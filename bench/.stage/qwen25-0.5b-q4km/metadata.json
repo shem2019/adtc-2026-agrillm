@@ -1,0 +1,29 @@
+{
+  "team_id": "sweep-qwen25-0.5b-q4km",
+  "domain": "agriculture",
+  "language_scope": ["en"],
+  "african_alpha_claim": false,
+  "budget_laptop_claim": true,
+  "submitter": {
+    "name": "Shem Kinyanjui Njuguna",
+    "email": "shem.kinyanjui.njuguna@gmail.com",
+    "github_handle": "shemvilejado"
+  },
+  "cross_disciplinary_pairing": {
+    "discipline": "agricultural_extension",
+    "load_bearing": true,
+    "description": "Candidate sweep run."
+  },
+  "test_prompts": [
+    { "prompt_id": "tp_001", "prompt": "Placeholder prompt for sweep run one." },
+    { "prompt_id": "tp_002", "prompt": "Placeholder prompt for sweep run two." }
+  ],
+  "model": {
+    "name": "qwen25-0.5b-q4km",
+    "runtime": "llama.cpp",
+    "quantization": "GGUF",
+    "parameters_estimate": "0.5B",
+    "packaging": "binary_bundle"
+  },
+  "_runtime": { "model_path": "model/candidate.gguf" }
+}

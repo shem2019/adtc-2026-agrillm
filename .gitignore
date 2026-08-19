@@ -1,0 +1,38 @@
+# Model weights are downloaded fresh by the evaluator via download_model.sh.
+# Committing them is an explicit rule violation.
+model/
+*.gguf
+*.bin
+*.safetensors
+
+# Profiler artifacts
+submission.json
+audit.json
+verdict.json
+bench/results/
+
+# Training scratch
+data/raw/
+data/interim/
+outputs/
+checkpoints/
+*.lora
+wandb/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.uv-cache/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+
+# llama.cpp source cached on the host for the Docker build
+bench/llama.cpp.tar.gz
+bench/*.partial
+bench/models/
+bench/.hfcache/
