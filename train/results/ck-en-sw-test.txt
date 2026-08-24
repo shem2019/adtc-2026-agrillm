@@ -1,0 +1,36 @@
+
+##############################################################################
+### train/ck-0001250
+##############################################################################
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s]Fetching 7 files: 100%|██████████| 7/7 [00:00<00:00, 1298.66it/s]
+
+--- EN  fall armyworm   (144 words, 72% unique)
+The symptoms described—ragged holes, windowpane scarring, and moist sawdust-like frass in the whorl—are highly characteristic of the fall armyworm (Spodoptera frugiperda). This is a highly destructive pest that causes severe damage to maize and other crops in Nakuru County.
+The pest is highly mobile and can rapidly spread through the field. It is a strict leaf feeder, which means it exclusively eats the leaves of the plant. The ragged holes and windowpane scarring are the most obvious physical signs of its presence.
+The farmer must act immediately to control the infestation:
+1. Scout the field
+
+--- SW  pest diagnosis   (99 words, 21% unique)
+Wadudu anawezaje kwa kilele kwa majani ya mbao kwa majani ya kinyesi (kama vumbi la mbao) kwa majani ya vya mazao ya kilele (kama vuma vya kilele) kwa majani ya majani ya kilele (kama vuma vya kilele) kwa majani ya majani ya majani ya kilele (kama vuma vya kilele).
+Kwa majani ya majani ya majani ya kilele, majani ya majani ya majani ya majani ya kilele anapofunika majani ya majani ya majani ya majani ya kilele kwa majani ya majani ya majani ya majani ya kilele.
+Kwa majani ya majani ya majani ya majani ya kilele, majani ya majani
+
+--- SW  crop rotation   (98 words, 7% unique)
+Mzunguko wa mazao unakuwa mazao ya mazao ya mazao (MMA) ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya mazao ya maz
+
+##############################################################################
+### train/ck-0002000
+##############################################################################
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s]Fetching 7 files: 100%|██████████| 7/7 [00:00<00:00, 1529.41it/s]
+
+--- EN  fall armyworm   (158 words, 68% unique)
+The symptoms described—ragged holes, windowpane scarring, and moist sawdust-like frass in the whorl—are highly indicative of the Maize Streak Virus (MSV). This is a devastating viral disease that targets the maize plant, causing severe yield losses and affecting the entire crop. The pest is highly contagious and spreads rapidly through the field, making it impossible to control solely through chemical sprays.
+The farmer must immediately take drastic action to protect their crop:
+1. Isolate the infected field immediately. Do not attempt to harvest the infected plants, as the virus can be transm
+
+--- SW  pest diagnosis   (80 words, 6% unique)
+Wadudu anapaswa kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kilele kwa kile
+
+--- SW  crop rotation   (81 words, 17% unique)
+Kwa nini mzunguko wa mazao unaboresha rutuba ya udongo kwa Kiswahili:
+1. Kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia kwa kuzuia k

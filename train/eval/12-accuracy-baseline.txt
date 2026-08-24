@@ -1,0 +1,105 @@
+
+════ sweep started 2026-08-20T09:12:38Z  accuracy=1 force=0 cpus=4 mem=7.5g
+→ using cached llama.cpp source ( 35M)
+→ building adtc-bench:latest (one-off, ~10-15 min of compiling — CPU-bound, not network)
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.29kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:22.04
+#2 DONE 1.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/9] FROM docker.io/library/ubuntu:22.04@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc
+#4 resolve docker.io/library/ubuntu:22.04@sha256:2edbbc5dc405e9612ba3584ce95480277e3eb374407b5505fe26f17df77c7dbc done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 40B done
+#5 DONE 0.0s
+
+#6 [6/9] RUN python3.11 -m venv /opt/venv
+#6 CACHED
+
+#7 [2/9] RUN apt-get update && apt-get install -y --no-install-recommends         build-essential cmake git curl ca-certificates         python3.11 python3.11-dev python3.11-venv         libcurl4-openssl-dev     && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [4/9] RUN mkdir -p /opt/llama.cpp     && tar -xzf /tmp/llama.tar.gz -C /opt/llama.cpp --strip-components=1     && rm -f /tmp/llama.tar.gz     && test -f /opt/llama.cpp/CMakeLists.txt
+#8 CACHED
+
+#9 [8/9] RUN command -v llama-bench >/dev/null     && python3 -c "import llama_cpp, lm_eval"     && adtc-profiler --help >/dev/null     && echo "✓ llama-bench, llama-cpp-python, lm-eval and adtc-profiler all present"
+#9 CACHED
+
+#10 [3/9] COPY llama.cpp.tar.gz /tmp/llama.tar.gz
+#10 CACHED
+
+#11 [5/9] RUN cd /opt/llama.cpp     && cmake -B build          -DGGML_NATIVE=OFF          -DLLAMA_CURL=OFF          -DBUILD_SHARED_LIBS=OFF          -DCMAKE_BUILD_TYPE=Release     && cmake --build build --config Release -j "$(nproc)"     && cp build/bin/llama-bench /usr/local/bin/     && (cp build/bin/llama-cli /usr/local/bin/ || true)     && rm -rf /opt/llama.cpp
+#11 CACHED
+
+#12 [7/9] RUN pip install --no-cache-dir --upgrade pip setuptools wheel     && pip install --no-cache-dir        "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git"
+#12 CACHED
+
+#13 [9/9] WORKDIR /work
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:7e339baf0fc62f538a37ce46dc1bf4e2b24d4565c3906c0dedd220e7caa0f6d8 done
+#14 exporting config sha256:4ead77846d26cd3ae0e73152bc476c9f8744e0eee36c2c8b4f77df3b3eb0fae0 done
+#14 exporting attestation manifest sha256:d87fffd26da27c7c7d942ef1602d7530ad373f7a9fdf9366341f1fe43469a5d4 done
+#14 exporting manifest list sha256:5be221d312e00a89092bf5341c23714fae18ffb81d9c2f9dcfe079566a164e27 done
+#14 naming to docker.io/library/adtc-bench:latest done
+#14 unpacking to docker.io/library/adtc-bench:latest done
+#14 DONE 0.0s
+→ toolchain recorded in /Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/environment.txt
+    captured:       2026-08-20T09:12:42Z
+    host:           Darwin 25.5.0 arm64
+    docker:         Docker version 29.6.1, build 8900f1d
+    container cpus: 4
+    container mem:  7.5g
+    llama-bench:    error: invalid parameter for argument: --version usage: llama-bench [options] version probe unsupported
+    profiler:       0.1.0
+    
+→ lm-eval dataset already cached — this run needs no internet
+
+══ qwen3-1.7b-q4km  (1.7B, Qwen3-1.7B-Q4_K_M.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/qwen3-1.7b-q4km.json) — skipping. Use --force to redo.
+
+══ qwen3-1.7b-udq4xl  (1.7B, Qwen3-1.7B-UD-Q4_K_XL.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/qwen3-1.7b-udq4xl.json) — skipping. Use --force to redo.
+
+══ qwen25-1.5b-q4km  (1.5B, qwen2.5-1.5b-instruct-q4_k_m.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/qwen25-1.5b-q4km.json) — skipping. Use --force to redo.
+
+══ llama32-1b-q4km  (1.2B, Llama-3.2-1B-Instruct-Q4_K_M.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/llama32-1b-q4km.json) — skipping. Use --force to redo.
+
+══ qwen3-4b-q3km  (4.0B, Qwen3-4B-Q3_K_M.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/qwen3-4b-q3km.json) — skipping. Use --force to redo.
+
+══ llama32-3b-q4km  (3.2B, Llama-3.2-3B-Instruct-Q4_K_M.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/llama32-3b-q4km.json) — skipping. Use --force to redo.
+
+══ qwen25-0.5b-q4km  (0.5B, qwen2.5-0.5b-instruct-q4_k_m.gguf)
+✓ already profiled (/Users/shemking/Hackathons/adtc-2026-agrillm/bench/results/qwen25-0.5b-q4km.json) — skipping. Use --force to redo.
+
+── sweep complete. Ranking:
+
+  de-rating measured TPS by 2.0x to estimate the audit VM
+  S_perf saturates at 15.0 tok/s — more is worth nothing
+
+candidate                  TPS  est.aud    x15   RAM GB   S_acc  S_perf   S_eff    TOTAL
+  --------------------------------------------------------------------------------------
+qwen25-0.5b-q4km          37.9     18.9    2.5     0.57    62.0   100.0    91.8     79.4  ⚠ params mismatch
+qwen25-1.5b-q4km          19.4      9.7    1.3     1.19    72.0    64.5    83.0     72.0  ← under 15 after de-rating  ⚠ params mismatch
+qwen3-1.7b-udq4xl         12.3      6.1    0.8     1.24    74.0    41.0    82.3     65.8  ← under 15 after de-rating
+qwen3-1.7b-q4km           12.5      6.2    0.8     1.21    72.0    41.5    82.7     65.0  ← under 15 after de-rating
+llama32-1b-q4km           13.3      6.7    0.9     0.91    62.0    44.4    87.0     61.7  ← under 15 after de-rating
+llama32-3b-q4km            8.8      4.4    0.6     2.08    70.0    29.2    70.2     57.8  ← under 15 after de-rating
+qwen3-4b-q3km              6.1      3.1    0.4     2.16    74.0    20.4    69.1     57.0  ← under 15 after de-rating
+

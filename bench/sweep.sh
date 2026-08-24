@@ -227,7 +227,7 @@ while IFS=$'\t' read -r label repo filename params; do
   "submitter": {
     "name": "Shem Kinyanjui Njuguna",
     "email": "shem.kinyanjui.njuguna@gmail.com",
-    "github_handle": "shemvilejado"
+    "github_handle": "shem2019"
   },
   "cross_disciplinary_pairing": {
     "discipline": "agricultural_extension",

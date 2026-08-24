@@ -13,8 +13,8 @@ set -euo pipefail
 
 # --- keep these three in sync with metadata.json ------------------------------
 MODEL_PATH="model/adtc-agri.gguf"
-MODEL_URL="TODO-public-url-to-your-gguf"
-EXPECTED_SHA256="TODO-sha256-of-your-gguf"
+MODEL_URL="https://huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri/resolve/main/adtc-agri-Q4_K_M.gguf"
+EXPECTED_SHA256="c35e00652cd1e33638fc78c1289076bcd091ebc5bfc45463388a8223b47bd5aa"
 # ------------------------------------------------------------------------------
 
 cd "$(dirname "$0")"

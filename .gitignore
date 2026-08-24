@@ -36,3 +36,15 @@ bench/llama.cpp.tar.gz
 bench/*.partial
 bench/models/
 bench/.hfcache/
+
+# Fused / merged intermediate model directories — 3 GB of weights plus an 11 MB
+# tokenizer each. All are reproducible from the adapter + base model.
+train/fused-*/
+train/merged/
+
+# Derived corpus. train/african/ holds the source material and is committed;
+# train/data/ is regenerated from it by prepare_data.py in under a minute.
+train/data/*.jsonl
+
+# Stray screenshots at repo root
+/Screenshot*.png

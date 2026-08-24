@@ -1,0 +1,457 @@
+5 prompts: 2 submitted, 3 probes
+
+loading base model…
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s]Fetching 7 files: 100%|██████████| 7/7 [00:00<00:00, 2081.54it/s]
+loading fine-tuned model (adapter: /Users/shemking/Hackathons/adtc-2026-agrillm/train/adapters)…
+Fetching 7 files:   0%|          | 0/7 [00:00<?, ?it/s]Fetching 7 files: 100%|██████████| 7/7 [00:00<00:00, 1711.96it/s]
+
+
+====================================================================================
+[1/5] SUBMITTED
+====================================================================================
+  A smallholder maize farmer in Nakuru County reports that leaves on young plants
+  have ragged holes and windowpane scarring, with moist sawdust-like frass in the
+  whorl. Identify the most likely pest, and give a control plan that a farmer with
+  limited cash can act on this week.
+
+  ### CHAT MODE (what the judge panel sees)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [chat]   (12.3s, 218 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The symptoms described by the maize farmer in Nakuru County, Kenya, are
+  indicative of a common pest infestation known as maize weevil (Sitophilus
+  zeamais). This pest is particularly damaging to young maize plants and can cause
+  significant yield losses if not controlled promptly.
+
+  ### Identification of the Pest:
+  Maize weevil is a small, dark-colored weevil that feeds on the developing
+  kernels of maize. The damage is characterized by ragged holes in the leaves,
+  windowpane scarring, and the presence of moist sawdust-like frass in the whorl
+  (the cluster of leaves at the base of the plant).
+
+  ### Control Plan for Limited Cash:
+
+  1. **Physical Removal:**
+     - **Manual Removal:** Farmers can manually remove the infested plants from
+  the field. This is the most effective and immediate control method but requires
+  significant time and effort.
+
+  2. **Chemical Control:**
+     - **Insecticides:** Farmers can use insecticides to control the weevil
+  population. However, since the farmer has limited cash, they should opt for
+  organic or low-cost insecticides. Examples include:
+       - **Pyrethrin:** Pyrethrin is a natural insecticide derived from
+  chrysanthemum flowers. It is effective against many insects, including weevils.
+       - **Neem Oil:** Neem oil is a natural insecticide derived from the neem
+  tree. It is effective against a wide range of pests and is often used in organic
+  farming.
+       - **Bacillus thuringiensis (Bt):** Bt is
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [chat]   (9.9s, 175 words)
+────────────────────────────────────────────────────────────────────────────────────
+  This is the damage caused by the stalk borer (Chilo partellus) in Nakuru County,
+  Kenya. The farmer must act immediately to protect the young maize plants.
+  Control Plan:
+  1. Immediate hand-picking: The farmer must physically remove all the dead stalk
+  borers from the whorl. This is the most effective and immediate control method.
+  2. Cultural sanitation: The farmer must clean the whorl thoroughly to remove all
+  dead stalk borers and any frass. This will prevent the pest from laying eggs on
+  the healthy plants.
+  3. Chemical sanitation: The farmer must spray a registered contact insecticide,
+  such as Imidacloprid or Spinetoram, directly into the whorl. This will kill the
+  active larvae and prevent them from tunneling into the whorl.
+  4. Post-harvest destruction: The farmer must destroy all the dead stalk borers
+  and frass in the whorl to prevent the pest from surviving and reproducing.
+  5. Follow-up monitoring: The farmer must monitor the whorl weekly to ensure that
+  the pest is not returning. If the pest returns, they must repeat the hand-
+  picking, sanitation, and chemical sanitation steps.
+
+  ### RAW MODE (what lm-eval scores — no chat template)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [raw]   (4.6s, 90 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The most likely pest is the maize weevil (Sitophilus zeamais). The symptoms
+  described are typical of damage caused by this pest. The control plan for a
+  smallholder farmer with limited cash would be:
+
+  1. **Physical Removal**: Collect and destroy infested seeds and grain. This is
+  the most immediate and effective action to prevent further infestation.
+
+  2. **Sanitation**: Clean the storage area thoroughly, removing any infested
+  grain or seeds. This includes cleaning the storage bins, removing any old or
+  infested grain, and ensuring that the storage area is dry and well-ventilated
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [raw]   (4.9s, 85 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The pest is the Spiny Stem Borer (Phthorimaea operculella). The farmer must
+  immediately uproot all infested plants and destroy the frass. They must also
+  apply a systemic insecticide containing Spinetoram (such as Actellic) or
+  Emamectin benzoate (such as Sevin) to the soil around the plants. The farmer
+  must also ensure that all infested plants are burned or buried in a safe manner.
+  The farmer must also ensure that all infested plants are burned or buried in a
+  safe manner. The farmer must also ensure that
+
+
+====================================================================================
+[2/5] SUBMITTED
+====================================================================================
+  An extension officer is advising a farmer with two acres of sandy loam and no
+  soil test, planting beans after a maize crop at the start of the short rains.
+  Recommend a fertiliser and spacing plan, explain why intercropping or rotation
+  matters here, and state what could go wrong if the rains end early.
+
+  ### CHAT MODE (what the judge panel sees)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [chat]   (11.9s, 216 words)
+────────────────────────────────────────────────────────────────────────────────────
+  ### Fertilizer Recommendation and Spacing Plan
+
+  #### Fertilizer Recommendation:
+  Given the sandy loam soil type and the lack of a soil test, the farmer should
+  consider using a balanced fertilizer that is suitable for sandy soils. A common
+  recommendation for sandy soils is a blend of nitrogen (N), phosphorus (P), and
+  potassium (K). A typical balanced fertilizer might be 10-10-10 or 15-15-15. The
+  exact amount should be determined by a soil test, but a general guideline is to
+  apply 100-150 pounds of nitrogen per acre, 50-75 pounds of phosphorus, and 50-75
+  pounds of potassium.
+
+  #### Spacing Plan:
+  For beans, the recommended spacing is 18-24 inches between rows and 6-8 inches
+  between plants within the row. This spacing allows for adequate air circulation
+  and sunlight penetration, which are crucial for bean growth. The maize crop
+  should be spaced 36-48 inches between rows and 12-18 inches between plants
+  within the row. This spacing is suitable for maize and allows for proper root
+  development and growth.
+
+  ### Intercropping and Rotation
+
+  #### Intercropping:
+  Intercropping is the practice of growing two or more crops in the same field at
+  the same time. In this case, intercropping beans with maize can be beneficial
+  for several reasons:
+
+  1. **Diversification**: Intercropping can help diversify the farmer's income and
+  reduce the risk of crop failure
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [chat]   (10.1s, 190 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Intercrop spacing is governed by the relative root depths of the two species.
+  Beans are shallow-rooted, while maize is deep-rooted. Plant beans at least 1
+  meter apart so their shallow roots can easily penetrate the soil. If the farmer
+  plants maize at the same spacing, the deep roots will quickly outcompete the
+  shallow-rooted beans for water and nutrients.
+  The farmer must also apply a balanced NPK (nitrogen, phosphorus, and potassium)
+  fertiliser at planting. A soil test will determine the soil's nutrient levels,
+  but the farmer must apply at least 50 kg of DAP per acre.
+  The farmer must also plant a legume cover crop like Desmodium or Desmodium
+  uncinatum to fix atmospheric nitrogen and prevent soil erosion. The farmer must
+  also rotate the maize with a non-legume crop like sorghum or sunflower to
+  prevent soil-borne diseases and pests.
+  If the rains end early, the maize will dry out and rot in the field, destroying
+  the farmer's investment. The farmer must also apply a dry-duster to protect the
+  maize from stalk borers and stalk borers. If the stalks are damaged, the beans
+  will rot in the field, destroying the farmer's investment.
+
+  ### RAW MODE (what lm-eval scores — no chat template)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [raw]   (4.6s, 87 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The farmer should apply a slow-release fertiliser such as a 10-10-10 or 15-15-15
+  blend. The spacing plan should be 1.5m between rows and 0.5m between plants.
+  Intercropping or rotation is important to prevent soil depletion and to maintain
+  soil health. If the rains end early, the beans will not have enough time to
+  mature and will likely be harvested before the maize is ready for harvest. This
+  could result in a lower yield for both crops and could lead to a loss of income
+  for the farmer
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [raw]   (4.9s, 99 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Apply 100 kg DAP per acre at planting. Space rows 90 cm apart. Intercrop with
+  legumes such as cowpeas or pigeon peas. If the rains end early, the maize will
+  dry down and the beans will suffer severe root rot. The farmer must immediately
+  uproot the dry maize and apply fresh manure to the soil surface to encourage
+  rapid bean emergence.
+  The farmer must never plant maize after a short rains dry spell. The dry soil
+  will crack and the maize will die. The farmer must never plant beans after a
+  short rains dry spell. The dry soil will
+
+
+====================================================================================
+[3/5] PROBE
+====================================================================================
+  A farmer's bean crop shows yellowing between the leaf veins on older leaves
+  first, while new growth looks normal. Diagnose the most likely cause and say
+  what you would confirm before recommending an input purchase.
+
+  ### CHAT MODE (what the judge panel sees)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [chat]   (10.9s, 237 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The symptoms described—yellowing between the leaf veins on older leaves, while
+  new growth appears normal—suggest a deficiency in a specific nutrient. Given the
+  typical symptoms of a deficiency in nitrogen (N), phosphorus (P), or potassium
+  (K), we can diagnose the most likely cause as a deficiency in one of these
+  nutrients.
+
+  To confirm the diagnosis, the farmer should:
+
+  1. **Test the soil for nutrient levels**: Collect soil samples from the affected
+  area and send them to a laboratory for analysis. This will provide a definitive
+  indication of the nutrient deficiencies present in the soil.
+
+  2. **Monitor plant growth and health**: Keep an eye on the overall health of the
+  plants and the rate of growth. This can help determine if the nutrient
+  deficiency is affecting the entire crop or just the older leaves.
+
+  3. **Apply the appropriate fertilizer**: Once the nutrient deficiencies are
+  confirmed, apply the necessary fertilizer to correct the deficiencies. For
+  example, if nitrogen is the deficiency, apply a nitrogen-rich fertilizer. If
+  phosphorus is the deficiency, apply a phosphorus-rich fertilizer.
+
+  4. **Monitor the crop again**: After applying the fertilizer, monitor the crop
+  again to see if the symptoms have improved. This will help ensure that the
+  fertilizer was effective in correcting the nutrient deficiency.
+
+  By following these steps, the farmer can diagnose the nutrient deficiency and
+  make an informed decision about the input purchase, ensuring that the crop
+  receives the necessary nutrients to grow healthily.
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [chat]   (3.6s, 75 words)
+────────────────────────────────────────────────────────────────────────────────────
+  This is a classic case of severe yellowing between the leaf veins, which is
+  caused by a severe deficiency of nitrogen. The farmer must immediately apply a
+  high-nitrogen fertilizer to save the crop. Before purchasing the fertilizer,
+  they must ensure that the product is registered and approved for use on the
+  specific crop. They must also check the label to ensure that the product
+  contains the exact amount of nitrogen required to correct the deficiency.
+
+  ### RAW MODE (what lm-eval scores — no chat template)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [raw]   (4.6s, 101 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The most likely cause of the yellowing between the leaf veins is a deficiency of
+  nitrogen. To confirm this, you would need to test the soil for nitrogen levels.
+  If the soil is deficient in nitrogen, you would recommend applying a nitrogen
+  fertilizer to the soil before making any input purchases.  (Note: This is a
+  simplified explanation and actual diagnosis and treatment may vary based on the
+  specific conditions of the crop and soil.)  (Source: University of California,
+  Davis, Integrated Pest Management Program)  (Note: This is a simplified
+  explanation and actual diagnosis and treatment may vary based on the specific
+  conditions
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [raw]   (4.9s, 104 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The farmer's bean crop is suffering from severe stunting and yellowing between
+  the leaf veins. The most likely cause is severe nutrient deficiency,
+  specifically nitrogen. The farmer must confirm that the soil is not too dry, as
+  dry soil will not absorb nitrogen. The farmer must also confirm that the soil is
+  not too alkaline, as alkaline soil will not absorb nitrogen. The farmer must
+  confirm that the soil is not too acidic, as acidic soil will not absorb
+  nitrogen. The farmer must confirm that the soil is not too salty, as salty soil
+  will not absorb nitrogen. The farmer must confirm that the
+
+
+====================================================================================
+[4/5] PROBE
+====================================================================================
+  Explain to a farmer with no formal training why rotating maize with beans
+  improves soil fertility. Keep it practical and under 150 words.
+
+  ### CHAT MODE (what the judge panel sees)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [chat]   (10.6s, 227 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Rotating maize with beans in a farmer's field can significantly improve soil
+  fertility in several practical ways:
+
+  1. **Nitrogen Fixation**: Beans fix atmospheric nitrogen into a form that plants
+  can use. This reduces the need for synthetic nitrogen fertilizers, which are
+  expensive and can leach into groundwater.
+
+  2. **Improved Soil Structure**: Beans help break up compacted soil, allowing for
+  better water infiltration and root growth. This leads to healthier plants and
+  more robust soil structure.
+
+  3. **Increased Organic Matter**: Beans add organic matter to the soil, which
+  improves its structure and fertility. This organic matter also helps retain
+  moisture and nutrients.
+
+  4. **Reduced Pests and Diseases**: The presence of beans in the rotation can
+  deter pests and diseases that might otherwise thrive in maize fields. This
+  reduces the need for chemical pesticides and fungicides.
+
+  5. **Nutrient Cycling**: By rotating crops, nutrients are cycled back into the
+  soil, reducing the need for continuous input of nutrients. This helps maintain
+  soil fertility over time.
+
+  6. **Water Management**: Beans help manage water by reducing soil erosion and
+  improving water retention. This can lead to more efficient use of water
+  resources.
+
+  7. **Biodiversity**: Including beans in the rotation increases biodiversity in
+  the field, which can lead to a more resilient and productive farm system.
+
+  By implementing this rotation, farmers can enhance soil health, reduce input
+  costs, and improve overall farm productivity.
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [chat]   (7.0s, 131 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Rotate maize with beans to improve soil fertility by:
+  1. Reducing soil compaction: Beans have deep taproots that penetrate soil,
+  breaking up hardpan layers and improving soil structure.
+  2. Nitrogen fixation: Legume roots contain symbiotic bacteria that fix
+  atmospheric nitrogen, converting it into a form usable by plants.
+  3. Nutrient recycling: Beans fix nitrogen, which improves soil fertility. Their
+  roots also help to break up soil, making nutrients more available to maize.
+  4. Water conservation: Legumes have deep root systems that tap moisture from
+  deeper soil layers, reducing waterlogging and improving soil moisture retention.
+  5. Pest control: Legumes naturally repel certain pests, reducing the need for
+  chemical sprays.
+  6. Improved soil structure: By breaking up hardpan layers, beans improve soil
+  structure, making it easier for maize to absorb nutrients and water.
+
+  ### RAW MODE (what lm-eval scores — no chat template)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [raw]   (4.5s, 103 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Rotating maize with beans is a practical way to improve soil fertility because
+  it mimics the natural relationship between these two plants. Beans fix nitrogen
+  from the air into the soil, which maize can then use. This helps to replenish
+  the soil's nitrogen levels, which is essential for plant growth. By alternating
+  the crops, the soil is given a chance to rest and recover, reducing the risk of
+  soil depletion. This practice also helps to prevent soil erosion and maintains
+  soil structure, leading to healthier, more productive soil over time. It's a
+  simple, sustainable method that can significantly enhance soil fertility and
+  overall
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [raw]   (4.8s, 103 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Rotating maize with beans dramatically improves soil fertility by fixing
+  atmospheric nitrogen, which is lost in the high winds of the semi-arid region.
+  Beans fix nitrogen in their roots, converting it from the air into a form that
+  can be used by the maize. This symbiotic relationship ensures that the soil
+  remains fertile, reducing the need for costly synthetic fertilizers.
+  Additionally, the deep root systems of beans help to break up compacted soil,
+  improving soil structure and water infiltration. This holistic approach to
+  farming not only boosts crop yields but also enhances soil health, making the
+  land more resilient to future challenges. This
+
+
+====================================================================================
+[5/5] PROBE
+====================================================================================
+  A farmer has 1.5 acres, no irrigation, and the rains are two weeks late. What
+  should they do differently this season?
+
+  ### CHAT MODE (what the judge panel sees)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [chat]   (11.8s, 259 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Given the scenario where the farmer has 1.5 acres of land, no irrigation, and
+  the rains are two weeks late, the farmer should consider the following
+  strategies to ensure successful crop production:
+
+  1. **Evaluate Soil Health**: Before planting, the farmer should assess the
+  soil's moisture content, nutrient levels, and pH. This will help in determining
+  the best time to plant and the appropriate amount of water to apply.
+
+  2. **Timing of Planting**: Since the rains are two weeks late, the farmer should
+  plant crops that are not sensitive to water stress. Crops like corn, beans, and
+  squash are generally more tolerant of drought conditions. The farmer should also
+  consider planting early varieties that are known to perform well in dry
+  conditions.
+
+  3. **Water Management**: If the farmer has access to a water source, they should
+  start irrigating the crops as soon as possible. However, if the water source is
+  limited, the farmer should focus on maintaining the soil moisture level through
+  mulching and using drip irrigation systems.
+
+  4. **Crop Selection**: The farmer should choose crops that are well-suited to
+  the local climate and soil conditions. Some crops, like tomatoes and peppers,
+  are more drought-tolerant and can withstand a delay in the rainy season.
+
+  5. **Pest and Disease Management**: The farmer should monitor the crops for any
+  signs of pests or diseases and take appropriate action to prevent them from
+  spreading. This might involve using organic pesticides or natural remedies.
+
+  6. **Soil Fertility**: The farmer should apply organic matter to the soil to
+  improve its structure and fertility. This will
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [chat]   (3.8s, 73 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The farmer should immediately apply a heavy, balanced, high-potassium manure or
+  fertilizer to the soil. This will help to quickly activate the soil's natural
+  nitrogen-fixing bacteria, which will rapidly convert the nitrogen in the soil
+  into a form that the maize seedlings can use. The farmer must also immediately
+  plant the maize seedlings at the very earliest possible time, as the late rains
+  will not provide enough moisture for the seedlings to survive.
+
+  ### RAW MODE (what lm-eval scores — no chat template)
+
+────────────────────────────────────────────────────────────────────────────────────
+  BASE  [raw]   (4.7s, 92 words)
+────────────────────────────────────────────────────────────────────────────────────
+  The farmer should plant drought-resistant crops and use drip irrigation.
+  Explain how you used the definition to come up with the answer. The definition
+  of the question is asking what the farmer should do differently this season to
+  address the situation of having 1.5 acres of land, no irrigation, and rains that
+  are two weeks late. The key elements of the question are:
+  1. 1.5 acres of land
+  2. No irrigation
+  3. Rains two weeks late
+  To address this, the farmer should consider the following:
+  1. Drought-resistant crops: Crops that can survive
+
+────────────────────────────────────────────────────────────────────────────────────
+  TUNED [raw]   (1.2s, 15 words)
+────────────────────────────────────────────────────────────────────────────────────
+  Plant drought-tolerant crops.
+  You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+
+
+====================================================================================
+LENGTH SUMMARY  (the objective test for catastrophic forgetting)
+====================================================================================
+                      BASE     TUNED      CHANGE
+  chat mode            231       129        -44%  <-- COLLAPSE
+  raw mode              95        81        -14%
+
+  Chat mode shrinking more than ~40% means the fine-tune has flattened the
+  model into a terse answering machine. That costs you the judged half of
+  S_acc. Raw mode getting shorter is fine, even desirable -- that path is
+  scored on whether the right continuation is probable, not on length.
+
+====================================================================================
+What to look for, in priority order:
+
+  1. Did the fine-tuned answer get SHORTER and less structured? That is the
+     catastrophic-forgetting signature. It is the main risk of this whole
+     approach and the reason to keep training light.
+  2. Did it gain real agronomy specificity — named pests, actual rates, correct
+     units — or just change its tone?
+  3. Does it still answer every part of a multi-part question, or does it now
+     answer only the first clause?
+  4. Any LaTeX, "Therefore:", or dataset artefacts leaking into prose? That
+     means the training format has bled into the judged register.
+
+If 1 or 3 look bad, retrain with fewer iterations or a lower learning rate.
+A model that scores marginally better on the benchmark but writes worse advice
+is a bad trade — the judged half is 50% of S_acc.
