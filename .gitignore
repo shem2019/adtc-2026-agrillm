@@ -48,3 +48,12 @@ train/data/*.jsonl
 
 # Stray screenshots at repo root
 /Screenshot*.png
+
+# LibreOffice lock files left behind while a deck is open
+.~lock.*#
+
+# Video production artifacts. Kept locally; they are not part of the
+# submission and the template's required structure does not include them.
+VIDEO_SCRIPT.md
+assets/AgriLLM_slides.*
+assets/make_slides.py

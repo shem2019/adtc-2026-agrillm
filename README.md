@@ -5,6 +5,8 @@
 
 Africa Deep Tech Challenge 2026 — Agriculture track.
 
+**Demo video:** https://youtu.be/BoG7xQlCPNY
+
 ```
 Model    AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M   986,048,512 bytes · 1.54 B params
 Base     Qwen2.5-1.5B-Instruct, LoRA fine-tuned on 18,248 agronomy examples
