@@ -154,7 +154,7 @@ subsequent decision was made on that measurement.
 
 ### 5.1 What the fine-tune actually gained
 
-On our flagship test prompt — ragged holes, windowpane scarring, moist
+On a representative diagnostic prompt — ragged holes, windowpane scarring, moist
 sawdust-like frass in the whorl:
 
 - **Base Qwen2.5-1.5B:** "maize weevil (*Sitophilus zeamais*)" — wrong

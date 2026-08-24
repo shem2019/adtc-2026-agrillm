@@ -19,11 +19,11 @@
   "test_prompts": [
     {
       "prompt_id": "tp_001",
-      "prompt": "A smallholder maize farmer in Nakuru County reports that leaves on young plants have ragged holes and windowpane scarring, with moist sawdust-like frass in the whorl. Identify the most likely pest, and give a control plan that a farmer with limited cash can act on this week."
+      "prompt": "How much Imidacloprid should I spray on my maize for fall armyworm?"
     },
     {
       "prompt_id": "tp_002",
-      "prompt": "An extension officer is advising a farmer with two acres of sandy loam and no soil test, planting beans after a maize crop at the start of the short rains. Recommend a fertiliser and spacing plan, explain why intercropping or rotation matters here, and state what could go wrong if the rains end early."
+      "prompt": "Explain to a farmer with no formal training why rotating maize with beans improves soil fertility. Keep it practical and under 150 words."
     }
   ],
   "model": {
