@@ -46,31 +46,63 @@ def main() -> int:
                     help="put the original template back from the .bak")
     args = ap.parse_args()
 
+    # transformers >= ~4.49 saves the chat template to a standalone
+    # chat_template.jinja rather than embedding it in tokenizer_config.json.
+    # Both layouts exist in the wild and llama.cpp's converter reads either, so
+    # find whichever is present - and patch BOTH if both are, since we cannot be
+    # sure which one the converter will pick up.
     cfg_path = args.checkpoint / "tokenizer_config.json"
-    if not cfg_path.exists():
-        print(f"no tokenizer_config.json in {args.checkpoint}", file=sys.stderr)
-        print("Run export_gguf.sh, which copies the tokenizer from the pinned base first.",
+    jinja_path = args.checkpoint / "chat_template.jinja"
+
+    targets: list[tuple[str, Path]] = []
+    if jinja_path.exists():
+        targets.append(("jinja", jinja_path))
+    if cfg_path.exists():
+        try:
+            if isinstance(json.loads(cfg_path.read_text(encoding="utf-8")).get("chat_template"), str):
+                targets.append(("json", cfg_path))
+        except json.JSONDecodeError:
+            pass
+
+    if not targets:
+        print(f"no chat template found in {args.checkpoint}", file=sys.stderr)
+        print("  looked for: chat_template.jinja, and a chat_template key in "
+              "tokenizer_config.json", file=sys.stderr)
+        print("  Run export_gguf.sh, which copies the tokenizer from the pinned base first.",
               file=sys.stderr)
         return 1
 
-    backup = cfg_path.with_suffix(".json.bak")
+    def read_template(kind: str, path: Path) -> str:
+        if kind == "jinja":
+            return path.read_text(encoding="utf-8")
+        return json.loads(path.read_text(encoding="utf-8"))["chat_template"]
+
+    def write_template(kind: str, path: Path, text: str) -> None:
+        if kind == "jinja":
+            path.write_text(text, encoding="utf-8")
+        else:
+            cfg = json.loads(path.read_text(encoding="utf-8"))
+            cfg["chat_template"] = text
+            path.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n",
+                            encoding="utf-8")
 
     if args.restore:
-        if not backup.exists():
-            print(f"no backup at {backup}", file=sys.stderr)
+        restored = 0
+        for kind, path in targets:
+            bak = path.with_suffix(path.suffix + ".bak")
+            if bak.exists():
+                shutil.copy2(bak, path)
+                print(f"restored {path.name} from {bak.name}")
+                restored += 1
+        if not restored:
+            print("no backups found", file=sys.stderr)
             return 1
-        shutil.copy2(backup, cfg_path)
-        print(f"restored original template from {backup}")
         return 0
 
-    cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
-    template = cfg.get("chat_template")
-    if not isinstance(template, str):
-        print("chat_template missing or not a string - nothing to patch", file=sys.stderr)
-        return 1
-
+    template = read_template(*targets[0])
     n_qwen = template.count(QWEN_DEFAULT)
     n_agri = template.count(AGRI_DEFAULT)
+    print(f"template source: {', '.join(p.name for _, p in targets)}")
 
     if args.check:
         print(f"checkpoint : {args.checkpoint}")
@@ -86,19 +118,17 @@ def main() -> int:
 
     if not n_qwen:
         print("! Could not find Qwen's default string in the template.", file=sys.stderr)
-        print("  Upstream may have changed the template. Inspect it manually:", file=sys.stderr)
-        print(f"    python3 -c \"import json;print(json.load(open('{cfg_path}'))['chat_template'])\"",
-              file=sys.stderr)
+        print("  Upstream may have changed the template. Inspect it with:", file=sys.stderr)
+        print(f"    cat {targets[0][1]}", file=sys.stderr)
         return 1
 
-    if not backup.exists():
-        shutil.copy2(cfg_path, backup)
-        print(f"backed up original -> {backup}")
-
-    cfg["chat_template"] = template.replace(QWEN_DEFAULT, AGRI_DEFAULT)
-    cfg_path.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-
-    print(f"patched {n_qwen} occurrence(s) in {cfg_path}")
+    patched_text = template.replace(QWEN_DEFAULT, AGRI_DEFAULT)
+    for kind, path in targets:
+        bak = path.with_suffix(path.suffix + ".bak")
+        if not bak.exists():
+            shutil.copy2(path, bak)
+        write_template(kind, path, patched_text)
+        print(f"patched {n_qwen} occurrence(s) in {path.name}")
     print(f"  new default: {AGRI_DEFAULT[:78]}...")
 
     # Prove it renders. Worth doing here rather than discovering it in the GGUF.
