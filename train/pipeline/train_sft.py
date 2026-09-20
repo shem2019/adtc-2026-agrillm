@@ -249,12 +249,36 @@ def main() -> int:
     # 1e-2 is partly or wholly lost to rounding. That is what produced
     # grad_norm=nan by step 20 and loss=0.0 thereafter on the first attempt at
     # this run, at the LOWEST learning rate in the sweep.
-    model = AutoModelForCausalLM.from_pretrained(
-        base_model,
-        revision=revision,
-        torch_dtype=torch.float32,
-        attn_implementation=cfg.get("attn_implementation", "sdpa"),
-    )
+    # Newer transformers renamed `torch_dtype` to `dtype` and only warns about
+    # the old spelling, so passing torch_dtype can be silently ignored - in which
+    # case the model loads at the dtype in Qwen's own config.json, which is
+    # bfloat16, and we are back to pure bf16 training without being told.
+    # Try the new name, fall back to the old, then force and ASSERT the result
+    # rather than trusting either kwarg.
+    _load_kwargs = {
+        "revision": revision,
+        "attn_implementation": cfg.get("attn_implementation", "sdpa"),
+    }
+    try:
+        model = AutoModelForCausalLM.from_pretrained(
+            base_model, dtype=torch.float32, **_load_kwargs
+        )
+    except TypeError:
+        model = AutoModelForCausalLM.from_pretrained(
+            base_model, torch_dtype=torch.float32, **_load_kwargs
+        )
+
+    param_dtype = next(model.parameters()).dtype
+    if param_dtype != torch.float32:
+        print(f"! model loaded as {param_dtype} despite the request; forcing fp32")
+        model = model.float()
+        param_dtype = next(model.parameters()).dtype
+    if param_dtype != torch.float32:
+        print(f"Could not load the model in fp32 (got {param_dtype}).", file=sys.stderr)
+        print("Pure bf16 full fine-tuning diverges; refusing to burn GPU time on it.",
+              file=sys.stderr)
+        return 1
+    print(f"parameter dtype: {param_dtype} (fp32 master weights, bf16 autocast)")
     model.config.use_cache = False
     n_params = sum(p.numel() for p in model.parameters())
     n_trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
