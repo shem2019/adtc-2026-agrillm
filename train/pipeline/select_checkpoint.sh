@@ -39,11 +39,19 @@ SERVER_PID=""
 cleanup() { [ -n "$SERVER_PID" ] && kill "$SERVER_PID" 2>/dev/null || true; }
 trap cleanup EXIT
 
+# llama.cpp's /health returns 503 with {"status":"loading model"} while the
+# model is still loading, and 200 only once it can actually serve. `curl -s`
+# exits 0 on ANY completed HTTP transaction including that 503, so checking
+# curl's exit status returns the moment the socket is listening and the eval
+# then connects to a server that is not ready. Check the status code.
 wait_for_server() {
-  for _ in $(seq 1 120); do
-    if curl -s "http://127.0.0.1:${PORT}/health" >/dev/null 2>&1; then return 0; fi
+  local code
+  for _ in $(seq 1 180); do
+    code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:${PORT}/health" 2>/dev/null || echo 000)
+    [ "$code" = "200" ] && return 0
     sleep 1
   done
+  echo "      last /health status: ${code:-none}" >&2
   return 1
 }
 
@@ -133,15 +141,26 @@ for r in ok:
     print(f"  {r['checkpoint']:22} {r['overall_f']:7.1%}  {r['crit_i']:17d}  {r['gguf_mb']:>5}{flag}")
 
 clean = [r for r in ok if r["crit_i"] == 0]
+errored = [r for r in rows if r["overall"] == "ERROR"]
 print()
-if clean:
+if not ok:
+    # Distinguish "every model failed safety" from "nothing was measured at all".
+    # These need completely different responses and must never be conflated.
+    print(f"  NO RESULTS AT ALL - {len(errored)} checkpoint(s) errored, 0 scored.")
+    print("  This says nothing about the models; the eval never ran. Check the")
+    print("  server logs next to this file for why llama-server did not come up:")
+    print(f"    {sys.argv[1].rsplit('/', 1)[0] if '/' in sys.argv[1] else '.'}/*-server.log")
+elif clean:
     w = clean[0]
     print(f"  WINNER: {w['checkpoint']}  ({w['overall_f']:.1%} overall, 0 safety-critical failures)")
     print(f"  Verify it on CPU before shipping - that is how the graders run it.")
+    if errored:
+        print(f"  NOTE: {len(errored)} checkpoint(s) errored and were not scored.")
 else:
-    print("  NO CLEAN CHECKPOINT. Every one has a safety-critical failure.")
-    print("  Do not ship any of these. Lower the learning rate or check the")
-    print("  loss mask in train/pipeline/data/sample_rendered.txt and retrain.")
+    print(f"  NO CLEAN CHECKPOINT among the {len(ok)} that scored.")
+    print("  Every one has at least one safety-critical failure. Do not ship these.")
+    print("  Lower the learning rate, or check the loss mask in")
+    print("  train/pipeline/data/sample_rendered.txt, and retrain.")
 PY
 
 echo

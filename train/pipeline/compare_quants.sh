@@ -74,8 +74,11 @@ for QUANT in Q4_K_M Q5_K_M Q6_K f16; do
   "${LLAMA_BIN}/llama-server" -m "$GGUF" -ngl 99 -c 4096 --port "$PORT" \
       > "${OUT_DIR}/${QUANT}-server.log" 2>&1 &
   SERVER_PID=$!
-  for _ in $(seq 1 120); do
-    curl -s "http://127.0.0.1:${PORT}/health" >/dev/null 2>&1 && break; sleep 1
+  # /health returns 503 while loading; curl -s exits 0 on that too, so check the
+  # status code rather than curl's exit status.
+  for _ in $(seq 1 180); do
+    [ "$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:${PORT}/health" 2>/dev/null || echo 000)" = "200" ] && break
+    sleep 1
   done
 
   set +e

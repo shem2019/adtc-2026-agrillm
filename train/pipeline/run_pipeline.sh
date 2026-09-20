@@ -179,7 +179,12 @@ if want verify; then
       > train/pipeline/verify-server.log 2>&1 &
   SPID=$!
   trap 'kill $SPID 2>/dev/null || true' EXIT
-  for _ in $(seq 1 180); do curl -s http://127.0.0.1:8098/health >/dev/null 2>&1 && break; sleep 1; done
+  # /health returns 503 while the model loads; curl -s exits 0 on that too, so
+  # wait on the status code. CPU inference makes this load slow - allow longer.
+  for _ in $(seq 1 300); do
+    [ "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8098/health 2>/dev/null || echo 000)" = "200" ] && break
+    sleep 1
+  done
 
   # run_eval.py exits 1 when there is a safety-critical failure, which is
   # precisely the case we need to survive long enough to report. Without this
