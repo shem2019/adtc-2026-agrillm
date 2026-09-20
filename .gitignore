@@ -57,3 +57,30 @@ train/data/*.jsonl
 VIDEO_SCRIPT.md
 assets/AgriLLM_slides.*
 assets/make_slides.py
+
+# ---------------------------------------------------------------------------
+# Quarantined, not deleted. Kept on disk locally as a record; not tracked.
+#
+# build_perfect_full_corpus.py is a pure string-template engine (174 templating
+# call sites, zero LLM calls). It produced 22,300 "rows" that were roughly 700
+# underlying answers wrapped in "Ref N:" serial-number prefixes, which scored
+# 100% on a naive distinctness check and ~3% on a shape-normalised one. Its
+# output is in train/african/_rejected_templated/ (17 MB). Neither is training
+# material and neither should appear in a submission repo.
+train/african/build_perfect_full_corpus.py
+train/african/_rejected_templated/
+
+# Per-row audit output from that same process. Every row reads
+# {"verdict": "KEEP", "problems": [], "confidence": 0.98} including rows later
+# found to state pesticide doses as fact. It is a rubber stamp, not evidence.
+train/african/_audit/
+
+# Scratch generators and temp dirs from the corpus expansion work.
+_gen_multiturn.py
+_tmp_gen/
+train/_tmp/
+train/_tmp_gen/
+train/_econ_a.jsonl
+train/_gen_econ_b.py
+train/_gen_econ_rows.py
+train/_gen_potato_rows.py
