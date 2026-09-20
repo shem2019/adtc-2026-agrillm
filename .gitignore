@@ -84,3 +84,9 @@ train/_econ_a.jsonl
 train/_gen_econ_b.py
 train/_gen_econ_rows.py
 train/_gen_potato_rows.py
+
+# Stage-1 external corpus: derived from AI71ai/agrillm-train-146k by
+# train/pipeline/prepare_stage1_external.py. Regenerable in ~3 minutes, and
+# large. The filter script and its manifest are tracked; the output is not.
+train/external/
+train/pipeline/data-stage1/

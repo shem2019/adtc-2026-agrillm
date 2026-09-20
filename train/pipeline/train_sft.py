@@ -190,6 +190,10 @@ def main() -> int:
     ap.add_argument("--learning-rate", type=float, default=None, help="override, for sweeps")
     ap.add_argument("--epochs", type=float, default=None, help="override, for sweeps")
     ap.add_argument("--tag", default=None, help="suffix for the run directory")
+    ap.add_argument("--init-from", type=Path, default=None,
+                    help="start from a local checkpoint instead of the HF base model. "
+                         "This is what makes stage 2 of a two-stage run continue from "
+                         "stage 1 rather than restarting from stock Qwen.")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
@@ -233,7 +237,20 @@ def main() -> int:
     base_model = cfg.get("base_model") or manifest.get("base_model", "Qwen/Qwen2.5-1.5B-Instruct")
     revision = cfg.get("base_model_revision") or manifest.get("base_model_revision")
 
-    print(f"base model: {base_model}" + (f" @ {revision}" if revision else " @ (unpinned)"))
+    # --init-from turns this into a continuation run. The tokenizer still comes
+    # from the pinned base (a checkpoint dir saved with save_only_model has no
+    # tokenizer), and the provenance still records the original base model and
+    # commit, plus the checkpoint we continued from.
+    init_from = str(args.init_from) if args.init_from else None
+    if init_from:
+        if not Path(init_from).is_dir():
+            print(f"--init-from path not found: {init_from}", file=sys.stderr)
+            return 1
+        print(f"CONTINUATION RUN")
+        print(f"  initialising weights from: {init_from}")
+        print(f"  original base (for tokenizer + provenance): {base_model} @ {revision}")
+    else:
+        print(f"base model: {base_model}" + (f" @ {revision}" if revision else " @ (unpinned)"))
     if not revision:
         print("! No base-model commit pinned. Gate 2 section 3.1 wants the exact SHA in metadata.json.")
 
@@ -257,17 +274,17 @@ def main() -> int:
     # bfloat16, and we are back to pure bf16 training without being told.
     # Try the new name, fall back to the old, then force and ASSERT the result
     # rather than trusting either kwarg.
-    _load_kwargs = {
-        "revision": revision,
-        "attn_implementation": cfg.get("attn_implementation", "sdpa"),
-    }
+    _load_src = init_from or base_model
+    _load_kwargs = {"attn_implementation": cfg.get("attn_implementation", "sdpa")}
+    if not init_from:
+        _load_kwargs["revision"] = revision
     try:
         model = AutoModelForCausalLM.from_pretrained(
-            base_model, dtype=torch.float32, **_load_kwargs
+            _load_src, dtype=torch.float32, **_load_kwargs
         )
     except TypeError:
         model = AutoModelForCausalLM.from_pretrained(
-            base_model, torch_dtype=torch.float32, **_load_kwargs
+            _load_src, torch_dtype=torch.float32, **_load_kwargs
         )
 
     param_dtype = next(model.parameters()).dtype
@@ -321,7 +338,8 @@ def main() -> int:
     run_record = {
         "base_model": base_model,
         "base_model_revision": revision,
-        "method": "full_finetune",
+        "initialised_from": init_from,
+        "method": "full_finetune" + ("_continuation" if init_from else ""),
         "trainable_parameters": n_trainable,
         "total_parameters": n_params,
         "config": cfg,
