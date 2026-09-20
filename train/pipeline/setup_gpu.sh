@@ -27,12 +27,19 @@ say "Checking GPU"
 command -v nvidia-smi >/dev/null || die "nvidia-smi not found - is this actually a GPU box?"
 nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv
 
+# Full fine-tune of Qwen2.5-1.5B peaks around 35GB at batch_size 4: ~23GB static
+# (fp32 weights + gradients + AdamW states) plus logits and activations. 40GB is
+# the practical floor, 48GB is comfortable. An H100 80GB is roughly twice what
+# this needs - measured, not assumed.
 VRAM_MB=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits | head -1 | tr -d ' ')
-if [ "${VRAM_MB}" -lt 70000 ]; then
-  warn "Card reports ${VRAM_MB} MiB. Expected ~81559 MiB for an H100 80GB."
-  warn "Full fine-tune needs ~33GB working set; below ~40GB you must lower batch_size."
+if [ "${VRAM_MB}" -lt 38000 ]; then
+  warn "Card reports ${VRAM_MB} MiB. Full FT peaks near 35GB at batch_size 4."
+  warn "Set batch_size 2 / grad_accum 16 in sft_config.yaml (same effective batch),"
+  warn "or use an 8-bit optimiser. Below ~24GB, full fine-tuning is not viable."
+elif [ "${VRAM_MB}" -lt 46000 ]; then
+  say "VRAM ${VRAM_MB} MiB - workable, limited headroom above the ~35GB peak"
 else
-  say "VRAM OK: ${VRAM_MB} MiB"
+  say "VRAM OK: ${VRAM_MB} MiB (peak need ~35GB)"
 fi
 
 # --------------------------------------------------------- 2. system packages
@@ -42,6 +49,19 @@ sudo apt-get update -qq
 sudo apt-get install -y -qq \
   build-essential cmake git git-lfs curl jq python3-venv python3-pip ccache
 git lfs install --skip-repo || true
+
+# build-essential has twice now failed to leave a working C++ compiler on these
+# rented images. The symptom is not obvious: gcc exists, nvcc exists, and the
+# llama.cpp CUDA build dies much later with
+#   gcc: fatal error: cannot execute 'cc1plus': execvp: No such file or directory
+# because cc1plus is the C++ backend and ships with g++, not gcc. Check for the
+# binary itself rather than trusting the package install to have worked.
+if ! command -v g++ >/dev/null 2>&1 || ! ls /usr/lib/gcc/x86_64-linux-gnu/*/cc1plus >/dev/null 2>&1; then
+  warn "g++ or cc1plus missing after build-essential; reinstalling explicitly"
+  sudo apt-get install -y -qq --reinstall build-essential g++ gcc
+fi
+command -v g++ >/dev/null 2>&1 || die "no working g++ - llama.cpp cannot build with CUDA"
+say "C++ toolchain: $(g++ --version | head -1)"
 
 # ------------------------------------------------------------- 3. python env
 if [ ! -d "$VENV" ]; then
