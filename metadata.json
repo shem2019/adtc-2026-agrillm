@@ -31,7 +31,15 @@
     "runtime": "llama.cpp",
     "quantization": "GGUF Q4_K_M",
     "parameters_estimate": "1.54B",
-    "packaging": "binary_bundle"
+    "packaging": "binary_bundle",
+    "base_model": {
+      "repo": "Qwen/Qwen2.5-1.5B-Instruct",
+      "source": "huggingface",
+      "commit_sha": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "license": "apache-2.0",
+      "parameters": 1543714304,
+      "fine_tuning_method": "full-parameter supervised fine-tune"
+    }
   },
   "_runtime": {
     "model_path": "model/adtc-agri.gguf"
