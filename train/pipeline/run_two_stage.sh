@@ -44,6 +44,7 @@ SAMPLES=8
 STAGE1_DIR="train/external/_stage1"
 STAGE1_DATA="train/pipeline/data-stage1"
 STAGE2_DATA="train/pipeline/data"
+CORPUS_DIR="train/african/_clean"
 RUNS="train/pipeline/runs"
 
 while [ $# -gt 0 ]; do
@@ -104,6 +105,20 @@ fi
 if want stage2; then
   S1_CKPT="${RUNS}/fullft-stage1/final"
   [ -d "$S1_CKPT" ] || die "no stage-1 checkpoint at ${S1_CKPT}; run --stage stage1 first"
+
+  # Our own corpus may not be tokenised on this box: run_pipeline.sh does it,
+  # but a machine that only ever ran the two-stage path never has. Tokenise on
+  # demand rather than failing at torch.load with a FileNotFoundError.
+  if [ ! -f "${STAGE2_DATA}/train.pt" ]; then
+    say "STAGE 2a  tokenise our corpus (not present on this box)"
+    python3 train/pipeline/prepare_sft_data.py \
+      --corpus-dir "$CORPUS_DIR" \
+      --out-dir "$STAGE2_DATA" \
+      ${REV:+--revision $REV} 2>&1 | tail -12
+    [ -f "${STAGE2_DATA}/train.pt" ] || die "tokenisation produced no train.pt"
+  else
+    ok "our corpus already tokenised at ${STAGE2_DATA}"
+  fi
 
   say "STAGE 2  continue on our verified corpus"
   python3 train/pipeline/train_sft.py \
