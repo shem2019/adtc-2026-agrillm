@@ -156,6 +156,35 @@ def pick_system(rng: random.Random) -> tuple[str, str | None]:
     return label, (rng.choice(NEUTRAL) if prompt == "__NEUTRAL__" else prompt)
 
 
+def template_ids(tok, messages: list[dict], add_generation_prompt: bool) -> list[int]:
+    """apply_chat_template -> a plain list of token ids, across transformers versions.
+
+    Newer transformers returns a BatchEncoding from apply_chat_template(tokenize=True)
+    because return_dict defaults to True; older versions return list[int]. len() on a
+    BatchEncoding is the number of KEYS - 2 - so prefix-consistency checks silently
+    compare 2 against 2 and reject every row. That is exactly what happened here:
+    74,696 of 74,696 rows dropped as "mask misalignment" on a box whose transformers
+    was newer than the one the code was written against.
+
+    Normalise rather than pin a version: return_dict=False is not accepted by older
+    builds, so handle whatever comes back.
+    """
+    out = tok.apply_chat_template(
+        messages, tokenize=True, add_generation_prompt=add_generation_prompt
+    )
+    if hasattr(out, "input_ids"):          # BatchEncoding / dict-like
+        out = out["input_ids"]
+    if len(out) and isinstance(out[0], (list, tuple)):   # batched
+        out = out[0]
+    ids = list(out)
+    if ids and not isinstance(ids[0], int):
+        raise TypeError(
+            f"apply_chat_template gave {type(ids[0]).__name__} tokens, expected int. "
+            f"transformers API changed again; fix template_ids()."
+        )
+    return ids
+
+
 def encode(messages: list[dict], tok, max_len: int) -> tuple[list[int], list[int]] | None:
     """Render through the chat template; unmask assistant spans only.
 
@@ -166,18 +195,14 @@ def encode(messages: list[dict], tok, max_len: int) -> tuple[list[int], list[int
     We verify that prefix-consistency per row and drop the row if it ever fails,
     rather than silently training on a misaligned mask.
     """
-    full_ids = tok.apply_chat_template(messages, tokenize=True, add_generation_prompt=False)
+    full_ids = template_ids(tok, messages, add_generation_prompt=False)
     labels = [IGNORE_INDEX] * len(full_ids)
 
     for i, msg in enumerate(messages):
         if msg["role"] != "assistant":
             continue
-        prefix_ids = tok.apply_chat_template(
-            messages[:i], tokenize=True, add_generation_prompt=True
-        )
-        upto_ids = tok.apply_chat_template(
-            messages[: i + 1], tokenize=True, add_generation_prompt=False
-        )
+        prefix_ids = template_ids(tok, messages[:i], add_generation_prompt=True)
+        upto_ids = template_ids(tok, messages[: i + 1], add_generation_prompt=False)
 
         # prefix-consistency checks
         if len(prefix_ids) >= len(upto_ids) or prefix_ids != upto_ids[: len(prefix_ids)]:
@@ -237,7 +262,7 @@ def main() -> int:
 
         out = encode(msgs, tok, args.max_len)
         if out is None:
-            n_tok = len(tok.apply_chat_template(msgs, tokenize=True))
+            n_tok = len(template_ids(tok, msgs, add_generation_prompt=False))
             if n_tok > args.max_len:
                 dropped_long += 1
             else:
