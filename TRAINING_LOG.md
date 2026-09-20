@@ -78,6 +78,41 @@ Net: roughly 45 minutes of billed time lost — two thirds to a base image that
 had a GPU driver but no compiler toolchain, one third to our own dependency
 ordering.
 
+### The NaN divergence, and how it was actually found
+
+Every training attempt died the same way: loss around 2.55 with a finite
+gradient norm at step 10, then a jump to ~530-550 and `grad_norm=nan` by step
+20, identically at 5e-6, 1e-5 and 2e-5. Three separate fixes were attempted by
+changing one variable and re-running, and all three failed — two of them because
+the box was still on stale code and the fix had never executed at all.
+
+That approach was abandoned for `train/pipeline/diagnose.py`, which runs 220
+real micro-batches of real data through forward and backward under four
+numerical configurations and reports the first batch where anything goes
+non-finite. Measured result:
+
+| params | attention | compute | outcome |
+|---|---|---|---|
+| fp32 | sdpa | bf16 autocast | grad nan at micro-batch 18 |
+| fp32 | **eager** | bf16 autocast | survived 220, loss 2.49 -> 2.21 |
+| fp32 | sdpa | **pure fp32** | survived 220, loss 2.46 -> 2.22 |
+| bf16 | sdpa | bf16 | grad nan at micro-batch 18 |
+
+**Cause: SDPA attention combined with bf16 compute produces non-finite
+gradients on right-padded batches.** It needs both; changing either fixes it.
+The original configuration (bf16 params + sdpa) and the first attempted fix
+(fp32 + autocast + sdpa) reached the same failure by different routes, which is
+why the fix appeared to change nothing.
+
+Two things this also settled, both of which had been guessed at wrongly:
+transformers 4.57.6 honours `dtype=`, `torch_dtype=` and no kwarg at all — all
+three load fp32, so the deprecation warning was noise and the dtype was never
+the problem. And the corpus is clean: token ids in range, zero rows with no
+trainable tokens.
+
+Shipped configuration is `attn_implementation: eager`. It should not be changed
+back to sdpa or flash_attention_2 without re-running `diagnose.py`.
+
 ---
 
 ## Corpus as trained

@@ -81,10 +81,12 @@ class AbortOnNaN(TrainerCallback):
                 continue
             if bad:
                 print(f"\n!! {key}={val} at step {state.global_step}. Aborting.", file=sys.stderr)
-                print("   A non-finite loss means the weights are already ruined; every", file=sys.stderr)
-                print("   further step is wasted GPU time. Lower the learning rate, or", file=sys.stderr)
-                print("   check that the model was loaded in fp32 with bf16=True rather", file=sys.stderr)
-                print("   than loaded in bf16 (pure bf16 training is unstable here).", file=sys.stderr)
+                print("   Non-finite loss means the weights are already ruined; every", file=sys.stderr)
+                print("   further step is wasted GPU time.", file=sys.stderr)
+                print("   Measured cause on this stack (see diagnose.py): SDPA attention", file=sys.stderr)
+                print("   combined with bf16 compute produces non-finite grads on", file=sys.stderr)
+                print("   right-padded batches. Check attn_implementation is 'eager'.", file=sys.stderr)
+                print("   If it already is, run: python3 train/pipeline/diagnose.py", file=sys.stderr)
                 control.should_training_stop = True
         return control
 

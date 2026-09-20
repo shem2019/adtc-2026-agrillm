@@ -54,7 +54,20 @@ max_len: 1024
 # ---- runtime ---------------------------------------------------------------
 # Off: with this much spare VRAM, recomputing activations only costs wall clock.
 gradient_checkpointing: false
-attn_implementation: sdpa   # switch to flash_attention_2 only if it installs cleanly
+
+# eager, NOT sdpa. This is load-bearing, and it was measured rather than guessed
+# (train/pipeline/diagnose.py, results in diagnose_result.json):
+#
+#   fp32 params + bf16 autocast + sdpa   -> grad_norm nan at micro-batch 18
+#   fp32 params + bf16 autocast + eager  -> survived 220 batches, loss 2.49->2.21
+#   fp32 params + no autocast   + sdpa   -> survived 220 batches, loss 2.46->2.22
+#   bf16 params                 + sdpa   -> grad_norm nan at micro-batch 18
+#
+# The failure needs SDPA *and* bf16 compute together; changing either fixes it.
+# SDPA's fused kernel produces non-finite gradients on right-padded batches in
+# bf16. Do not "optimise" this back to sdpa or flash_attention_2 without
+# re-running diagnose.py - three training runs were lost to this.
+attn_implementation: eager
 dataloader_num_workers: 4
 logging_steps: 10
 save_total_limit: 10
