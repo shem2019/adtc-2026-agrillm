@@ -66,12 +66,22 @@ NEUTRAL = [
     "You are a helpful AI assistant. Answer the user's question.",
 ]
 
-# (label, prompt-or-None, weight). None means: pass no system message and let the
-# template inject its own default. After set_chat_template_default.py has run,
-# that injected default IS AgriLLM's, so this share trains the exact string the
-# grader will produce on a raw call.
+# (label, prompt, weight).
+#
+# AGRI_DEFAULT is passed EXPLICITLY here rather than by letting the template
+# inject it. That distinction matters and is easy to get wrong:
+# prepare_sft_data.py runs against the *unpatched* base tokenizer, because
+# set_chat_template_default.py does not run until GGUF export. So a row with no
+# system message would render Qwen's default at training time and AgriLLM's at
+# inference time - the exact string the grader produces would appear in training
+# zero times. Passing it explicitly is byte-identical to what the patched
+# template emits, since both branches render
+#     '<|im_start|>system\n' + <the string> + '<|im_end|>\n'
+#
+# The QWEN_DEFAULT share stays as insurance for the case where a grader renders
+# with a stock template instead of the one embedded in our GGUF.
 SYSTEM_MIX: list[tuple[str, str | None, float]] = [
-    ("agri_default_injected", None, 0.45),
+    ("agri_default", AGRI_DEFAULT, 0.45),
     ("qwen_default_explicit", QWEN_DEFAULT, 0.20),
     ("agri_paraphrase", "__PARAPHRASE__", 0.20),
     ("neutral", "__NEUTRAL__", 0.15),
