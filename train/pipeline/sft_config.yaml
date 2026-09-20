@@ -36,12 +36,16 @@ weight_decay: 0.01
 max_grad_norm: 1.0
 optim: adamw_torch_fused
 
-# Effective batch = batch_size * grad_accum = 32.
-# 6,473 train rows / 32 ~= 203 steps per epoch, ~607 steps for the full run.
-# At ~1024 max tokens on an 80GB card this sits near 33GB working set, so
-# batch_size 16 is chosen for throughput rather than to avoid OOM.
-batch_size: 16
-grad_accum: 2
+# Effective batch = batch_size * grad_accum = 32, unchanged.
+#
+# batch_size is 4, not 16, because of the vocabulary. Qwen2.5's vocab is
+# 151,936 tokens, so the logits tensor is batch x seq x 151936. At batch 16 and
+# seq 1024 that is ~10 GB in fp32 for a SINGLE tensor, and the first attempt at
+# this run hit repeated allocator OOMs with 52 MB free on an 80 GB card. For a
+# small model with a large vocabulary the vocab projection dominates memory,
+# not the weights. At batch 4 the same tensor is ~2.5 GB.
+batch_size: 4
+grad_accum: 8
 
 # Corpus p99 is ~562 tokens and the longest row is ~633, so 1024 clears
 # everything with room to spare. Raising it only wastes padding compute.

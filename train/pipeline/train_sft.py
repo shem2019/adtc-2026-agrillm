@@ -51,11 +51,42 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     Trainer,
+    TrainerCallback,
     TrainingArguments,
     set_seed,
 )
 
 IGNORE_INDEX = -100
+
+
+class AbortOnNaN(TrainerCallback):
+    """Stop the run the moment the loss or gradient norm goes non-finite.
+
+    Without this, a diverged run keeps going to the last step, writes four
+    checkpoints of NaN weights, and bills you for all of it. The first attempt
+    at this run spent 68% of its wall clock producing loss=0.0 with
+    grad_norm=nan before anyone looked at the screen.
+    """
+
+    def on_log(self, args, state, control, logs=None, **kwargs):
+        if not logs:
+            return control
+        for key in ("loss", "grad_norm", "eval_loss"):
+            val = logs.get(key)
+            if val is None:
+                continue
+            try:
+                bad = not math.isfinite(float(val))
+            except (TypeError, ValueError):
+                continue
+            if bad:
+                print(f"\n!! {key}={val} at step {state.global_step}. Aborting.", file=sys.stderr)
+                print("   A non-finite loss means the weights are already ruined; every", file=sys.stderr)
+                print("   further step is wasted GPU time. Lower the learning rate, or", file=sys.stderr)
+                print("   check that the model was loaded in fp32 with bf16=True rather", file=sys.stderr)
+                print("   than loaded in bf16 (pure bf16 training is unstable here).", file=sys.stderr)
+                control.should_training_stop = True
+        return control
 
 
 class PackedJsonlDataset(Dataset):
@@ -208,10 +239,20 @@ def main() -> int:
     if tok.pad_token_id is None:
         tok.pad_token = tok.eos_token
 
+    # Load in fp32 and let bf16=True drive autocast. This is MIXED precision:
+    # fp32 master weights, bf16 forward/backward.
+    #
+    # Loading in bf16 while also setting bf16=True is a different and much worse
+    # thing - PURE bf16 training, with no fp32 master copy. AdamW then applies
+    # updates directly to bf16 weights, and bf16 carries roughly three decimal
+    # digits of mantissa, so an update of order 1e-6 against a weight of order
+    # 1e-2 is partly or wholly lost to rounding. That is what produced
+    # grad_norm=nan by step 20 and loss=0.0 thereafter on the first attempt at
+    # this run, at the LOWEST learning rate in the sweep.
     model = AutoModelForCausalLM.from_pretrained(
         base_model,
         revision=revision,
-        torch_dtype=torch.bfloat16,
+        torch_dtype=torch.float32,
         attn_implementation=cfg.get("attn_implementation", "sdpa"),
     )
     model.config.use_cache = False
@@ -238,6 +279,7 @@ def main() -> int:
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=PadCollator(tok.pad_token_id),
+        callbacks=[AbortOnNaN()],
     )
 
     t0 = time.time()

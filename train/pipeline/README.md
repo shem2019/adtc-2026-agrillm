@@ -104,14 +104,21 @@ dose for the human judge and then quoted "100 to 150 ppm" in the automated run.
 Full FT of 1.54B params on one H100 80GB:
 
 ```
-bf16 weights                 ~3.1 GB
-bf16 gradients               ~3.1 GB
-AdamW fp32 moments           ~12.3 GB
-fp32 master weights          ~6.2 GB
-activations @1024 tok, bs16  ~4-8 GB
------------------------------------
-working set                  ~30-33 GB of 80
+fp32 master weights           ~5.8 GB
+fp32 gradients                ~5.8 GB
+AdamW states (2 x fp32)      ~11.5 GB
+logits @ bs4, seq1024, fp32   ~2.3 GB   <-- vocab is 151,936; this dominates
+activations                   ~2-6 GB
+------------------------------------
+working set                  ~28-32 GB of 80
 ```
+
+The logits line is the one worth internalising. For a 1.5B model with a 152k
+vocabulary, the vocab projection is a bigger single allocation than anything in
+the model itself: `batch x seq x 151936`. At batch 16 that tensor alone is
+~9.3 GB in fp32, which is how the first attempt at this run managed to OOM on an
+80 GB card. batch_size is 4 with grad_accum 8 for that reason, not for
+throughput.
 
 Corpus p99 is ~562 tokens, so `max_len: 1024` clears every row. ~6,500 training
 examples at effective batch 32 ≈ 204 steps/epoch, ~816 steps for 4 epochs — a
