@@ -127,7 +127,10 @@ for cand in "${LLAMA_DIR}/requirements/requirements-convert_hf_to_gguf.txt" \
 done
 
 if [ -n "$REQ_SRC" ]; then
-  REQ_FILTERED="$(mktemp)"
+  # Write the filtered copy NEXT TO the original, not in /tmp: these files chain
+  # with relative includes ("-r ./requirements-convert_legacy_llama.txt"), which
+  # resolve against the file's own directory and break if it is moved.
+  REQ_FILTERED="$(dirname "$REQ_SRC")/.filtered-no-torch.txt"
   grep -viE '^\s*(torch([=<>~!].*)?|--extra-index-url.*|--index-url.*)\s*$' \
     "$REQ_SRC" > "$REQ_FILTERED" || true
   python -m pip install --quiet -r "$REQ_FILTERED" || \
@@ -135,6 +138,19 @@ if [ -n "$REQ_SRC" ]; then
   rm -f "$REQ_FILTERED"
 else
   warn "Could not find llama.cpp convert requirements - check before export"
+fi
+
+# The converter is not used until hours later, at export. Fail now if it cannot
+# even import, rather than after a full training run.
+say "Checking convert_hf_to_gguf.py imports"
+if python "${LLAMA_DIR}/convert_hf_to_gguf.py" --help >/dev/null 2>&1; then
+  ok "converter imports cleanly"
+else
+  warn "converter failed to import; installing its usual dependencies"
+  python -m pip install --quiet gguf sentencepiece protobuf numpy || true
+  python "${LLAMA_DIR}/convert_hf_to_gguf.py" --help >/dev/null 2>&1 \
+    && ok "converter imports cleanly now" \
+    || warn "converter STILL failing - GGUF export will not work, fix before training"
 fi
 
 # Hard guard: if anything above downgraded torch, fail here rather than at the
