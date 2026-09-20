@@ -61,8 +61,22 @@ compiler backend was missing, so nvcc could not preprocess host code. Fixed with
 `apt-get install --reinstall build-essential g++ gcc`. CMake then reported
 `CUDA host compiler is GNU 11.4.0` and the build completed.
 
-Net: roughly 30 minutes of billed time lost to a base image that had a GPU
-driver but no compiler toolchain.
+**3. llama.cpp's convert requirements silently replaced CUDA torch with a CPU
+build.** This one was a pipeline bug, not the image. `setup_gpu.sh` installed
+`torch` (CUDA) early, then later ran
+`pip install -r requirements-convert_hf_to_gguf.txt`. That file pins torch *and*
+points at PyTorch's CPU wheel index, because GGUF conversion only needs to read
+tensors. The result was `torch 2.11.0+cpu` replacing `2.14.0+cu130`, with no
+error at install time. It surfaced at the start of the first training run as
+`CUDA not available`, which looked like a driver failure and was not:
+`nvidia-smi`, `/proc/driver/nvidia/version` and `libcuda.so.1` were all healthy
+throughout. Fixed by reinstalling torch, and in the pipeline by filtering torch
+and index directives out of that requirements file plus a hard post-install
+guard that fails setup rather than letting the problem surface an hour later.
+
+Net: roughly 45 minutes of billed time lost — two thirds to a base image that
+had a GPU driver but no compiler toolchain, one third to our own dependency
+ordering.
 
 ---
 

@@ -93,10 +93,44 @@ fi
 say "llama.cpp binaries"
 ls -1 "${LLAMA_DIR}/build/bin/" | grep -E '^llama-(quantize|server|cli)$' || die "llama.cpp build incomplete"
 
-say "Installing llama.cpp conversion requirements"
-python -m pip install --quiet -r "${LLAMA_DIR}/requirements/requirements-convert_hf_to_gguf.txt" || \
-  python -m pip install --quiet -r "${LLAMA_DIR}/requirements.txt" || \
-  warn "Could not install llama.cpp convert requirements automatically - check before export"
+say "Installing llama.cpp conversion requirements (excluding torch)"
+# llama.cpp's convert requirements pin torch AND point at PyTorch's CPU wheel
+# index, because conversion only needs to read tensors and a CPU build is
+# smaller. Installing them unfiltered silently replaces the CUDA torch above
+# with a +cpu build, and the failure surfaces much later as
+# "CUDA not available" at the start of training. So strip torch and any index
+# directives out, and install the rest.
+REQ_SRC=""
+for cand in "${LLAMA_DIR}/requirements/requirements-convert_hf_to_gguf.txt" \
+            "${LLAMA_DIR}/requirements.txt"; do
+  [ -f "$cand" ] && REQ_SRC="$cand" && break
+done
+
+if [ -n "$REQ_SRC" ]; then
+  REQ_FILTERED="$(mktemp)"
+  grep -viE '^\s*(torch([=<>~!].*)?|--extra-index-url.*|--index-url.*)\s*$' \
+    "$REQ_SRC" > "$REQ_FILTERED" || true
+  python -m pip install --quiet -r "$REQ_FILTERED" || \
+    warn "Some llama.cpp convert requirements failed - check before export"
+  rm -f "$REQ_FILTERED"
+else
+  warn "Could not find llama.cpp convert requirements - check before export"
+fi
+
+# Hard guard: if anything above downgraded torch, fail here rather than at the
+# start of a training run.
+say "Re-verifying torch still has CUDA after dependency installs"
+python - <<'PY'
+import sys, torch
+ok = torch.cuda.is_available()
+print(f"  torch {torch.__version__}  cuda_available={ok}")
+if not ok or torch.version.cuda is None:
+    sys.exit(
+        "torch lost CUDA support during dependency installation.\n"
+        "  Fix with:  pip uninstall -y torch && pip install torch\n"
+        "  Then re-run this script."
+    )
+PY
 
 # -------------------------------------------------- 5. base model + commit SHA
 say "Fetching base model and pinning its commit SHA"

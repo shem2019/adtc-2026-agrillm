@@ -174,7 +174,20 @@ def main() -> int:
     set_seed(cfg.get("seed", 1337))
 
     if not torch.cuda.is_available():
-        print("CUDA not available. This script is meant for the rented GPU box.", file=sys.stderr)
+        # Be specific rather than just "no CUDA". The commonest cause here is not
+        # a missing GPU at all: llama.cpp's convert requirements pin torch against
+        # PyTorch's CPU wheel index, so installing them replaces a working CUDA
+        # build with a +cpu one and this is where it surfaces.
+        print("CUDA not available to torch.", file=sys.stderr)
+        print(f"  torch {torch.__version__}, compiled for CUDA {torch.version.cuda}", file=sys.stderr)
+        if torch.version.cuda is None or "+cpu" in torch.__version__:
+            print("  This is a CPU-only torch build. Something replaced the CUDA one.",
+                  file=sys.stderr)
+            print("  Fix:  pip uninstall -y torch && pip install torch", file=sys.stderr)
+        else:
+            print("  torch has CUDA support but cannot reach a device. Check nvidia-smi",
+                  file=sys.stderr)
+            print("  and whether a driver update needs a reboot to take effect.", file=sys.stderr)
         return 1
     props = torch.cuda.get_device_properties(0)
     vram_gb = props.total_memory / 1024**3
