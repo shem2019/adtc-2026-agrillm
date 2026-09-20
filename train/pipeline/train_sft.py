@@ -145,7 +145,11 @@ def build_training_args(cfg: dict, out_dir: Path) -> TrainingArguments:
         "gradient_accumulation_steps": cfg["grad_accum"],
         "learning_rate": cfg["learning_rate"],
         "lr_scheduler_type": cfg.get("scheduler", "cosine"),
+        # warmup_ratio was dropped as unsupported by a newer transformers build,
+        # which silently removed warmup entirely. warmup_steps is the older,
+        # still-accepted spelling; build_training_args keeps whichever survives.
         "warmup_ratio": cfg.get("warmup_ratio", 0.05),
+        "warmup_steps": cfg.get("warmup_steps", 0) or None,
         "weight_decay": cfg.get("weight_decay", 0.01),
         "max_grad_norm": cfg.get("max_grad_norm", 1.0),
         "bf16": True,
@@ -166,7 +170,14 @@ def build_training_args(cfg: dict, out_dir: Path) -> TrainingArguments:
         "group_by_length": False,
     }
 
+    # If this build has no warmup_ratio, convert it to an explicit step count so
+    # the run does not silently lose its warmup altogether.
     supported = set(inspect.signature(TrainingArguments.__init__).parameters)
+    if "warmup_ratio" not in supported and "warmup_steps" in supported:
+        total = cfg.get("_total_steps")
+        if total:
+            wanted["warmup_steps"] = max(10, int(total * cfg.get("warmup_ratio", 0.05)))
+    wanted = {k: v for k, v in wanted.items() if v is not None}
     # keep only one of the eval-strategy spellings
     if "eval_strategy" in supported:
         wanted.pop("evaluation_strategy", None)
@@ -194,6 +205,14 @@ def main() -> int:
                     help="start from a local checkpoint instead of the HF base model. "
                          "This is what makes stage 2 of a two-stage run continue from "
                          "stage 1 rather than restarting from stock Qwen.")
+    ap.add_argument("--batch-size", type=int, default=None,
+                    help="override micro-batch size (memory), not effective batch")
+    ap.add_argument("--grad-accum", type=int, default=None,
+                    help="override accumulation steps; keep batch_size x grad_accum constant")
+    ap.add_argument("--gradient-checkpointing", action="store_true",
+                    help="recompute activations instead of storing them: large memory "
+                         "saving, roughly 30 percent slower. Needed for long sequences "
+                         "on a 48GB card.")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
@@ -201,12 +220,24 @@ def main() -> int:
         cfg["learning_rate"] = args.learning_rate
     if args.epochs is not None:
         cfg["epochs"] = args.epochs
+    if args.batch_size is not None:
+        cfg["batch_size"] = args.batch_size
+    if args.grad_accum is not None:
+        cfg["grad_accum"] = args.grad_accum
+    if args.gradient_checkpointing:
+        cfg["gradient_checkpointing"] = True
 
     data_dir = args.data_dir or Path(cfg["data_dir"])
     out_dir = args.out_dir or Path(cfg["out_dir"])
     if args.tag:
         out_dir = out_dir.parent / f"{out_dir.name}-{args.tag}"
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # The allocator had 2.36 GiB reserved-but-unallocated when it OOMed. With a
+    # 152k vocab the logits tensor is large and its size varies per batch with
+    # sequence length, which fragments the pool badly. Expandable segments lets
+    # the allocator grow a block rather than hunt for a contiguous one.
+    os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
 
     set_seed(cfg.get("seed", 1337))
 
@@ -229,8 +260,13 @@ def main() -> int:
     props = torch.cuda.get_device_properties(0)
     vram_gb = props.total_memory / 1024**3
     print(f"GPU: {props.name}  {vram_gb:.1f} GB VRAM  (CUDA {torch.version.cuda}, torch {torch.__version__})")
-    if vram_gb < 70:
-        print(f"! Expected an 80GB card; found {vram_gb:.1f} GB. Full FT config assumes ~33GB working set.")
+    eff = cfg["batch_size"] * cfg["grad_accum"]
+    if vram_gb < 38:
+        print(f"! {vram_gb:.1f} GB is tight for full FT. Use --batch-size 2 --grad-accum 16 "
+              f"--gradient-checkpointing (effective batch stays {eff}).")
+    elif vram_gb < 50 and cfg["batch_size"] > 2:
+        print(f"! {vram_gb:.1f} GB with batch_size {cfg['batch_size']}: long sequences may OOM "
+              f"in the vocab projection. --batch-size 2 --grad-accum {eff // 2} is safer.")
 
     manifest_path = data_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
@@ -326,9 +362,10 @@ def main() -> int:
     val_ds = PackedJsonlDataset(data_dir / "val.pt")
     print(f"data: {len(train_ds)} train / {len(val_ds)} val examples")
 
-    targs = build_training_args(cfg, out_dir)
     eff_batch = cfg["batch_size"] * cfg["grad_accum"]
     steps_per_epoch = math.ceil(len(train_ds) / eff_batch)
+    cfg["_total_steps"] = int(steps_per_epoch * cfg["epochs"])
+    targs = build_training_args(cfg, out_dir)
     print(f"effective batch {eff_batch}  ->  ~{steps_per_epoch} steps/epoch, "
           f"~{int(steps_per_epoch * cfg['epochs'])} total")
     print(f"learning rate {cfg['learning_rate']}  scheduler {cfg.get('scheduler','cosine')}  "

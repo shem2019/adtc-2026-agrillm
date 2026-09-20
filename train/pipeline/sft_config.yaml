@@ -44,8 +44,8 @@ optim: adamw_torch_fused
 # this run hit repeated allocator OOMs with 52 MB free on an 80 GB card. For a
 # small model with a large vocabulary the vocab projection dominates memory,
 # not the weights. At batch 4 the same tensor is ~2.5 GB.
-batch_size: 4
-grad_accum: 8
+batch_size: 2
+grad_accum: 16
 
 # Corpus p99 is ~562 tokens and the longest row is ~633, so 1024 clears
 # everything with room to spare. Raising it only wastes padding compute.

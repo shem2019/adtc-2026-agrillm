@@ -86,9 +86,15 @@ fi
 # ===================================================== stage1: train
 if want stage1; then
   say "STAGE 1c  train on the external corpus (from base Qwen)"
+  # Stage 1 sequences are far longer than our own corpus: p99 865 tokens against
+  # 562, max 1024. With a 151,936-token vocab the logits tensor is
+  # batch x seq x vocab, so at batch 4 x 1024 it is ~3.7 GB in bf16 plus its fp32
+  # copy in the loss - which OOMed a 48GB card at step 6. Half the micro-batch and
+  # recompute activations; effective batch is unchanged at 32.
   python3 train/pipeline/train_sft.py \
     --config train/pipeline/sft_config.yaml \
     --data-dir "$STAGE1_DATA" \
+    --batch-size 2 --grad-accum 16 --gradient-checkpointing \
     --learning-rate "$S1_LR" --epochs "$S1_EPOCHS" \
     --tag stage1 2>&1 | tee "${RUNS}-stage1.log" || die "stage 1 failed"
   ok "stage 1 done -> ${RUNS}/fullft-stage1/final"
@@ -104,6 +110,7 @@ if want stage2; then
     --config train/pipeline/sft_config.yaml \
     --data-dir "$STAGE2_DATA" \
     --init-from "$S1_CKPT" \
+    --batch-size 2 --grad-accum 16 \
     --learning-rate "$S2_LR" --epochs "$S2_EPOCHS" \
     --tag 2stage 2>&1 | tee "${RUNS}-2stage.log" || die "stage 2 failed"
   ok "stage 2 done -> ${RUNS}/fullft-2stage"
