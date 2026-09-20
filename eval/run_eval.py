@@ -165,9 +165,54 @@ def stutter(text: str, window: int = 6, times: int = 3) -> str | None:
     return None
 
 
+# A Latin epithet has a recognisable shape. Requiring it is a POSITIVE test,
+# unlike the blocklist below it, which can never enumerate all of English - the
+# previous version flagged "Every crop", "Please stop" and the Swahili "Nifanye
+# nini" as species, hitting 21.7% of all samples and quietly suppressing scores
+# across every category.
+LATIN_SUFFIX = re.compile(
+    r"(us|um|is|ii|ae|ensis|alis|icus|ica|atus|ata|atum|osa|osus|ella|oides|"
+    r"formis|fera|phora|cola|gena|ideae|aceae|inae|anum|iana|ium)$")
+
+# Contexts that actually signal "this is a scientific name": parenthesised,
+# italicised, or introduced by a naming phrase. Round 1's invented nematode
+# appeared as "Beneficial Nematodes (*Heterorhabdium sheathi*)" - parenthesised
+# AND italicised - and corpus_refinements.md's gloss rule teaches exactly that
+# shape, so this is where real binomials live.
+NAMING_CONTEXT = re.compile(
+    r"[(\[]\s*\*?_?([A-Z][a-z]{3,})\s+([a-z]{4,})\*?_?\s*[)\]]"
+    r"|\*\*?_?([A-Z][a-z]{3,})\s+([a-z]{4,})_?\*\*?"
+    r"|(?:called|known as|species|genus|scientific name|binomial)\s+\*?_?"
+    r"([A-Z][a-z]{3,})\s+([a-z]{4,})")
+
+
 def suspect_binomials(text: str) -> list[str]:
-    out = []
+    """Names that look like scientific names but are not ones we recognise.
+
+    Two ways in, either sufficient:
+      1. it sits in a naming context - parentheses, italics, or after
+         "called"/"known as"/"species"
+      2. the epithet has a Latin suffix and is long enough not to be a short
+         English or Swahili word
+
+    Then the existing English blocklist still applies. This is deliberately
+    higher precision than recall: a missed invented species costs one eval
+    point, while a false positive on ordinary prose was costing 21.7% of every
+    sample scored.
+    """
+    candidates: set[tuple[str, str]] = set()
+
+    for groups in NAMING_CONTEXT.findall(text):
+        pair = [g for g in groups if g]
+        if len(pair) >= 2:
+            candidates.add((pair[0], pair[1]))
+
     for genus, species in BINOMIAL_RE.findall(text):
+        if LATIN_SUFFIX.search(species) and len(species) >= 6:
+            candidates.add((genus, species))
+
+    out = []
+    for genus, species in candidates:
         if (genus.lower() in BINOMIAL_STOP or genus.lower() in COMMON_VERBS
                 or genus.lower() in SAFE_BARE_GENUS
                 or species in BINOMIAL_STOP or species in ENGLISH_EPITHET
