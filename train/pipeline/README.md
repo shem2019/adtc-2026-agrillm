@@ -7,16 +7,34 @@ shortest possible time: nothing here needs thinking about while it's billing.
 ## The short version
 
 ```bash
-# on the rented box, from a clean checkout
+# on the rented box, from a clean checkout - no manual edits required
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
 
-bash train/pipeline/setup_gpu.sh                 # ~10-15 min, once
+bash train/pipeline/setup_gpu.sh                 # ~15-20 min, once, idempotent
 source .venv-train/bin/activate
+bash train/pipeline/preflight.sh                 # ~30 s, must be all green
 
-# paste the SHA that setup printed into the config (it tells you the exact sed)
-bash train/pipeline/run_pipeline.sh              # ~3-4 hrs end to end
+tmux new -s train                                # long runs, survive a dropped ssh
+bash train/pipeline/run_pipeline.sh              # single stage, our corpus
+#   or
+bash train/pipeline/run_two_stage.sh             # external corpus, then ours
 ```
+
+**Nothing tracked by git needs editing on the box.** `setup_gpu.sh` installs the
+CUDA toolkit if absent, verifies the C++ toolchain, guards torch against being
+downgraded to a CPU build by llama.cpp's requirements, and writes the pinned
+base-model commit to `base_model_pin.json`, which the training scripts read.
+`sft_config.yaml` stays at `base_model_revision: null` on purpose - hard-coding
+the SHA there meant editing a tracked file on every box, which then conflicted
+with every `git pull`. A manual step you have to remember is a reproducibility
+bug, and Gate 2 §3.2 has organizers re-running this.
+
+`preflight.sh` checks the things that have each cost real GPU time: a CPU-only
+torch, a chat-template API whose return type changed, an `sdpa` attention
+setting that produces non-finite gradients, a missing GGUF converter, an
+unpinned base model, and the loss mask itself. Thirty seconds, and strictly
+cheaper than finding any of them mid-run.
 
 Then read the ranked table at the end, pick the winner, and:
 

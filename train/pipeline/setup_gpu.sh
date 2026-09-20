@@ -47,8 +47,37 @@ say "Installing system packages"
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update -qq
 sudo apt-get install -y -qq \
-  build-essential cmake git git-lfs curl jq python3-venv python3-pip ccache
+  build-essential cmake git git-lfs curl wget jq python3-venv python3-pip ccache tmux
 git lfs install --skip-repo || true
+
+# ---------------------------------------------------- CUDA toolkit (nvcc)
+# nvidia-smi reporting a CUDA version is about the DRIVER, not the toolkit, and
+# PyTorch works without the toolkit because its wheels bundle a runtime. But
+# compiling llama.cpp with GGML_CUDA needs nvcc, and on both rented images we
+# have used it was absent - the failure appears minutes later as
+# "CUDA Toolkit not found". Install it rather than warn about it.
+if ! command -v nvcc >/dev/null 2>&1 && [ ! -x /usr/local/cuda/bin/nvcc ]; then
+  say "CUDA toolkit not found - installing"
+  UBU=$(. /etc/os-release && echo "${VERSION_ID//./}")
+  KEYRING="cuda-keyring_1.1-1_all.deb"
+  wget -q "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBU}/x86_64/${KEYRING}" \
+    -O "/tmp/${KEYRING}" \
+    && sudo dpkg -i "/tmp/${KEYRING}" >/dev/null 2>&1 \
+    && sudo apt-get update -qq \
+    && sudo apt-get install -y -qq cuda-toolkit-12-6 \
+    || warn "automatic CUDA toolkit install failed - llama.cpp CUDA build may fail"
+  rm -f "/tmp/${KEYRING}"
+fi
+for d in /usr/local/cuda/bin /usr/local/cuda-12.6/bin; do
+  [ -x "$d/nvcc" ] && export PATH="$d:$PATH" && break
+done
+if command -v nvcc >/dev/null 2>&1; then
+  say "nvcc: $(nvcc --version | tail -1)"
+  grep -q 'usr/local/cuda' ~/.bashrc 2>/dev/null || \
+    echo "export PATH=$(dirname "$(command -v nvcc)"):\$PATH" >> ~/.bashrc
+else
+  warn "no nvcc on PATH - llama.cpp will fall back to a CPU-only build"
+fi
 
 # build-essential has twice now failed to leave a working C++ compiler on these
 # rented images. The symptom is not obvious: gcc exists, nvcc exists, and the
@@ -196,20 +225,23 @@ $(say "Setup complete")
   base model  : ${BASE_MODEL}
   commit SHA  : ${PINNED_SHA}
 
-Two things to do before the real run:
+The commit SHA is recorded in train/pipeline/base_model_pin.json and read from
+there by the training and data scripts. Nothing tracked by git needs editing -
+sft_config.yaml stays at 'base_model_revision: null' deliberately, so a pull
+never conflicts. The real SHA still reaches provenance via run_record.json and
+the data manifest.
 
-  1. Put that SHA into train/pipeline/sft_config.yaml as base_model_revision,
-     and into metadata.json (Gate 2 section 3.1 asks for it):
-
-       sed -i 's|^base_model_revision: null|base_model_revision: ${PINNED_SHA}|' \\
-         train/pipeline/sft_config.yaml
-
-  2. Activate the venv in every later shell:
+Activate the venv in every later shell:
 
        source ${VENV}/bin/activate
 
-Then drive everything with:
+Then run one of:
 
-       bash train/pipeline/run_pipeline.sh
+       bash train/pipeline/run_pipeline.sh       # single-stage, our corpus only
+       bash train/pipeline/run_two_stage.sh      # external corpus, then ours
+
+Long runs deserve tmux, which is installed:
+
+       tmux new -s train
 
 EOF

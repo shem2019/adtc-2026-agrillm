@@ -234,8 +234,26 @@ def main() -> int:
 
     manifest_path = data_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
-    base_model = cfg.get("base_model") or manifest.get("base_model", "Qwen/Qwen2.5-1.5B-Instruct")
-    revision = cfg.get("base_model_revision") or manifest.get("base_model_revision")
+
+    # Base-model identity resolves from three places, in order:
+    #   1. sft_config.yaml, if someone set it explicitly
+    #   2. base_model_pin.json, written by setup_gpu.sh at download time
+    #   3. the data manifest, written by prepare_sft_data.py
+    #
+    # The pin file is why sft_config.yaml can stay `base_model_revision: null`
+    # in git forever. Hard-coding the SHA there meant editing a tracked file on
+    # every box, which then conflicted with every subsequent git pull - a
+    # manual step that has to be remembered is a reproducibility bug.
+    pin_path = Path("train/pipeline/base_model_pin.json")
+    pin = json.loads(pin_path.read_text(encoding="utf-8")) if pin_path.exists() else {}
+
+    base_model = (cfg.get("base_model") or pin.get("base_model")
+                  or manifest.get("base_model") or "Qwen/Qwen2.5-1.5B-Instruct")
+    revision = (cfg.get("base_model_revision") or pin.get("revision")
+                or manifest.get("base_model_revision"))
+    if revision and not cfg.get("base_model_revision"):
+        src = "base_model_pin.json" if pin.get("revision") else "data manifest"
+        print(f"base-model commit resolved from {src}")
 
     # --init-from turns this into a continuation run. The tokenizer still comes
     # from the pinned base (a checkpoint dir saved with save_only_model has no
