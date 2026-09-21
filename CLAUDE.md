@@ -7,6 +7,19 @@ Challenge 2026, Agriculture track. **Gate 2 (semifinal) deadline: 22 September
 Read `REPORT.md` for the full story, `TRAINING_LOG.md` for the run-by-run record,
 `GATE2_CHECKLIST.md` for what is done and what is open.
 
+**This file is a distillation.** The complete working record — every decision,
+every failed attempt, every correction — is the Cowork session transcript. To
+bring it into the repo:
+
+```bash
+bash tools/export_session.sh
+```
+
+That writes `.context/session-<id>.md` (gitignored). Read it when you need the
+reasoning behind something this file only states as a conclusion. The raw model
+answers used to pick the shipped checkpoint are in `~/Hackathons/review-*.md`,
+outside the repo.
+
 ---
 
 ## How Shem wants things written
