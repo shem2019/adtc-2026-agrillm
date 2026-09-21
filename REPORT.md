@@ -431,7 +431,58 @@ deliberately trained to defer to the product label and the local agrovet.
 
 ## 12. Reproducibility
 
-The model can be rebuilt from a bare GPU machine in one command:
+### Running and measuring the shipped model (CPU only)
+
+From an x86-64 Ubuntu 24.04 machine with nothing installed:
+
+```bash
+# 1. Toolchain. Ubuntu 24.04: the profiler needs Python 3.11 or newer, and
+#    22.04 ships 3.10. build-essential and cmake are needed twice: to build
+#    llama.cpp, and because llama-cpp-python compiles during the profiler install.
+sudo apt-get update
+sudo apt-get install -y git curl build-essential cmake \
+                        python3 python3-pip python3-venv
+
+# 2. llama.cpp, pinned to b10175, the release the official profiler image
+#    builds. The profiler calls llama-bench, so it must be on PATH.
+git clone --depth 1 --branch b10175 https://github.com/ggml-org/llama.cpp ~/llama.cpp
+cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF
+cmake --build ~/llama.cpp/build --config Release -j"$(nproc)" \
+      --target llama-bench llama-cli llama-server
+export PATH="$HOME/llama.cpp/build/bin:$PATH"
+llama-bench --help | head -3
+
+# 3. This repo and the weights.
+git clone https://github.com/shem2019/adtc-2026-agrillm.git
+cd adtc-2026-agrillm
+bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
+sha256sum model/adtc-agri-Q4_K_M.gguf
+# expect ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f
+
+# 4. The profiler, pinned to the commit whose schema metadata.json follows.
+#    Compiles llama-cpp-python from source; allow 10-20 minutes on 4 cores.
+python3 -m venv .venv && source .venv/bin/activate
+python3 -m pip install --upgrade pip wheel
+python3 -m pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git@7f117dde3d8f2a0b3d3f05948a7bfd4bf693e909"
+
+# 5. Measure: smoke test first (about a minute), then the full run with accuracy.
+adtc-profiler run --submission . --mode participant --skip-accuracy --output smoke.json
+adtc-profiler run --submission . --mode participant --output submission.json
+cat submission.json
+```
+
+On a host with more than four cores, prefix step 5 with `taskset -c 0-3` so the
+throughput figure stays comparable to the reference laptop; child processes
+inherit the affinity, so `llama-bench` is covered.
+
+`download_model.sh` is the official template file with only the filename and URL
+changed, as Gate 2 Section 3.2 requires. The URL is a plain, readable string
+pinned to Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`.
+
+### Retraining the model (GPU)
+
+The model can be rebuilt from a bare GPU machine with at least 40 GB of VRAM in
+one command:
 
 ```bash
 # Ubuntu GPU box, NVIDIA driver already present (nvidia-smi works)
@@ -446,51 +497,6 @@ missing, verifies the compiler, keeps the GPU build of PyTorch in place against 
 dependency that would replace it with a CPU-only one, and writes the base model
 commit to a file the training scripts read. A pre-flight check then verifies
 twelve conditions in about thirty seconds before any GPU time is spent.
-
-To measure the shipped model, starting from a machine with nothing installed.
-This was run end to end on a 4 vCPU / 16 GB Ubuntu 24.04 instance, which matches
-the reference laptop on cores:
-
-```bash
-# 1. Toolchain. Ubuntu 24.04 is required: the profiler needs Python >= 3.11
-#    and 22.04 ships 3.10. build-essential and cmake are needed because
-#    llama-cpp-python compiles from source during the profiler install.
-sudo apt-get update
-sudo apt-get install -y git curl build-essential cmake \
-                        python3 python3-pip python3-venv
-
-# 2. llama.cpp. The profiler shells out to llama-bench, so it must be on PATH
-#    before the profiler runs, or the run fails with no benchmark binary.
-git clone --depth 1 https://github.com/ggml-org/llama.cpp ~/llama.cpp
-cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF
-cmake --build ~/llama.cpp/build --config Release -j"$(nproc)"
-export PATH="$HOME/llama.cpp/build/bin:$PATH"
-llama-bench --help | head -3
-
-# 3. The submission and the weights.
-git clone https://github.com/shem2019/adtc-2026-agrillm.git
-cd adtc-2026-agrillm
-bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
-sha256sum model/adtc-agri-Q4_K_M.gguf
-# expect ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f
-
-# 4. The profiler. Compiles from source; allow 10-20 minutes on 4 cores.
-python3 -m venv .venv && source .venv/bin/activate
-python3 -m pip install --upgrade pip wheel
-python3 -m pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git"
-
-# 5. Measure.
-adtc-profiler run --submission . --mode participant --output submission.json
-cat submission.json
-```
-
-On a host with more than four cores, prefix step 5 with `taskset -c 0-3` so the
-throughput figure stays comparable to the reference laptop; child processes
-inherit the affinity, so `llama-bench` is covered.
-
-`download_model.sh` is the official template file with only the filename and URL
-changed, as Gate 2 Section 3.2 requires. The URL is a plain, readable string
-pinned to Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`.
 
 ## 13. Attribution
 

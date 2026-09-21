@@ -16,6 +16,15 @@
     "load_bearing": true,
     "description": "An offline crop and livestock advisory model for smallholder farmers and government extension officers across Africa, where advisory coverage averages one officer per several thousand farmers and field visits happen without connectivity. The model runs entirely on a refurbished 8 GB laptop carried into the field, answering questions on pest and disease identification, planting calendars, input rates, and livestock health without any network round-trip. The pairing is load-bearing: the prompt set, training corpus, and latency target are all derived from how an officer actually uses a laptop during a farm visit."
   },
+  "provenance": {
+    "base_model_source": "huggingface:Qwen/Qwen2.5-1.5B-Instruct",
+    "base_model_commit_sha": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "fine_tuning_method": "full_fine_tune",
+    "training_datasets": [
+      "https://github.com/shem2019/adtc-2026-agrillm/tree/main/train/african/_clean",
+      "https://huggingface.co/datasets/AI71ai/agrillm-train-146k"
+    ]
+  },
   "test_prompts": [
     {
       "prompt_id": "tp_001",
@@ -32,36 +41,6 @@
     "quantization": "GGUF Q4_K_M",
     "parameters_estimate": "1.54B",
     "packaging": "binary_bundle"
-  },
-  "provenance": {
-    "base_model_source": "huggingface:Qwen/Qwen2.5-1.5B-Instruct",
-    "base_model_commit_sha": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
-    "base_model_license": "apache-2.0",
-    "base_model_parameters": 1543714304,
-    "fine_tuning_method": "full_fine_tune",
-    "fine_tuning_notes": "Two-stage full-parameter supervised fine-tune — every weight updated. Gate 2 Section 3.1 asks LoRA and QLoRA teams for adapter files; for a full fine-tune the equivalent proof-of-training artefacts in provenance/ are the training scripts, configs, per-step loss logs, dataset manifests with checksums, and a layer-by-layer weight-delta report against the base model showing 99.9986% of parameters changed.",
-    "training_datasets": [
-      {
-        "name": "AgriLLM African Extension Corpus (purpose-built for this submission)",
-        "source": "https://github.com/shem2019/adtc-2026-agrillm/tree/main/train/african/_clean",
-        "size": "6703 rows across 25 JSONL files",
-        "license": "CC-BY-4.0",
-        "role": "stage 2 — safety behaviour, register, African context, identity",
-        "sha256_manifest": "provenance/dataset/corpus_manifest.json"
-      },
-      {
-        "name": "AI71ai/agrillm-train-146k",
-        "source": "https://huggingface.co/datasets/AI71ai/agrillm-train-146k",
-        "size": "143875 rows as published; 74697 rows retained after filtering",
-        "license": "apache-2.0",
-        "role": "stage 1 — broad agricultural domain coverage",
-        "sha256_source_file": "c6f7755a951eda368453ddd6e702ea5eba9eb66238be312bc24a7f30d5d43abc",
-        "attribution": "Third-party dataset published on the Hugging Face Hub by AI71ai, used under its Apache-2.0 licence. Filtered before use; the filter and its counts are recorded in provenance/dataset/stage1_manifest.json."
-      }
-    ],
-    "quantized_model_sha256": "ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f",
-    "training_hardware": "1x NVIDIA RTX A6000 48GB (stage 1 and stage 2); earlier single-stage sweep on 1x NVIDIA H100 PCIe 80GB",
-    "reproduce": "bash train/pipeline/reproduce.sh --all"
   },
   "_runtime": {
     "model_path": "model/adtc-agri-Q4_K_M.gguf"

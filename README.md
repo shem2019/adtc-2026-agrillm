@@ -112,33 +112,36 @@ with nothing installed. Ubuntu 24.04 — the profiler needs Python 3.11 or newer
 and 22.04 ships 3.10.
 
 ```bash
-# toolchain. build-essential and cmake are needed twice over: to build
-# llama.cpp, and because llama-cpp-python compiles during the profiler install
+# 1. Toolchain. Ubuntu 24.04: the profiler needs Python 3.11 or newer, and
+#    22.04 ships 3.10. build-essential and cmake are needed twice: to build
+#    llama.cpp, and because llama-cpp-python compiles during the profiler install.
 sudo apt-get update
 sudo apt-get install -y git curl build-essential cmake \
                         python3 python3-pip python3-venv
 
-# llama.cpp. The profiler shells out to llama-bench, so it has to be on PATH
-# before the profiler runs.
-git clone --depth 1 https://github.com/ggml-org/llama.cpp ~/llama.cpp
+# 2. llama.cpp, pinned to b10175, the release the official profiler image
+#    builds. The profiler calls llama-bench, so it must be on PATH.
+git clone --depth 1 --branch b10175 https://github.com/ggml-org/llama.cpp ~/llama.cpp
 cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF
-cmake --build ~/llama.cpp/build --config Release -j"$(nproc)"
+cmake --build ~/llama.cpp/build --config Release -j"$(nproc)" \
+      --target llama-bench llama-cli llama-server
 export PATH="$HOME/llama.cpp/build/bin:$PATH"
 llama-bench --help | head -3
 
-# this repo and the weights
+# 3. This repo and the weights.
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
-bash download_model.sh
+bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
 sha256sum model/adtc-agri-Q4_K_M.gguf
 # expect ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f
 
-# the profiler. Compiles from source; allow 10-20 minutes on 4 cores.
+# 4. The profiler, pinned to the commit whose schema metadata.json follows.
+#    Compiles llama-cpp-python from source; allow 10-20 minutes on 4 cores.
 python3 -m venv .venv && source .venv/bin/activate
 python3 -m pip install --upgrade pip wheel
-python3 -m pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git"
+python3 -m pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git@7f117dde3d8f2a0b3d3f05948a7bfd4bf693e909"
 
-# smoke test first, then the full run
+# 5. Measure: smoke test first (about a minute), then the full run with accuracy.
 adtc-profiler run --submission . --mode participant --skip-accuracy --output smoke.json
 adtc-profiler run --submission . --mode participant --output submission.json
 cat submission.json
