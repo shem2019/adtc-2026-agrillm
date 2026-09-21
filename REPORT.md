@@ -35,7 +35,7 @@ African-language bonus was not claimed, for the reason in Section 11.
 
 | Constraint | Effect on the design |
 |---|---|
-| **Hardware**: 4 CPU cores, 8 GB RAM, integrated graphics only | CPU-only inference through llama.cpp; a 1.5B model at Q4_K_M, peaking at 1.65 GB against a 7 GB budget where overrunning disqualifies |
+| **Hardware**: 4 CPU cores, 8 GB RAM, integrated graphics only | CPU-only inference through llama.cpp; a 1.5B model at Q4_K_M, peaking at 1.07 GB in the official profiler image against a 7 GB budget where overrunning disqualifies |
 | **Connectivity**: none in the field | Everything runs locally; after the one-time download, no network call is made |
 | **Speed**: throughput scoring caps at 15 tokens/sec | Choose the largest model that clears the cap, not the fastest (Section 3) |
 | **Data**: no verified, African, safety-checked agricultural Q&A set existed | A 6,703-row corpus was written and checked for this submission (Section 4) |
@@ -63,7 +63,7 @@ training data, seven training runs, and an evaluation method Round 1 lacked.
 
 Design constraints were unchanged: 4 cores and no dedicated graphics, a 7 GB
 memory budget where overrunning disqualifies, and no network at inference. Peak
-memory measured 1.65 GB.
+memory measured 1.07 GB in the official profiler image.
 
 ![From base model to submission: every training run scored on the same harness, with the hardware and data used at each stage](assets/journey.svg)
 
@@ -392,26 +392,30 @@ species that does not exist. The slower build was shipped, and that fabricated
 name became a permanent test prompt. A quantisation sweep was run for the
 single-stage models but not re-run on the two-stage model before the deadline.
 
-Measured on 21 September 2026 with `adtc-profiler` (commit `7f117dd`) in
-participant mode, full run including accuracy, using the commands in Section 12:
-AMD EPYC Genoa, 4 vCPU, Ubuntu 24.04, CPU only, llama.cpp
-`b10175`, repo commit `a6cf825`. The profiler output is in
+Measured on 21 September 2026 on a clean 4 vCPU AMD EPYC Genoa instance,
+Ubuntu 24.04, CPU only, in two ways. The first is the official `adtc-profiler`
+Docker image built from the profiler repository at commit `7f117dd` and run as
+its README shows, with a 7.5 GB memory limit and 4 CPUs; this is the build the
+organisers evaluate with. The second is the same profiler with llama.cpp `b10175`
+compiled on the host, which lets it use the CPU's AVX-512 instructions. Both are
+full participant-mode runs including accuracy. Raw output is in
 [`provenance/benchmark/`](provenance/benchmark/).
 
-| Metric | Gate 2 measurement |
-|---|---:|
-| Generation speed | 54.04 tokens/sec (smoke run: 51.27) |
-| Peak memory | 1.65 GB of a 7 GB budget |
-| Time to first token | 2,874 ms on a 512-token prompt |
-| ARC-Easy, 50 samples | 0.68 `acc_norm` |
-| Thermal | No throttling |
+| Metric | Official profiler image | Host-compiled llama.cpp |
+|---|---:|---:|
+| Generation speed | **15.72 tokens/sec** | 54.04 tokens/sec |
+| Peak memory | **1.07 GB** of a 7 GB budget | 1.65 GB |
+| Time to first token, 512-token prompt | 22,365 ms | 2,874 ms |
+| ARC-Easy, 50 samples | 0.68 `acc_norm` | 0.68 `acc_norm` |
+| Thermal | No throttling | No throttling |
 
-On the leaderboard formula this gives `S_perf` 100, since throughput is capped at
-15 tokens/sec, and `S_eff` 76.4. Round 1 measured 10.44 tokens/sec on a
-different 4 vCPU EPYC host; generation speed depends heavily on the host CPU,
-while peak memory was 1.65 GB on both. The model also runs on a real budget
-laptop — Intel i5-6300U, 2 cores, 8 GB, below the reference spec. The 78.9%
-quoted throughout refers to the internal test described in Section 7.
+On the leaderboard formula the official image gives `S_perf` 100, since
+throughput is capped at 15 tokens/sec, and `S_eff` 84.7. The official image
+builds llama.cpp with AVX, AVX2 and FMA disabled so that one binary runs on any
+machine; that accounts for the difference in speed. Round 1 measured 10.44
+tokens/sec on a different host. The model also runs on a real budget laptop —
+Intel i5-6300U, 2 cores, 8 GB, below the reference spec. The 78.9% quoted
+throughout refers to the internal test described in Section 7.
 
 ## 11. Limitations
 
@@ -448,7 +452,7 @@ deliberately trained to defer to the product label and the local agrovet.
 
 From an x86-64 Ubuntu 24.04 machine with nothing installed. These commands were
 run on a clean 4 vCPU AMD EPYC Genoa instance on 21 September 2026; the results
-are in Section 10.
+are in Section 10, alongside a run in the official profiler Docker image.
 
 ```bash
 # 1. Toolchain. Ubuntu 24.04: the profiler needs Python 3.11 or newer, and
@@ -493,6 +497,29 @@ inherit the affinity, so `llama-bench` is covered.
 `download_model.sh` is the official template file with only the filename and URL
 changed, as Gate 2 Section 3.2 requires. The URL is a plain, readable string
 pinned to Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`.
+
+### Measuring in the official profiler image
+
+The headline figures in Section 10 come from the profiler's own Docker image, run
+as its README shows. From the same machine, after step 3 above:
+
+```bash
+sudo apt-get install -y docker.io      # skip if Docker is already installed
+git clone https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git ~/adtc-profiler
+git -C ~/adtc-profiler checkout 7f117dde3d8f2a0b3d3f05948a7bfd4bf693e909
+sudo docker build -t adtc-profiler:7f117dd ~/adtc-profiler
+mkdir -p ~/docker-results
+sudo docker run --rm --memory=7.5g --cpus=4 \
+  -e GIT_CONFIG_COUNT=1 -e GIT_CONFIG_KEY_0=safe.directory -e GIT_CONFIG_VALUE_0='*' \
+  -v "$HOME/adtc-2026-agrillm:/submission:ro" \
+  -v "$HOME/docker-results:/artifacts" \
+  adtc-profiler:7f117dd run --submission /submission --mode participant \
+  --output /artifacts/submission.json
+cat ~/docker-results/submission.json
+```
+
+The three `GIT_CONFIG` variables let git inside the container read the mounted
+repository, so the report records its commit rather than a placeholder.
 
 ### Retraining the model (GPU)
 

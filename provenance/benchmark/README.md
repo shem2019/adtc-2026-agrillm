@@ -1,9 +1,13 @@
 # Benchmark run, 21 September 2026
 
-Output of the commands in REPORT.md Section 12, run on a clean x86-64 instance.
+Two runs on the same clean 4 vCPU x86-64 instance: one in the official profiler
+Docker image, one with llama.cpp compiled on the host using the commands in
+REPORT.md Section 12.
 
 | File | What it is |
 |---|---|
+| `profiler-official-image.json` | full participant-mode run inside the official profiler Docker image (commit `7f117dd`), `--memory=7.5g --cpus=4` |
+| `machine-official-image.txt` | machine and image details for that run |
 | `profiler-full.json` | `adtc-profiler run --mode participant`, full run with accuracy |
 | `profiler-smoke.json` | the same with `--skip-accuracy`, run first |
 | `machine.txt` | OS, CPU, core count, memory, repo commit |

@@ -86,22 +86,23 @@ deliberately.
 
 ## Measured performance
 
-Measured on 21 September 2026 with `adtc-profiler` (commit `7f117dd`) in
-participant mode, full run including accuracy, using the exact commands under
-"Local testing". AMD EPYC Genoa, 4 vCPU, Ubuntu 24.04, CPU only, llama.cpp
-`b10175`, repo commit `a6cf825`.
+Measured on 21 September 2026 on a clean 4 vCPU AMD EPYC Genoa instance, CPU
+only, with the official `adtc-profiler` Docker image (commit `7f117dd`) run as
+its README shows: 7.5 GB memory limit, 4 CPUs, full participant-mode run
+including accuracy.
 
 | Metric | Value | Score |
 |---|---:|---:|
-| Tokens/sec | 54.04 | `S_perf` 100 (capped at 15 tok/s) |
-| Peak RSS | 1.65 GB of 7 GB | `S_eff` 76.4 |
-| Time to first token | 2,874 ms on a 512-token prompt | |
+| Tokens/sec | 15.72 | `S_perf` 100 (capped at 15 tok/s) |
+| Peak RSS | 1.07 GB of 7 GB | `S_eff` 84.7 |
+| Time to first token | 22,365 ms on a 512-token prompt | |
 | ARC-Easy, 50 samples | 0.68 `acc_norm` | |
 | Thermal | no throttle | penalty 0 |
 
-The smoke run before it measured 51.27 tokens/sec and the same peak memory.
-Round 1 measured 10.44 tokens/sec on a different 4 vCPU EPYC host; generation
-speed depends heavily on the host CPU.
+The official image disables AVX, AVX2 and FMA for portability. With llama.cpp
+compiled on the same host, using the commands under "Local testing", the same
+model measured 54.04 tokens/sec and 1.65 GB. Raw output for both runs is in
+`provenance/benchmark/`.
 
 Also verified on an Intel i5-6300U — an actual $200 refurbished laptop, below the
 reference spec.

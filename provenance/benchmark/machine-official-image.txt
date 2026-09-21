@@ -1,0 +1,12 @@
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+x86_64
+4
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       661Mi       6.0Gi       1.1Mi       9.3Gi        14Gi
+Swap:             0B          0B          0B
+CPU(s):                                  4
+Model name:                              AMD EPYC-Genoa Processor
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm rep_good nopl cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a mi
+1d4a78b92bd365614fdd73e49836eb6d6b50ea1b
+sha256:20f4a0353355df2decbf841a2fe3821afae3879e685360a31c57528937822f1a
