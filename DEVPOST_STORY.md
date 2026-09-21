@@ -4,102 +4,108 @@ My parents recently retired from teaching and started farming.
 
 They have land and they have time, but they don't have the things agricultural
 advice usually assumes. There's no reliable internet at the farm. There's no
-budget for a monthly AI subscription on a teacher's pension. There's no machine
-capable of running a large model, and no extension officer arriving to answer
-the question that matters this week — what is eating the maize, and what can be
-done about it before the weekend.
+budget for a monthly AI subscription. There's no machine capable of running a
+large model, and no extension officer arriving to answer the question that
+matters this week: what is eating the maize, and what can be done about it before
+the weekend.
 
-When I read the ADTC brief, it described their situation almost exactly: the
-8 GB laptop already sitting on the desk, no cloud, no discrete GPU, no API fees.
-I entered because the competition and the problem I actually wanted to solve
+That is the situation of millions of smallholders across Africa, where one
+extension officer serves thousands of farmers. When I read the ADTC brief, it
+described it almost exactly: the 8 GB laptop already on the desk, no cloud, no
+discrete GPU, no API fees. The competition and the problem I wanted to solve
 turned out to be the same thing.
 
 ## What it does
 
 AgriLLM is a 940 MB language model that answers crop, pest, livestock and soil
 questions **completely offline**. It runs on a second-hand laptop with the
-network switched off, and it's fine-tuned on East African agronomy — the pests,
-seasons and crops that matter in Kenya, not generic advice written for somewhere
-else.
+network switched off, and it's trained on African agriculture: fall armyworm,
+Striga, cassava mosaic and brown streak, aflatoxin in stored maize, Newcastle
+disease in village poultry, and referrals to the agrodealer, agrovet or county
+extension officer a smallholder can actually reach.
 
-The clearest example of what the fine-tuning bought: shown a field description
-of ragged holes, windowpane scarring and moist sawdust-like frass in the maize
-whorl, the base model says "maize weevil." AgriLLM says **fall armyworm
-(*Spodoptera frugiperda*)** — the pest that has dominated Kenyan maize since
-2017, and the correct answer.
+What the fine-tuning changed, on the same prompts, base model vs AgriLLM:
 
-It also learned when *not* to answer. Ask it for a pesticide dose and it tells
-you to read the product label and confirm with your local extension office,
-because registrations differ by country and a wrong rate can poison someone.
+- **Asked how to treat the "Letticea leaf miner"**, a pest I invented, the base
+  model wrote a confident three-part control programme for it. AgriLLM says it
+  doesn't know that pest and asks what the farmer is actually seeing.
+- **Asked for an Imidacloprid dose**, the base model sometimes gave a
+  concentration outright. AgriLLM refuses in 8 of 8 samples and points to the
+  product label and the agrodealer, because registrations differ by country and
+  a wrong rate can poison someone.
+- **Asked for a Paraquat dose against armyworm**, it usually explains that
+  Paraquat is a herbicide that would kill the maize and not touch the
+  caterpillars. The base model just refused, leaving the farmer none the wiser.
+
+On a 24-prompt behavioural test the base model scores **22.7%** and fails all
+5 safety-critical prompts. AgriLLM scores **78.9%** and fails 1.
 
 ## How I built it
 
-**Model selection by measurement, not reputation.** I benchmarked seven
-candidates from 0.5B to 4B, on both my Mac and an x86 VM matching the audit
-environment. Qwen3-4B was the most capable model I tested and I rejected it: at
-5.97 tok/s it forfeits two-thirds of the throughput score to buy accuracy within
-noise of a 1.5B. Qwen2.5-1.5B won because it was top-two under every throughput
-assumption I could construct.
+**Model selection by measurement.** I benchmarked seven candidates from 0.5B to
+4B. Throughput scoring caps at 15 tokens/sec, so the target was the largest model
+that still clears it. Qwen2.5-1.5B-Instruct won; Qwen3-4B was more capable and
+too slow.
 
-**A corpus assembled from three openly-licensed datasets** (Apache-2.0, CC0,
-MIT) plus 10,564 East African entries I generated and validated — 18,248 unique
-examples in total. One promising dataset was excluded because it declared no
-licence.
+**A corpus written for the job.** Round 1 trained on 18,248 mostly third-party
+rows, and a judge called the result unfit for field use: it invented doses and
+species. For Gate 2 I rebuilt the data from scratch: **6,703 verified rows** of
+African extension advice across 25 files, each checked by a script that rejects
+stated pesticide rates, vague safety advice and templated duplicates.
 
-**LoRA fine-tuning with MLX**, then fusing, converting to GGUF and quantising to
-Q4_K_M. Final measurements on a 4 vCPU x86 VM: **10.4 tok/s, 1.65 GB peak RSS of
-a 7 GB budget**, reproduced across two independent runs.
+**Two-stage full fine-tune.** Stage 1 trains on a third-party dataset,
+AI71ai/agrillm-train-146k, for breadth. I read it before using it and kept 52%:
+74,697 of 143,875 rows. The rest was off-topic, stated doses, or leftover prompt
+scaffolding that would have taught the model to emit its own markup. Stage 2
+trains on my verified corpus for correctness, safety and African context. Every
+weight in the model changed, on a single rented 48 GB GPU in about five hours.
+
+**Measured with the official profiler.** In the ADTC profiler's own Docker image
+on 4 vCPUs: **15.7 tokens/sec, 1.07 GB peak memory** of a 7 GB budget, no
+thermal throttling.
 
 ## Challenges I ran into
 
-**The loss curve lied to me.** My first fine-tune had a beautiful training
-curve — loss fell from 2.15 to 0.51 in 100 iterations — and produced the worst
-model I built. It answered one clause of a four-part question in 19 words, and
-started reciting my training data's refusal template as if it were advice.
-Fitting that fast means memorising format, not learning content. I built a
-comparison harness that runs my actual submitted prompts through base and
-fine-tuned models side by side, and made every decision after that on
-measurement rather than loss.
+**The best-scoring model was the wrong one, twice.** In Round 1 an IQ4_XS
+quantisation scored 4.4 points higher and named fall armyworm "the Letticea leaf
+miner", a species that doesn't exist. I shipped the slower model. In Gate 2 a
+checkpoint scored 81.7%, the highest of the project, with a final training loss
+of 0.021: it had memorised the corpus, and the organisers add hidden prompts to
+catch exactly that. I shipped the 78.9% checkpoint with loss 0.594.
 
-**The best-scoring model was the wrong one.** An IQ4_XS quantisation scored 4.4
-points higher than what I shipped — 31% faster, 40% less memory. Asked to
-identify fall armyworm, it answered "the Letticea leaf miner," a species that
-doesn't exist. 4.25-bit quantisation had destroyed the domain knowledge while
-improving every telemetry metric. I shipped the slower model.
+**My own test was over-scoring.** Reading the raw answers showed it scored 13 to
+18 points higher than a human reading the same text, because confident nonsense
+still matches string patterns. It also had three bugs that penalised good
+models, such as a banned-phrase rule firing on "never use salt water". After
+that, no checkpoint was chosen on score alone. The final pick was the only one
+that named aflatoxin, identified nitrogen deficiency and got both cassava
+diseases right.
 
-**Reading data beats reading logs.** Five separate bugs were invisible in summary
-statistics. The worst: a minimum-length filter deleted 11,095 rows of
-quantitative agronomy because answers like `5.87 kg/ha` are only ten characters
-— while *keeping* that dataset's "cannot be determined" refusals, which are
-longer. It inverted my corpus so that 27% of training examples were refusals. I
-only found it by printing two actual training examples and reading them.
+**Training kept producing NaN.** Three runs were lost before I isolated the cause:
+PyTorch's fast attention path with bf16 produced non-finite gradients on padded
+batches. Switching to eager attention fixed it, confirmed with a diagnostic
+script rather than guessed.
 
-**Swahili defeated me, and I'm reporting it honestly.** There's a bonus for
-African-language support and I tried hard to earn it. I generated 2,500 pairs,
-measured that they contained only 121 distinct answers recycled 20 times each,
-and threw them away. I regenerated 880 verified pairs and trained on them. The
-model produced degenerate repetition — the same noun phrase repeating until the
-token budget ran out. I confirmed it at two training durations. 880 rows at 4%
-of a corpus teaches a 1.5B model vocabulary without grammar. **I declined the
-language bonus rather than claim something that would fail when a judge tested
-it.** The use-case claim is separate and it stands: the subject matter, corpus,
-pests, crops and target user are African throughout.
+**Swahili defeated me, and I say so.** I generated and verified Swahili training
+pairs; the model degenerated into repeating phrases at two training durations.
+I declined the African-language bonus rather than claim something a judge would
+disprove in one prompt.
 
 ## What I learned
 
-That most of this work is measurement, not modelling. Every time I trusted an
-assumption — about the scoring formula, about my hardware, about my own data — it
-was wrong in a way that only showed up when I measured it. And that knowing when
-to reject your own better-scoring result is part of the engineering, not separate
-from it.
+Most of this work is measurement, not modelling. Every time I trusted an
+assumption, about the scoring formula, my hardware or my own test harness, it
+was wrong in a way that only showed up when I measured it. And rejecting your
+own better-scoring result is part of the engineering.
 
 ## What's next
 
-Fact-checking the generated corpus against KALRO and FAO material — the model
-still confabulates crop variety names, and that's inherited from training data I
-didn't verify. Swahili done properly, with enough data to teach grammar rather
-than vocabulary. And offline retrieval over a farmer's own records, so the advice
-knows what was planted in that field last season.
+The shipped model still advises keeping pesticide-contaminated clothing on after
+a spill; it must come off, and that is the first corpus fix. Diagnosis is the
+weakest category at 59.4%. After that: Swahili with enough data to teach grammar
+rather than vocabulary, fact-checking against KALRO and FAO material, and
+offline retrieval over a farmer's own records, so the advice knows what was
+planted in that field last season.
 
 My parents' farm is where this gets tested next.
 
