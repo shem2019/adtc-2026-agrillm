@@ -1,6 +1,6 @@
 # AgriLLM
 
-**An offline agricultural advisor for East African smallholders.**
+**An offline agricultural advisor for African smallholders.**
 940 MB, runs on a second-hand laptop, no network, no GPU, no API fees.
 
 Africa Deep Tech Challenge 2026 — Agriculture track.

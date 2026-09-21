@@ -1,4 +1,4 @@
-# AgriLLM — an offline agricultural advisor for East African smallholders
+# AgriLLM — an offline agricultural advisor for African smallholders
 
 **Team ID:** agrillm · **Domain:** agriculture · **Track:** ADTC 2026 Laptop LLM
 **Model:** `AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M` · 940 MB · 1.54 B parameters
@@ -10,7 +10,7 @@
 
 ## 1. Problem
 
-Agricultural extension in East Africa is limited by people, not knowledge. One
+Agricultural extension across Africa is limited by people, not knowledge. One
 officer serves thousands of farmers, and the advice a farmer most needs — what is
 eating my maize, what do I do this week, can I afford it — is needed in the
 field, where there is no reliable network and no budget for cloud AI.
@@ -60,11 +60,8 @@ clears 15 tokens/second*, not the fastest available.
 
 Qwen2.5-1.5B was top-two under every speed assumption tested and, unlike Qwen3,
 carries no hidden reasoning preamble that wastes tokens in a speed-scored
-contest.
-
-Worth stating for the anti-gaming rule in Gate 2 Section 3.5: the 0.5B model is twice as
-fast on a third of the memory and would score better on both Efficiency and
-Performance. It is also materially worse at the job, so it was not shipped.
+contest. The 0.5B model is twice as fast on a third of the memory, and was
+rejected on answer quality.
 
 ---
 
@@ -73,13 +70,13 @@ Performance. It is also materially worse at the job, so it was not shipped.
 This consumed most of the project and is where Round 1 went wrong. Three attempts
 failed before one worked, and the failures produced the working version.
 
-**Round 1 — 10,564 generated rows.** No open corpus of East African agronomy met
+**Round 1 — 10,564 generated rows.** No open corpus of African agronomy met
 a usable quality bar; what exists is either non-African in context or has no
 declared licence. One dataset described itself as East Africa Agronomy QA and was
 the closest match available, but declared no licence, so it was excluded rather
 than risk shipping weights derived from unaccounted material. Generation filled
-the gap, validated for language, agricultural content and duplication. That last
-check earned its place: a Swahili batch of 2,500 rows passed every other test —
+the gap, validated for language, agricultural content and duplication. The
+duplication check mattered: a Swahili batch of 2,500 rows passed every other test —
 2,500 unique questions — while containing only **121 distinct answers, each
 recycled about 20 times**. Checking questions alone missed it entirely, because
 the generator varied the question and reused the answer.
@@ -90,9 +87,8 @@ unique answers. Reading the file showed what the checks could not. The rows were
 roughly **700 underlying answers wrapped in serial `Ref N:` prefixes** —
 string-unique, nearly identical in substance. The generator contained 174
 templating markers and made zero calls to a language model; it was permuting
-fixed sentences. Its audit folder scored every single row `{"verdict":"KEEP"}`,
-and an audit that never rejects anything is not an audit. The same answer
-appeared for Kitui, Machakos, Makueni and Kajiado with nothing else changed. All
+fixed sentences. Its audit folder scored every single row `{"verdict":"KEEP"}`.
+The same answer appeared for Kitui, Machakos, Makueni and Kajiado with nothing else changed. All
 22,300 rows were discarded.
 
 **Attempt 3 — 6,938 rows, of which 4,897 survived.** A mechanical gate
@@ -102,8 +98,7 @@ rather than the data being trusted. It cut 2,041 rows: stated pesticide doses
 the person spraying, and rates belong on the product label), stated veterinary
 doses, vague safety advice like "wear appropriate protective equipment" that
 tells a farmer nothing, place-swap padding surviving from attempt 2, and
-near-duplicate answers. Losing those rows was the right outcome, but 4,897 was
-too thin to move the model.
+near-duplicate answers. The remaining 4,897 rows were too few to move the model.
 
 **Attempt 4 — line by line.** The decision was to stop generating in bulk: write
 one file at a time, fact-check claims while writing them, re-run the gate after
@@ -151,7 +146,7 @@ three times as new marker shapes appeared while reading the output.
 
 This dataset is treated as breadth, never as truth. It is largely
 machine-generated and unverified; its job is to supply agricultural vocabulary
-and coverage, after which stage 2 restores correctness, safety and East African
+and coverage, after which stage 2 restores correctness, safety and African
 context from the verified corpus.
 
 ---
@@ -164,8 +159,7 @@ was scored first on the same test, which Round 1 never did:
 > **Unmodified Qwen2.5-1.5B-Instruct, quantised identically: 22.7%, with all five
 > safety-critical prompts failed.**
 
-Without that number there is no way to tell a fine-tune that worked from a base
-model that was already competent.
+This is the comparison every later result is measured against.
 
 | Run | Data | Epochs | Learning rate | Final loss | Best checkpoint | Score | Safety fails |
 |---|---|---:|---:|---:|---|---:|---:|
@@ -251,9 +245,9 @@ the roots stay healthy when root rot is precisely what defines the disease, and
 identifies nitrogen deficiency in only 1 of 8 attempts where the shipped model
 manages 3 of 8. Organisers also add hidden prompts specifically to catch
 memorisation. And the measured noise in the scoring is about **±6 points** — in
-the same run, two byte-for-byte identical checkpoints scored 75.1% and 81.7%.
-Trading a memorised model for 2.8 points inside a ±6 margin is not worth it. It
-is published as `candidates/2stage-x-final-Q4_K_M.gguf` for inspection.
+the same run, two byte-for-byte identical checkpoints scored 75.1% and 81.7%, so
+the 2.8-point gain sits inside the margin. It is published as
+`candidates/2stage-x-final-Q4_K_M.gguf` for inspection.
 
 **Shipped: `fullft-2stage/checkpoint-1224`.**
 
@@ -346,9 +340,7 @@ such pest; the name was invented for this test.
 
 Qwen's chat format silently inserts *"You are Qwen, created by Alibaba Cloud"*
 when no instruction is supplied — which is exactly how an automated grader calls
-it. That default was replaced with an AgriLLM one that **names the Qwen base
-honestly**, since Gate 2 Section 3.1 requires disclosing it and a model claiming to be
-entirely homegrown would contradict this section.
+it. That default was replaced with an AgriLLM one that names the Qwen base.
 
 ## 10. Quantisation and benchmarks
 
@@ -381,9 +373,9 @@ score.
 
 **Swahili does not work.** Asked *"Mahindi yangu yana wadudu wanaokula majani.
 Nifanye nini?"* the model returns repeating nonsense. Swahili was attempted in
-Round 1 with 880 verified pairs at about 4% of the corpus, produced the same
-failure, and the African Language bonus was declined rather than claim a
-capability that would fail a live test. This is an English model.
+Round 1 with 880 verified pairs at about 4% of the corpus and produced the same
+failure, so the African Language bonus was not claimed. This is an English
+model.
 
 **It still invents things in a minority of answers.** Caught by reading: a
 non-existent species name, a fabricated fertiliser technique, and in one rejected
@@ -421,9 +413,7 @@ manager, prevents a dependency conflict that silently replaces the GPU build of
 PyTorch with a CPU-only one, and pins the base model commit to a file the
 training scripts read — so the pin never has to be hand-edited. A pre-flight
 check then verifies twelve conditions in about thirty seconds before any GPU time
-is spent. Each guard exists because its absence cost money on a rented machine
-during this project; the worst was a `git pull` blocked by a locally-edited
-config, which once left a full training run executing stale code.
+is spent.
 
 To run the shipped model:
 

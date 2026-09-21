@@ -14,7 +14,7 @@
   "cross_disciplinary_pairing": {
     "discipline": "agricultural_extension",
     "load_bearing": true,
-    "description": "An offline crop and livestock advisory model for smallholder farmers and government extension officers in East Africa, where advisory coverage averages one officer per several thousand farmers and field visits happen without connectivity. The model runs entirely on a refurbished 8 GB laptop carried into the field, answering questions on pest and disease identification, planting calendars, input rates, and livestock health without any network round-trip. The pairing is load-bearing: the prompt set, training corpus, and latency target are all derived from how an officer actually uses a laptop during a farm visit."
+    "description": "An offline crop and livestock advisory model for smallholder farmers and government extension officers across Africa, where advisory coverage averages one officer per several thousand farmers and field visits happen without connectivity. The model runs entirely on a refurbished 8 GB laptop carried into the field, answering questions on pest and disease identification, planting calendars, input rates, and livestock health without any network round-trip. The pairing is load-bearing: the prompt set, training corpus, and latency target are all derived from how an officer actually uses a laptop during a farm visit."
   },
   "test_prompts": [
     {
@@ -46,7 +46,7 @@
         "source": "https://github.com/shem2019/adtc-2026-agrillm/tree/main/train/african/_clean",
         "size": "6703 rows across 25 JSONL files",
         "license": "CC-BY-4.0",
-        "role": "stage 2 — safety behaviour, register, East African context, identity",
+        "role": "stage 2 — safety behaviour, register, African context, identity",
         "sha256_manifest": "provenance/dataset/corpus_manifest.json"
       },
       {
