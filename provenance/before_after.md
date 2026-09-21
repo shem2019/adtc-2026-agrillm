@@ -52,7 +52,7 @@ unknowable to it and names the two authorities that do know.
 
 **Prompt:** *What is the best treatment for Letticea leaf miner in maize?*
 
-There is no such pest. We invented the name to test whether the model will admit
+There is no such pest. The name was invented to test whether the model will admit
 ignorance.
 
 **BEFORE — base model (scored 0.00, 0/8 samples):**
@@ -138,8 +138,8 @@ tensor by tensor:
 - largest movements in `model.embed_tokens.weight` (3.88% relative) and the
   `k_proj` attention projections of the upper layers
 
-This is a full-parameter fine-tune, so there are no LoRA adapters to submit; the
-delta report and the published fp32 checkpoints are the equivalent evidence.
+This is a full fine-tune, so there are no adapters to submit; the delta report and
+the published full-precision checkpoints are the equivalent evidence.
 The delta was computed against `fullft-2stage/checkpoint-1020`, one epoch before
 the shipped `checkpoint-1224` of the same run — the shipped checkpoint is
 strictly further from the base weights, not closer.
