@@ -1,124 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 660" width="1040" height="660" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-<rect width="1040" height="660" fill="#ffffff"/>
-<text x="86" y="36" font-size="20" font-weight="700" fill="#1f2328">From base model to submission</text>
-<text x="86" y="59" font-size="13" fill="#57606a">Eight models, each scored on the same 24-prompt harness at 8 samples per prompt. Left to right is the order they were trained.</text>
-<rect x="107.0" y="84.0" width="106.8" height="402.0" rx="8" fill="#eaeef2"/>
-<text x="160.4" y="106.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Base model</text>
-<text x="160.4" y="126.0" font-size="11.5" fill="#57606a" text-anchor="middle">unmodified</text>
-<text x="160.4" y="145.0" font-size="11" fill="#57606a" text-anchor="middle" font-style="italic">no training</text>
-<rect x="219.8" y="84.0" width="445.0" height="402.0" rx="8" fill="#f3eefc"/>
-<text x="442.2" y="106.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Verified corpus only</text>
-<text x="442.2" y="126.0" font-size="11.5" fill="#57606a" text-anchor="middle">+ 6,703 verified rows</text>
-<text x="442.2" y="145.0" font-size="11" fill="#57606a" text-anchor="middle" font-style="italic">NVIDIA H100 PCIe 80 GB</text>
-<rect x="670.8" y="84.0" width="332.2" height="402.0" rx="8" fill="#eaf2fb"/>
-<text x="836.9" y="106.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Two-stage</text>
-<text x="836.9" y="126.0" font-size="11.5" fill="#57606a" text-anchor="middle">+ 74,697 filtered rows, then + 6,703 verified</text>
-<text x="836.9" y="145.0" font-size="11" fill="#57606a" text-anchor="middle" font-style="italic">NVIDIA RTX A6000 48 GB</text>
-<text transform="translate(28,302) rotate(-90)" font-size="12" font-weight="600" fill="#57606a" text-anchor="middle">Score on the 24-prompt harness</text>
-<line x1="104" y1="428.0" x2="1006" y2="428.0" stroke="#d8dee4" stroke-width="1.6"/>
-<text x="92" y="432.0" font-size="11" fill="#57606a" text-anchor="end">0%</text>
-<line x1="104" y1="365.0" x2="1006" y2="365.0" stroke="#d8dee4" stroke-width="1"/>
-<text x="92" y="369.0" font-size="11" fill="#57606a" text-anchor="end">25%</text>
-<line x1="104" y1="302.0" x2="1006" y2="302.0" stroke="#d8dee4" stroke-width="1"/>
-<text x="92" y="306.0" font-size="11" fill="#57606a" text-anchor="end">50%</text>
-<line x1="104" y1="239.0" x2="1006" y2="239.0" stroke="#d8dee4" stroke-width="1"/>
-<text x="92" y="243.0" font-size="11" fill="#57606a" text-anchor="end">75%</text>
-<line x1="104" y1="176.0" x2="1006" y2="176.0" stroke="#d8dee4" stroke-width="1"/>
-<text x="92" y="180.0" font-size="11" fill="#57606a" text-anchor="end">100%</text>
-<path d="M160.4,370.8 L273.1,297.8 L385.9,278.6 L498.6,276.0 L611.4,266.9 L724.1,226.0 L836.9,229.3 L949.6,222.1" fill="none" stroke="#afb8c1" stroke-width="2" stroke-dasharray="4 4"/>
-<circle cx="160.4" cy="370.8" r="7" fill="#6e7781"/>
-<text x="160.4" y="350.8" font-size="15.5" font-weight="700" fill="#6e7781" text-anchor="middle">22.7%</text>
-<text x="160.4" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">no training</text>
-<circle cx="273.1" cy="297.8" r="7" fill="#8250df"/>
-<text x="273.1" y="277.8" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">51.7%</text>
-<text x="273.1" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">2 epochs</text>
-<text x="273.1" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 5e-6</text>
-<circle cx="385.9" cy="278.6" r="7" fill="#8250df"/>
-<text x="385.9" y="258.6" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">59.3%</text>
-<text x="385.9" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">4 epochs</text>
-<text x="385.9" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 5e-6</text>
-<circle cx="498.6" cy="276.0" r="7" fill="#8250df"/>
-<text x="498.6" y="256.0" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">60.3%</text>
-<text x="498.6" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">4 epochs</text>
-<text x="498.6" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 1e-5</text>
-<circle cx="611.4" cy="266.9" r="7" fill="#8250df"/>
-<text x="611.4" y="246.9" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">63.9%</text>
-<text x="611.4" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">4 epochs</text>
-<text x="611.4" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 2e-5</text>
-<circle cx="724.1" cy="226.0" r="7" fill="#0969da"/>
-<text x="724.1" y="206.0" font-size="15.5" font-weight="700" fill="#0969da" text-anchor="middle">80.2%</text>
-<text x="724.1" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">5 epochs</text>
-<text x="724.1" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 2e-5</text>
-<circle cx="836.9" cy="229.3" r="19" fill="none" stroke="#1a7f37" stroke-width="2" opacity="0.5"/>
-<circle cx="836.9" cy="229.3" r="11" fill="#1a7f37"/>
-<text x="836.9" y="209.3" font-size="15.5" font-weight="700" fill="#1a7f37" text-anchor="middle">78.9%</text>
-<text x="836.9" y="189.3" font-size="12" font-weight="700" fill="#1a7f37" text-anchor="middle">SHIPPED</text>
-<text x="836.9" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">6 epochs</text>
-<text x="836.9" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 2e-5</text>
-<circle cx="949.6" cy="222.1" r="11" fill="#cf222e"/>
-<text x="949.6" y="202.1" font-size="15.5" font-weight="700" fill="#cf222e" text-anchor="middle">81.7%</text>
-<text x="949.6" y="182.1" font-size="12" font-weight="700" fill="#cf222e" text-anchor="middle">REJECTED</text>
-<text x="949.6" y="452.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">10 epochs</text>
-<text x="949.6" y="468.0" font-size="11" fill="#57606a" text-anchor="middle">lr 1e-5</text>
-<text x="86" y="502.0" font-size="14" font-weight="700" fill="#1f2328">SAFETY-CRITICAL PROMPTS FAILED (out of 5)</text>
-<text x="86" y="520.0" font-size="11.5" fill="#57606a">Five prompts where a wrong answer could injure someone. A filled red square is a failure. This is not a performance number.</text>
-<rect x="117.4" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="135.4" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="153.4" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="171.4" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="189.4" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<text x="160.4" y="570.0" font-size="11.5" font-weight="600" fill="#cf222e" text-anchor="middle">5 of 5 failed</text>
-<rect x="230.1" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="248.1" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="266.1" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="284.1" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="302.1" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="273.1" y="570.0" font-size="11.5" font-weight="600" fill="#cf222e" text-anchor="middle">3 of 5 failed</text>
-<rect x="342.9" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="360.9" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="378.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="396.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="414.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="385.9" y="570.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">2 of 5 failed</text>
-<rect x="455.6" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="473.6" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="491.6" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="509.6" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="527.6" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="498.6" y="570.0" font-size="11.5" font-weight="600" fill="#cf222e" text-anchor="middle">3 of 5 failed</text>
-<rect x="568.4" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="586.4" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="604.4" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="622.4" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="640.4" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="611.4" y="570.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
-<rect x="681.1" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="699.1" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="717.1" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="735.1" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="753.1" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="724.1" y="570.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
-<rect x="793.9" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="811.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="829.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="847.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="865.9" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="836.9" y="570.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
-<rect x="906.6" y="540.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
-<rect x="924.6" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="942.6" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="960.6" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<rect x="978.6" y="540.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
-<text x="949.6" y="570.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
-<circle cx="92" cy="610" r="6" fill="#6e7781"/>
-<text x="105" y="614" font-size="12" fill="#1f2328">Base model</text>
-<circle cx="185.0" cy="610" r="6" fill="#8250df"/>
-<text x="198.0" y="614" font-size="12" fill="#1f2328">Verified corpus only</text>
-<circle cx="347.0" cy="610" r="6" fill="#0969da"/>
-<text x="360.0" y="614" font-size="12" fill="#1f2328">Two-stage</text>
-<circle cx="433.1" cy="610" r="6" fill="#1a7f37"/>
-<text x="446.1" y="614" font-size="12" fill="#1f2328">Shipped</text>
-<circle cx="505.40000000000003" cy="610" r="6" fill="#cf222e"/>
-<text x="518.4000000000001" y="614" font-size="12" fill="#1f2328">Rejected — memorised</text>
-<text x="86" y="642" font-size="11.5" fill="#57606a">Round 1 shipped a LoRA adapter trained with MLX on Apple Silicon. It was never run against this harness, so it has no point here. Sampling noise is about ±6 points.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 748" width="1260" height="748" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1260" height="748" fill="#ffffff"/>
+<text x="86" y="38" font-size="22" font-weight="700" fill="#1f2328">Safety and accuracy: Qwen2.5-1.5B against AgriLLM</text>
+<text x="86" y="64" font-size="15" font-weight="600" fill="#57606a">From base model to submission</text>
+<text x="86" y="85" font-size="12.5" fill="#57606a">(Eight models, each scored on the same 24-prompt harness at 8 samples per prompt. Left to right is the order they were trained.)</text>
+<rect x="107.0" y="112.0" width="111.8" height="444.0" rx="8" fill="#eaeef2"/>
+<text x="162.9" y="136.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Base model</text>
+<text x="162.9" y="156.0" font-size="11.5" fill="#57606a" text-anchor="middle">unmodified</text>
+<text x="162.9" y="175.0" font-size="11" fill="#57606a" text-anchor="middle" font-style="italic">no training</text>
+<rect x="224.8" y="112.0" width="465.0" height="444.0" rx="8" fill="#f3eefc"/>
+<text x="457.2" y="136.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Verified corpus only</text>
+<text x="457.2" y="156.0" font-size="11.5" fill="#57606a" text-anchor="middle">+ 6,703 verified rows</text>
+<text x="457.2" y="175.0" font-size="11" fill="#57606a" text-anchor="middle" font-style="italic">NVIDIA H100 PCIe 80 GB</text>
+<rect x="695.8" y="112.0" width="347.2" height="444.0" rx="8" fill="#eaf2fb"/>
+<text x="869.4" y="136.0" font-size="13.5" font-weight="700" fill="#1f2328" text-anchor="middle">Two-stage</text>
+<text x="869.4" y="156.0" font-size="11.5" fill="#57606a" text-anchor="middle">+ 74,697 filtered rows, then + 6,703 verified</text>
+<text x="869.4" y="175.0" font-size="11" fill="#57606a" text-anchor="middle" font-style="italic">NVIDIA RTX A6000 48 GB</text>
+<text transform="translate(28,330) rotate(-90)" font-size="12" font-weight="600" fill="#57606a" text-anchor="middle">Score on the 24-prompt harness</text>
+<line x1="104" y1="452.0" x2="1046" y2="452.0" stroke="#d8dee4" stroke-width="1.6"/>
+<text x="92" y="456.0" font-size="11" fill="#57606a" text-anchor="end">0%</text>
+<line x1="104" y1="391.0" x2="1046" y2="391.0" stroke="#d8dee4" stroke-width="1"/>
+<text x="92" y="395.0" font-size="11" fill="#57606a" text-anchor="end">25%</text>
+<line x1="104" y1="330.0" x2="1046" y2="330.0" stroke="#d8dee4" stroke-width="1"/>
+<text x="92" y="334.0" font-size="11" fill="#57606a" text-anchor="end">50%</text>
+<line x1="104" y1="269.0" x2="1046" y2="269.0" stroke="#d8dee4" stroke-width="1"/>
+<text x="92" y="273.0" font-size="11" fill="#57606a" text-anchor="end">75%</text>
+<line x1="104" y1="208.0" x2="1046" y2="208.0" stroke="#d8dee4" stroke-width="1"/>
+<text x="92" y="212.0" font-size="11" fill="#57606a" text-anchor="end">100%</text>
+<line x1="162.9" y1="396.7" x2="1016.0" y2="396.7" stroke="#6e7781" stroke-width="1.2" stroke-dasharray="3 4" opacity="0.7"/>
+<line x1="1016.0" y1="392.7" x2="1016.0" y2="276.6" stroke="#1a7f37" stroke-width="2.5"/>
+<polygon points="1016.0,267.6 1010.0,279.6 1022.0,279.6" fill="#1a7f37"/>
+<text transform="translate(1003.0,328.1) rotate(-90)" font-size="17" font-weight="700" fill="#1a7f37" text-anchor="middle">+56.2 points</text>
+<path d="M162.9,396.7 L280.6,325.9 L398.4,307.4 L516.1,304.8 L633.9,296.0 L751.6,256.4 L869.4,259.6 L987.1,252.6" fill="none" stroke="#afb8c1" stroke-width="2" stroke-dasharray="4 4"/>
+<circle cx="162.9" cy="396.7" r="7" fill="#6e7781"/>
+<text x="162.9" y="376.7" font-size="15.5" font-weight="700" fill="#6e7781" text-anchor="middle">22.7%</text>
+<text x="162.9" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">no training</text>
+<rect x="119.9" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="137.9" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="155.9" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="173.9" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="191.9" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<text x="162.9" y="544.0" font-size="11.5" font-weight="600" fill="#cf222e" text-anchor="middle">5 of 5 failed</text>
+<circle cx="280.6" cy="325.9" r="7" fill="#8250df"/>
+<text x="280.6" y="305.9" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">51.7%</text>
+<text x="280.6" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">2 epochs</text>
+<text x="280.6" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 5e-6</text>
+<rect x="237.6" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="255.6" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="273.6" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="291.6" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="309.6" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="280.6" y="544.0" font-size="11.5" font-weight="600" fill="#cf222e" text-anchor="middle">3 of 5 failed</text>
+<circle cx="398.4" cy="307.4" r="7" fill="#8250df"/>
+<text x="398.4" y="287.4" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">59.3%</text>
+<text x="398.4" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">4 epochs</text>
+<text x="398.4" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 5e-6</text>
+<rect x="355.4" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="373.4" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="391.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="409.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="427.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="398.4" y="544.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">2 of 5 failed</text>
+<circle cx="516.1" cy="304.8" r="7" fill="#8250df"/>
+<text x="516.1" y="284.8" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">60.3%</text>
+<text x="516.1" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">4 epochs</text>
+<text x="516.1" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 1e-5</text>
+<rect x="473.1" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="491.1" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="509.1" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="527.1" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="545.1" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="516.1" y="544.0" font-size="11.5" font-weight="600" fill="#cf222e" text-anchor="middle">3 of 5 failed</text>
+<circle cx="633.9" cy="296.0" r="7" fill="#8250df"/>
+<text x="633.9" y="276.0" font-size="15.5" font-weight="700" fill="#8250df" text-anchor="middle">63.9%</text>
+<text x="633.9" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">4 epochs</text>
+<text x="633.9" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 2e-5</text>
+<rect x="590.9" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="608.9" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="626.9" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="644.9" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="662.9" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="633.9" y="544.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
+<circle cx="751.6" cy="256.4" r="7" fill="#0969da"/>
+<text x="751.6" y="236.4" font-size="15.5" font-weight="700" fill="#0969da" text-anchor="middle">80.2%</text>
+<text x="751.6" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">5 epochs</text>
+<text x="751.6" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 2e-5</text>
+<rect x="708.6" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="726.6" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="744.6" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="762.6" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="780.6" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="751.6" y="544.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
+<circle cx="869.4" cy="259.6" r="19" fill="none" stroke="#1a7f37" stroke-width="2" opacity="0.5"/>
+<circle cx="869.4" cy="259.6" r="11" fill="#1a7f37"/>
+<text x="869.4" y="239.6" font-size="15.5" font-weight="700" fill="#1a7f37" text-anchor="middle">78.9%</text>
+<text x="869.4" y="219.6" font-size="12" font-weight="700" fill="#1a7f37" text-anchor="middle">SHIPPED</text>
+<text x="869.4" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">6 epochs</text>
+<text x="869.4" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 2e-5</text>
+<rect x="826.4" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="844.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="862.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="880.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="898.4" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="869.4" y="544.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
+<circle cx="987.1" cy="252.6" r="11" fill="#cf222e"/>
+<text x="987.1" y="232.6" font-size="15.5" font-weight="700" fill="#cf222e" text-anchor="middle">81.7%</text>
+<text x="987.1" y="212.6" font-size="12" font-weight="700" fill="#cf222e" text-anchor="middle">REJECTED</text>
+<text x="987.1" y="478.0" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">10 epochs</text>
+<text x="987.1" y="494.0" font-size="11" fill="#57606a" text-anchor="middle">lr 1e-5</text>
+<rect x="944.1" y="512.0" width="14" height="14" rx="2.5" fill="#cf222e" stroke="#cf222e"/>
+<rect x="962.1" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="980.1" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="998.1" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<rect x="1016.1" y="512.0" width="14" height="14" rx="2.5" fill="#d6f0dc" stroke="#aedbba"/>
+<text x="987.1" y="544.0" font-size="11.5" font-weight="600" fill="#57606a" text-anchor="middle">1 of 5 failed</text>
+<text x="86" y="582.0" font-size="13" font-weight="700" fill="#1f2328">SAFETY-CRITICAL PROMPTS FAILED (out of 5)</text>
+<text x="86" y="600.0" font-size="11.5" fill="#57606a">The squares above each model. Five prompts where a wrong answer could injure someone; a filled red square is a failure. This is a safety count, not a performance score.</text>
+<text x="1068.0" y="124.0" font-size="12" font-weight="700" fill="#1f2328">MODELS</text>
+<rect x="1068.0" y="135.0" width="17" height="13" rx="2.5" fill="#6e7781"/>
+<text x="1093.0" y="146.0" font-size="12" fill="#1f2328">Base model</text>
+<rect x="1068.0" y="165.0" width="17" height="13" rx="2.5" fill="#8250df"/>
+<text x="1093.0" y="176.0" font-size="12" fill="#1f2328">Verified</text>
+<text x="1093.0" y="191.0" font-size="12" fill="#1f2328">corpus only</text>
+<rect x="1068.0" y="210.0" width="17" height="13" rx="2.5" fill="#0969da"/>
+<text x="1093.0" y="221.0" font-size="12" fill="#1f2328">Two-stage</text>
+<rect x="1068.0" y="240.0" width="17" height="13" rx="2.5" fill="#1a7f37"/>
+<text x="1093.0" y="251.0" font-size="12" fill="#1f2328">Shipped</text>
+<rect x="1068.0" y="270.0" width="17" height="13" rx="2.5" fill="#cf222e"/>
+<text x="1093.0" y="281.0" font-size="12" fill="#1f2328">Rejected</text>
+<text x="1093.0" y="296.0" font-size="12" fill="#1f2328">— memorised</text>
+<rect x="86.0" y="624.0" width="1116.0" height="62" rx="7" fill="#f2f8f4" stroke="#aedbba"/>
+<text x="100.0" y="647.0" font-size="12.5" font-weight="700" fill="#1a7f37">Why 78.9% was shipped over 80.2% and 81.7%</text>
+<text x="100.0" y="665.0" font-size="11.5" fill="#1f2328">Both gaps sit inside the ±6-point sampling noise, so neither is a real difference. The 81.7% model finished at a training loss of 0.021 against 0.594 — it had memorised</text>
+<text x="100.0" y="681.0" font-size="11.5" fill="#1f2328">the corpus rather than learned from it. Reading the raw answers separated them: only this checkpoint names aflatoxin, identifies nitrogen deficiency and gets both cassava diseases right.</text>
+<text x="86" y="732" font-size="11" fill="#57606a">Round 1 shipped a LoRA adapter trained with MLX on Apple Silicon; it was never run against this harness, so it has no point here.</text>
 </svg>

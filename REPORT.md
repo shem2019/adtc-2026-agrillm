@@ -56,8 +56,9 @@ memory measured 1.65 GB.
 
 ![From base model to submission: every training run scored on the same harness, with the hardware and data used at each stage](assets/journey.svg)
 
-Section 6 has the same information as a table, Section 8 explains the rejected
-model.
+Section 6 has the same information as a table. Section 8 covers why the
+highest-scoring model was rejected, and Section 9 compares the base model and
+the shipped model category by category.
 
 ## 3. Model selection
 
