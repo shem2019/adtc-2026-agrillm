@@ -90,7 +90,3 @@ train/_gen_potato_rows.py
 # large. The filter script and its manifest are tracked; the output is not.
 train/external/
 train/pipeline/data-stage1/
-
-# Session transcripts exported by tools/export_session.sh — working material,
-# and this repo is public.
-.context/
