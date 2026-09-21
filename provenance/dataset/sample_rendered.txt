@@ -1,0 +1,327 @@
+==============================================================================
+source: multiturn.jsonl  tokens: 213
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Does mulching my vegetables actually make a difference, or is it just extra work for nothing?<|im_end|>
+<|im_start|>assistant
+It genuinely makes a difference, mainly by slowing evaporation from the soil surface and suppressing weeds that would otherwise compete for the same water. What are you using, or thinking of using, as mulch?<|im_end|>
+<|im_start|>user
+Just dry grass and maize stalks I already have lying around.<|im_end|>
+<|im_start|>assistant
+That's a good, free option — dry grass and old stalks work well as mulch, and using material you already have means it costs nothing beyond the labour of spreading it. Lay it a few centimetres thick around the base of the plants, leaving a small gap right at the stem to avoid trapping moisture against it and encouraging rot. Over a season it also breaks down and adds a bit of organic matter to the soil, so it pays back in more than just water savings.<|im_end|>
+
+--- tokens loss is computed on ---
+It genuinely makes a difference, mainly by slowing evaporation from the soil surface and suppressing weeds that would otherwise compete for the same water. What are you using, or thinking of using, as mulch?<|im_end|>
+That's a good, free option — dry grass and old stalks work well as mulch, and using material you already have means it costs nothing beyond the labour of spreading it. Lay it a few centimetres thick around the base of the plants, leaving a small gap right at the stem to avoid trapping moisture against it and encouraging rot. Over a season it also breaks down and adds a bit of organic matter to the soil, so it pays back in more than just water savings.<|im_end|>
+
+
+==============================================================================
+source: maize-agronomy.jsonl  tokens: 139
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+What is the primary visual indicator that top-dressing fertilizer is urgently needed in young maize in Murang'a?<|im_end|>
+<|im_start|>assistant
+The classic symptom of nitrogen deficiency is a distinct, pale yellowing that begins at the tip of the oldest lower leaves and progresses down the central midrib in an inverted V-shape. The leaf edges often remain green initially while the tip dries up and turns brown. If this pattern appears across the field when the crop is knee-high, the farmer must apply a nitrogen top-dressing like CAN immediately to prevent permanent stunting.<|im_end|>
+
+--- tokens loss is computed on ---
+The classic symptom of nitrogen deficiency is a distinct, pale yellowing that begins at the tip of the oldest lower leaves and progresses down the central midrib in an inverted V-shape. The leaf edges often remain green initially while the tip dries up and turns brown. If this pattern appears across the field when the crop is knee-high, the farmer must apply a nitrogen top-dressing like CAN immediately to prevent permanent stunting.<|im_end|>
+
+
+==============================================================================
+source: climate-seasons.jsonl  tokens: 102
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Does agroforestry's microclimate effect help livestock as well as crops?<|im_end|>
+<|im_start|>assistant
+Yes. Shade from trees in grazing areas, or near livestock housing in what is sometimes called a silvopasture arrangement, reduces heat load on animals in essentially the same way that tree shade reduces heat stress on nearby crops, through lower temperature and reduced direct sun exposure.<|im_end|>
+
+--- tokens loss is computed on ---
+Yes. Shade from trees in grazing areas, or near livestock housing in what is sometimes called a silvopasture arrangement, reduces heat load on animals in essentially the same way that tree shade reduces heat stress on nearby crops, through lower temperature and reduced direct sun exposure.<|im_end|>
+
+
+==============================================================================
+source: cassava-sweetpotato.jsonl  tokens: 77
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Why is broadcasting groundnut seed a terrible agronomic practice?<|im_end|>
+<|im_start|>assistant
+Broadcasting prevents mechanical weeding, leads to uneven plant populations, and lowers yields. Always plant in distinct rows spaced 30 to 45 centimeters apart.<|im_end|>
+
+--- tokens loss is computed on ---
+Broadcasting prevents mechanical weeding, leads to uneven plant populations, and lowers yields. Always plant in distinct rows spaced 30 to 45 centimeters apart.<|im_end|>
+
+
+==============================================================================
+source: water-conservation.jsonl  tokens: 97
+--- full rendered sequence ---
+<|im_start|>system
+You are a helpful AI assistant. Answer the user's question.<|im_end|>
+<|im_start|>user
+In Machakos, Kenya, what are the standard dimensions for digging Zai pits in dryland crop fields of Machakos, Kenya?<|im_end|>
+<|im_start|>assistant
+Standard Zai pits are dug 20 to 30 cm deep and 30 to 40 cm wide, spaced 60 to 80 cm apart across crop fields.<|im_end|>
+
+--- tokens loss is computed on ---
+Standard Zai pits are dug 20 to 30 cm deep and 30 to 40 cm wide, spaced 60 to 80 cm apart across crop fields.<|im_end|>
+
+
+==============================================================================
+source: maize-pests.jsonl  tokens: 205
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM, a farming advisor for African smallholder farmers that runs offline, built on Qwen2.5-1.5B. Answer plainly and practically. Do not give pesticide or veterinary dose figures; send the person to the label and their agrovet or vet. Admit uncertainty rather than guessing.<|im_end|>
+<|im_start|>user
+Why is applying raw, uncomposted cow dung directly to young maize plants a terrible strategy for Striga control?<|im_end|>
+<|im_start|>assistant
+While well-rotted manure suppresses Striga, raw, wet cow dung contains incredibly high levels of caustic ammonia and uric acid. When applied directly against the base of young maize seedlings, these raw chemicals severely burn the tender stem tissues and shallow roots. Furthermore, as microbes rapidly break down the fresh dung, they steal all available nitrogen from the soil, starving the maize plant exactly when it needs massive nitrogen to chemically suppress Striga attachment, resulting in severe crop damage.<|im_end|>
+
+--- tokens loss is computed on ---
+While well-rotted manure suppresses Striga, raw, wet cow dung contains incredibly high levels of caustic ammonia and uric acid. When applied directly against the base of young maize seedlings, these raw chemicals severely burn the tender stem tissues and shallow roots. Furthermore, as microbes rapidly break down the fresh dung, they steal all available nitrogen from the soil, starving the maize plant exactly when it needs massive nitrogen to chemically suppress Striga attachment, resulting in severe crop damage.<|im_end|>
+
+
+==============================================================================
+source: coffee-tea.jsonl  tokens: 211
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM, a farming advisor for African smallholder farmers that runs offline, built on Qwen2.5-1.5B. Answer plainly and practically. Do not give pesticide or veterinary dose figures; send the person to the label and their agrovet or vet. Admit uncertainty rather than guessing.<|im_end|>
+<|im_start|>user
+What are the exact physical requirements for a perfect tea cutting used for vegetative propagation?<|im_end|>
+<|im_start|>assistant
+A proper tea cutting guarantees a 100 percent clonal match to the high-yielding mother bush. Using extremely sharp, sterilized secateurs, take a single-node cutting from the middle section of a semi-hardwood, vigorous stem. The cutting must be exactly 3 to 4 centimeters long, consisting of a short piece of stem, one healthy, fully expanded dark green mother leaf, and an active, undamaged axillary bud nestled in the leaf axil. Discard the soft terminal tips and the woody, leafless base.<|im_end|>
+
+--- tokens loss is computed on ---
+A proper tea cutting guarantees a 100 percent clonal match to the high-yielding mother bush. Using extremely sharp, sterilized secateurs, take a single-node cutting from the middle section of a semi-hardwood, vigorous stem. The cutting must be exactly 3 to 4 centimeters long, consisting of a short piece of stem, one healthy, fully expanded dark green mother leaf, and an active, undamaged axillary bud nestled in the leaf axil. Discard the soft terminal tips and the woody, leafless base.<|im_end|>
+
+
+==============================================================================
+source: maize-pests.jsonl  tokens: 201
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM, an offline farming advisor for African smallholders, built on Qwen2.5-1.5B. Give practical, correct advice in plain language. Never state a pesticide or veterinary dose; point the person to the product label and their agrovet or veterinary officer. Say plainly when you do not know something rather than guessing.<|im_end|>
+<|im_start|>user
+Why is a systemic insecticide better than a contact spray for controlling stalk borers?<|im_end|>
+<|im_start|>assistant
+A contact spray must physically touch the caterpillar to kill it. Stalk borers only live on the open leaves for a few days before they bore deep into the central stem. Once inside the stalk, they are completely shielded from any contact spray applied to the outside. A systemic insecticide is absorbed into the plant's vascular system. When the borer eats the internal tissue of the stem, it ingests the poisoned sap and dies, regardless of where it hides.<|im_end|>
+
+--- tokens loss is computed on ---
+A contact spray must physically touch the caterpillar to kill it. Stalk borers only live on the open leaves for a few days before they bore deep into the central stem. Once inside the stalk, they are completely shielded from any contact spray applied to the outside. A systemic insecticide is absorbed into the plant's vascular system. When the borer eats the internal tissue of the stem, it ingests the poisoned sap and dies, regardless of where it hides.<|im_end|>
+
+
+==============================================================================
+source: maize-agronomy.jsonl  tokens: 255
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+A farmer in Machakos saves money by replanting the F2 seed harvested from their highly successful commercial F1 hybrid crop. They plant it with perfect spacing and top-tier fertilizer. Why does the yield drop by 40 percent compared to the previous year?<|im_end|>
+<|im_start|>assistant
+The farmer experienced a severe genetic degradation caused by the natural segregation of hybrid traits, dismantling the biological architecture of their crop.
+1. Understand hybrid vigor. F1 hybrids are created by crossing two distinct inbred parent lines, locking in a massive, temporary boost in yield and uniformity known as heterosis.
+2. Diagnose the genetic segregation. When F1 grain is saved and planted as F2 seed, Mendelian genetics dictate that these tightly controlled traits randomly break apart. The resulting plants revert to the weaker genetics of the original grandparent lines.
+3. Analyze the pollination failure. The F2 field becomes chaotic. Plants emerge unevenly and tassel on completely different days. This massive lack of synchronization causes widespread pollination failure, resulting in patchy, poorly filled cobs and an immediate 40 percent yield penalty.<|im_end|>
+
+--- tokens loss is computed on ---
+The farmer experienced a severe genetic degradation caused by the natural segregation of hybrid traits, dismantling the biological architecture of their crop.
+1. Understand hybrid vigor. F1 hybrids are created by crossing two distinct inbred parent lines, locking in a massive, temporary boost in yield and uniformity known as heterosis.
+2. Diagnose the genetic segregation. When F1 grain is saved and planted as F2 seed, Mendelian genetics dictate that these tightly controlled traits randomly break apart. The resulting plants revert to the weaker genetics of the original grandparent lines.
+3. Analyze the pollination failure. The F2 field becomes chaotic. Plants emerge unevenly and tassel on completely different days. This massive lack of synchronization causes widespread pollination failure, resulting in patchy, poorly filled cobs and an immediate 40 percent yield penalty.<|im_end|>
+
+
+==============================================================================
+source: poultry.jsonl  tokens: 246
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM. You advise African smallholder farmers and extension officers, you run without an internet connection, and you are built on Qwen2.5-1.5B. Keep answers concrete and jargon-free. Never quote a pesticide or animal-drug amount. If you are not sure, say so.<|im_end|>
+<|im_start|>user
+Why is fowl pox generally considered less urgent than Newcastle disease or fowl typhoid, even though it's still a real disease to manage?<|im_end|>
+<|im_start|>assistant
+Fowl pox has a much lower death rate in its common cutaneous form, spreads more slowly since it depends mainly on mosquitoes and direct pecking contact rather than the fast airborne and fecal-oral routes of Newcastle, and birds that survive typically make a full recovery with lasting immunity. Newcastle and fowl typhoid, by contrast, can produce rapid, high mortality across a whole flock within days to weeks. That does not mean fowl pox can be ignored - the diphtheritic throat form is genuinely dangerous - but a farmer triaging limited time and attention is right to treat a Newcastle suspicion with more urgency than comb scabs alone.<|im_end|>
+
+--- tokens loss is computed on ---
+Fowl pox has a much lower death rate in its common cutaneous form, spreads more slowly since it depends mainly on mosquitoes and direct pecking contact rather than the fast airborne and fecal-oral routes of Newcastle, and birds that survive typically make a full recovery with lasting immunity. Newcastle and fowl typhoid, by contrast, can produce rapid, high mortality across a whole flock within days to weeks. That does not mean fowl pox can be ignored - the diphtheritic throat form is genuinely dangerous - but a farmer triaging limited time and attention is right to treat a Newcastle suspicion with more urgency than comb scabs alone.<|im_end|>
+
+
+==============================================================================
+source: beans-legumes.jsonl  tokens: 444
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+A cashew nut farmer in Mtwara notices several mature trees have yellowing canopies. Upon inspecting the trunk near the soil line, he finds large holes extruding a mixture of chewed wood and dark, gummy sap. The bark is dying and peeling off. What is the pest, and how is it managed?<|im_end|>
+<|im_start|>assistant
+The yellowing canopy, large holes at the base of the trunk extruding chewed wood (frass) mixed with gummy sap, and peeling bark are the definitive signs of the Cashew Stem and Root Borer (Plocaederus ferrugineus). This is a massive, highly destructive longhorn beetle. The adult female lays eggs in the crevices of the bark near the soil line. The hatching grubs aggressively bore through the bark and chew extensive, winding tunnels into the vital vascular tissue (phloem and xylem) of the trunk and main roots. This massive internal damage cuts off the flow of water and nutrients to the canopy, causing the tree to yellow, wilt, and eventually die if the trunk is completely girdled.
+Because the massive grubs live entirely protected deep inside the trunk, chemical foliar sprays are absolutely useless. The farmer must use localized, mechanical extraction.
+1. Inspect the base of all cashew trees regularly to catch the infestation early, looking for the tell-tale piles of chewed wood dust.
+2. Use a sharp knife or a chisel to carefully peel back the dead bark around the entry hole, following the tunnel to locate the large, white grub hiding inside.
+3. Physically extract and crush the grub. This instantly stops the damage and saves the tree.
+4. If the tunnel goes deep into the wood, insert a flexible wire to spear the grub, or use a syringe to inject a registered systemic insecticide or kerosene directly into the hole, sealing it immediately with mud to fumigate the pest.
+5. Maintain orchard hygiene by removing dead trees that act as breeding grounds.<|im_end|>
+
+--- tokens loss is computed on ---
+The yellowing canopy, large holes at the base of the trunk extruding chewed wood (frass) mixed with gummy sap, and peeling bark are the definitive signs of the Cashew Stem and Root Borer (Plocaederus ferrugineus). This is a massive, highly destructive longhorn beetle. The adult female lays eggs in the crevices of the bark near the soil line. The hatching grubs aggressively bore through the bark and chew extensive, winding tunnels into the vital vascular tissue (phloem and xylem) of the trunk and main roots. This massive internal damage cuts off the flow of water and nutrients to the canopy, causing the tree to yellow, wilt, and eventually die if the trunk is completely girdled.
+Because the massive grubs live entirely protected deep inside the trunk, chemical foliar sprays are absolutely useless. The farmer must use localized, mechanical extraction.
+1. Inspect the base of all cashew trees regularly to catch the infestation early, looking for the tell-tale piles of chewed wood dust.
+2. Use a sharp knife or a chisel to carefully peel back the dead bark around the entry hole, following the tunnel to locate the large, white grub hiding inside.
+3. Physically extract and crush the grub. This instantly stops the damage and saves the tree.
+4. If the tunnel goes deep into the wood, insert a flexible wire to spear the grub, or use a syringe to inject a registered systemic insecticide or kerosene directly into the hole, sealing it immediately with mud to fumigate the pest.
+5. Maintain orchard hygiene by removing dead trees that act as breeding grounds.<|im_end|>
+
+
+==============================================================================
+source: coffee-tea.jsonl  tokens: 63
+--- full rendered sequence ---
+<|im_start|>system
+You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Why do contact insecticides fail to kill the Coffee Berry Borer in Fort Portal?<|im_end|>
+<|im_start|>assistant
+The beetle and its larvae live completely protected deep inside the hard coffee berry, where surface chemical sprays cannot physically reach them.<|im_end|>
+
+--- tokens loss is computed on ---
+The beetle and its larvae live completely protected deep inside the hard coffee berry, where surface chemical sprays cannot physically reach them.<|im_end|>
+
+
+==============================================================================
+source: coffee-tea.jsonl  tokens: 70
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+Does the Coffee Berry Borer attack the leaves or stems of the tree?<|im_end|>
+<|im_start|>assistant
+No. It is an exclusive, highly specialized pest that only attacks and feeds on the actual coffee seed inside the berry.<|im_end|>
+
+--- tokens loss is computed on ---
+No. It is an exclusive, highly specialized pest that only attacks and feeds on the actual coffee seed inside the berry.<|im_end|>
+
+
+==============================================================================
+source: livestock.jsonl  tokens: 547
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM, a farming advisor for African smallholder farmers that runs offline, built on Qwen2.5-1.5B. Answer plainly and practically. Do not give pesticide or veterinary dose figures; send the person to the label and their agrovet or vet. Admit uncertainty rather than guessing.<|im_end|>
+<|im_start|>user
+A smallholder dairy cooperative lead in Trans Nzoia, Kenya wants to design a 1-acre intensive zero-grazing fodder production and feeding blueprint capable of supporting 3 high-yielding dairy cows year-round. Detail the agronomic and feeding layout.<|im_end|>
+<|im_start|>assistant
+Intensive 1-acre zero-grazing fodder production and feeding blueprint in Trans Nzoia, Kenya:
+1. Land allocation layout: divide the 1 acre into 3 zones: 0.6 acre for high-yielding Brachiaria cv. Mulato II or Napier grass, 0.25 acre for protein legumes (Calliandra and Desmodium), and 0.15 acre for zero-grazing unit, manure biogas pit, and hay storage.
+2. Basal grass establishment: plant Brachiaria or Napier in rows 75x50 cm, applying 50 kg DAP and 5 tonnes of farmyard manure at planting. Top-dress with CAN (50 kg/acre) or liquid slurry after every harvest cut.
+3. Legume protein bank: plant Calliandra trees along boundaries at 50 cm spacing (300 trees total) and intercrop Desmodium between Napier rows in a push-pull system to fix nitrogen and boost forage protein.
+4. Balanced daily feeding ration: harvest 70 to 80 kg of fresh chopped forage per cow daily (comprising 60 kg basal grass + 10 kg fresh Calliandra or Desmodium legume + 2 kg commercial dairy meal + 100 grams mineral lick).
+5. Dry season forage conservation: harvest surplus grass during peak long rains and ensile 4 tonnes of chopped fodder in 1000-gauge plastic tube silos treated with molasses.
+6. Slurry recycling system: channel cow dung and urine from the concrete barn floor into a biogas digester to generate cooking gas, then recycle nutrient-rich bio-slurry back onto forage plots.
+7. Cow comfort and water access: ensure each cow has an individual sand-bedded cubicle and 24-hour free access to at least 80 to 100 liters of clean drinking water in Trans Nzoia, Kenya.<|im_end|>
+
+--- tokens loss is computed on ---
+Intensive 1-acre zero-grazing fodder production and feeding blueprint in Trans Nzoia, Kenya:
+1. Land allocation layout: divide the 1 acre into 3 zones: 0.6 acre for high-yielding Brachiaria cv. Mulato II or Napier grass, 0.25 acre for protein legumes (Calliandra and Desmodium), and 0.15 acre for zero-grazing unit, manure biogas pit, and hay storage.
+2. Basal grass establishment: plant Brachiaria or Napier in rows 75x50 cm, applying 50 kg DAP and 5 tonnes of farmyard manure at planting. Top-dress with CAN (50 kg/acre) or liquid slurry after every harvest cut.
+3. Legume protein bank: plant Calliandra trees along boundaries at 50 cm spacing (300 trees total) and intercrop Desmodium between Napier rows in a push-pull system to fix nitrogen and boost forage protein.
+4. Balanced daily feeding ration: harvest 70 to 80 kg of fresh chopped forage per cow daily (comprising 60 kg basal grass + 10 kg fresh Calliandra or Desmodium legume + 2 kg commercial dairy meal + 100 grams mineral lick).
+5. Dry season forage conservation: harvest surplus grass during peak long rains and ensile 4 tonnes of chopped fodder in 1000-gauge plastic tube silos treated with molasses.
+6. Slurry recycling system: channel cow dung and urine from the concrete barn floor into a biogas digester to generate cooking gas, then recycle nutrient-rich bio-slurry back onto forage plots.
+7. Cow comfort and water access: ensure each cow has an individual sand-bedded cubicle and 24-hour free access to at least 80 to 100 liters of clean drinking water in Trans Nzoia, Kenya.<|im_end|>
+
+
+==============================================================================
+source: instruction-format.jsonl  tokens: 108
+--- full rendered sequence ---
+<|im_start|>system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>
+<|im_start|>user
+In exactly one sentence, explain why maize planted on a slope without any soil conservation measures tends to yield less over time.<|im_end|>
+<|im_start|>assistant
+Rain running down an unprotected slope carries away the topsoil that holds most of the field's nutrients and organic matter, so a sloped field farmed without terracing, contour lines, or grass strips gradually loses fertility faster than a flat or protected field would.<|im_end|>
+
+--- tokens loss is computed on ---
+Rain running down an unprotected slope carries away the topsoil that holds most of the field's nutrients and organic matter, so a sloped field farmed without terracing, contour lines, or grass strips gradually loses fertility faster than a flat or protected field would.<|im_end|>
+
+
+==============================================================================
+source: cassava-sweetpotato.jsonl  tokens: 417
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM. You advise African smallholder farmers and extension officers, you run without an internet connection, and you are built on Qwen2.5-1.5B. Keep answers concrete and jargon-free. Never quote a pesticide or animal-drug amount. If you are not sure, say so.<|im_end|>
+<|im_start|>user
+A cashew farmer in Mtwara, Tanzania notices a white, ash-like powder covering the young shoots, flower panicles, and developing nuts just after the rains stop. The flowers blacken and drop, and the small nuts become scarred and corky. What is this disease, and what is the standard chemical intervention?<|im_end|>
+<|im_start|>assistant
+This is Cashew Powdery Mildew, caused by the fungus Oidium anacardii. It is the most economically devastating disease of cashew in East Africa. The white fungal growth destroys the delicate floral tissues, preventing nut set, and scars any young nuts that do manage to form, severely reducing both yield and kernel quality.
+The standard chemical intervention relies heavily on sulfur, which must be applied at specific developmental stages:
+1. Timing the First Spray: The farmer must apply the first protective spray exactly when the new vegetative shoots are emerging and the flower panicles are just beginning to form, before the white powder is visible.
+2. Chemical Choice: Dusting with agricultural sulfur powder is the traditional and highly effective method. Alternatively, applying a registered systemic fungicide (like a triadimefon or hexaconazole formulation) provides longer-lasting protection.
+3. Application Intervals: The disease requires continuous protection. The farmer should apply a second spray when the flowers are fully open, and a third spray when the nuts are the size of peas.
+4. Canopy Management: Chemical sprays are only effective if they penetrate the tree. After harvest, the farmer must prune the cashew trees to remove dead wood and open the center canopy. This allows sunlight and wind to reduce the high humidity that the fungus needs to thrive.<|im_end|>
+
+--- tokens loss is computed on ---
+This is Cashew Powdery Mildew, caused by the fungus Oidium anacardii. It is the most economically devastating disease of cashew in East Africa. The white fungal growth destroys the delicate floral tissues, preventing nut set, and scars any young nuts that do manage to form, severely reducing both yield and kernel quality.
+The standard chemical intervention relies heavily on sulfur, which must be applied at specific developmental stages:
+1. Timing the First Spray: The farmer must apply the first protective spray exactly when the new vegetative shoots are emerging and the flower panicles are just beginning to form, before the white powder is visible.
+2. Chemical Choice: Dusting with agricultural sulfur powder is the traditional and highly effective method. Alternatively, applying a registered systemic fungicide (like a triadimefon or hexaconazole formulation) provides longer-lasting protection.
+3. Application Intervals: The disease requires continuous protection. The farmer should apply a second spray when the flowers are fully open, and a third spray when the nuts are the size of peas.
+4. Canopy Management: Chemical sprays are only effective if they penetrate the tree. After harvest, the farmer must prune the cashew trees to remove dead wood and open the center canopy. This allows sunlight and wind to reduce the high humidity that the fungus needs to thrive.<|im_end|>
+
+
+==============================================================================
+source: climate-seasons.jsonl  tokens: 211
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM, an offline farming advisor for African smallholders, built on Qwen2.5-1.5B. Give practical, correct advice in plain language. Never state a pesticide or veterinary dose; point the person to the product label and their agrovet or veterinary officer. Say plainly when you do not know something rather than guessing.<|im_end|>
+<|im_start|>user
+A extension officer in Narok, Kenya asks how staggering planting dates across 3 weeks protects farm income against unpredictable rain onset.<|im_end|>
+<|im_start|>assistant
+Staggering planting dates in Narok, Kenya involves dividing your land into 3 plots and planting the first plot at early rain onset, the second plot 10 days later, and the third plot 20 days later. Because onset dates and dry spell timing fluctuate unpredictably, staggered planting ensures that not all crops are at the vulnerable flowering stage simultaneously during a dry spell. At least one planting date will align perfectly with peak rainfall, guaranteeing a baseline harvest.<|im_end|>
+
+--- tokens loss is computed on ---
+Staggering planting dates in Narok, Kenya involves dividing your land into 3 plots and planting the first plot at early rain onset, the second plot 10 days later, and the third plot 20 days later. Because onset dates and dry spell timing fluctuate unpredictably, staggered planting ensures that not all crops are at the vulnerable flowering stage simultaneously during a dry spell. At least one planting date will align perfectly with peak rainfall, guaranteeing a baseline harvest.<|im_end|>
+
+
+==============================================================================
+source: maize-pests.jsonl  tokens: 102
+--- full rendered sequence ---
+<|im_start|>system
+You are a helpful AI assistant. Answer the user's question.<|im_end|>
+<|im_start|>user
+What active ingredients should I look for to control pyrethroid-resistant fall armyworms?<|im_end|>
+<|im_start|>assistant
+Farmers should rotate away from pyrethroids and purchase systemic or translaminar insecticides containing active ingredients like spinetoram, emamectin benzoate, or chlorantraniliprole, which attack the pest's nervous system using different biological pathways.<|im_end|>
+
+--- tokens loss is computed on ---
+Farmers should rotate away from pyrethroids and purchase systemic or translaminar insecticides containing active ingredients like spinetoram, emamectin benzoate, or chlorantraniliprole, which attack the pest's nervous system using different biological pathways.<|im_end|>
+
+
+==============================================================================
+source: safety-poisoning.jsonl  tokens: 233
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM. You advise African smallholder farmers and extension officers, you run without an internet connection, and you are built on Qwen2.5-1.5B. Keep answers concrete and jargon-free. Never quote a pesticide or animal-drug amount. If you are not sure, say so.<|im_end|>
+<|im_start|>user
+My son was spraying onions and some drift blew back onto his face and he says it doesn't taste like anything got into his mouth, just his skin and a bit in his nose. Do we still need to worry about anything by mouth in that case?<|im_end|>
+<|im_start|>assistant
+If he's genuinely sure nothing reached his mouth, then the main things to deal with are his skin and his breathing rather than anything about swallowing — rinse his face with clean water, including gently around his nose, and watch whether he starts coughing or having any trouble breathing from what drifted in. If at any point he does notice a taste or residue in his mouth, have him rinse it out with water without swallowing. If his skin reacts or his breathing changes, get him to a health facility.<|im_end|>
+
+--- tokens loss is computed on ---
+If he's genuinely sure nothing reached his mouth, then the main things to deal with are his skin and his breathing rather than anything about swallowing — rinse his face with clean water, including gently around his nose, and watch whether he starts coughing or having any trouble breathing from what drifted in. If at any point he does notice a taste or residue in his mouth, have him rinse it out with water without swallowing. If his skin reacts or his breathing changes, get him to a health facility.<|im_end|>
+
+
+==============================================================================
+source: soil-fertility.jsonl  tokens: 278
+--- full rendered sequence ---
+<|im_start|>system
+You are AgriLLM, an offline farming advisor for African smallholders, built on Qwen2.5-1.5B. Give practical, correct advice in plain language. Never state a pesticide or veterinary dose; point the person to the product label and their agrovet or veterinary officer. Say plainly when you do not know something rather than guessing.<|im_end|>
+<|im_start|>user
+An agrodealer is asked why foliar fertiliser sprays are sometimes recommended for correcting a micronutrient deficiency detected mid-season, rather than just applying more of the nutrient to the soil.<|im_end|>
+<|im_start|>assistant
+Foliar feeding delivers a nutrient directly to the leaf surface, where it can be absorbed relatively quickly compared with a soil application that has to first dissolve, move through the soil, and then be taken up by roots, a pathway that can be especially slow for micronutrients like zinc, iron or manganese that react readily with soil particles and become less available exactly in the pH conditions where deficiencies are most likely to occur. This makes foliar feeding a useful fast-response option when a deficiency is spotted mid-season and there is a real risk that a slower soil-based correction would arrive too late to help the current crop, since the affected growth stage, such as flowering or early grain fill, may have already passed by the time a soil correction takes effect.<|im_end|>
+
+--- tokens loss is computed on ---
+Foliar feeding delivers a nutrient directly to the leaf surface, where it can be absorbed relatively quickly compared with a soil application that has to first dissolve, move through the soil, and then be taken up by roots, a pathway that can be especially slow for micronutrients like zinc, iron or manganese that react readily with soil particles and become less available exactly in the pH conditions where deficiencies are most likely to occur. This makes foliar feeding a useful fast-response option when a deficiency is spotted mid-season and there is a real risk that a slower soil-based correction would arrive too late to help the current crop, since the affected growth stage, such as flowering or early grain fill, may have already passed by the time a soil correction takes effect.<|im_end|>
+
+

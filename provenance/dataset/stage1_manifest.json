@@ -1,0 +1,27 @@
+{
+  "source_dataset": "AI71ai/agrillm-train-146k",
+  "source_file": "/home/shadeform/.cache/huggingface/hub/datasets--AI71ai--agrillm-train-146k/snapshots/6c10a9eef08a9ca65f87b3cfdc5e34c49da1d69e/train.jsonl",
+  "source_sha256": "c6f7755a951eda368453ddd6e702ea5eba9eb66238be312bc24a7f30d5d43abc",
+  "source_license": "apache-2.0",
+  "filters_applied": {
+    "non_english": "Devanagari, or 4+ French function words",
+    "off_topic": "no agricultural vocabulary anywhere in the row",
+    "too_short": "answer under 15 words",
+    "dose_quarantined": "verify_corpus.py DOSE_RATE, plus tons/cartloads/bags per acre|hectare and NPK ratios",
+    "banned_abstraction": "verify_corpus.py BANNED_ABSTRACT"
+  },
+  "counts": {
+    "total": 143875,
+    "kept": 74697,
+    "kept_east_africa": 3551,
+    "off_topic": 40043,
+    "dose_quarantined": 2571,
+    "banned_abstraction": 208,
+    "non_english": 2119,
+    "too_short": 2417,
+    "scaffolding_only": 21815,
+    "generation_tag": 1,
+    "empty": 4
+  },
+  "shards": 8
+}

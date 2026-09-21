@@ -1,0 +1,160 @@
+{
+  "name": "AgriLLM African Extension Corpus",
+  "licence": "CC-BY-4.0",
+  "built_by": "this team, purpose-built for ADTC 2026",
+  "files": 25,
+  "total_rows": 6703,
+  "gate": "train/verify_corpus.py \u2014 all files pass",
+  "per_file": [
+    {
+      "file": "banana.jsonl",
+      "rows": 369,
+      "bytes": 185968,
+      "sha256": "8d457695681de7df86a34fcba1665406379d797589feb248c0f7b20230a4b1bf"
+    },
+    {
+      "file": "beans-legumes.jsonl",
+      "rows": 773,
+      "bytes": 636758,
+      "sha256": "4f558a83588e1591d87604c0d7dce16b0ba7bf1fc6aa14446b1fd1d82585e73a"
+    },
+    {
+      "file": "cassava-sweetpotato.jsonl",
+      "rows": 603,
+      "bytes": 493157,
+      "sha256": "6e320141cef6cf0aa667b173211396b25fd66c986499dce822db7192cb059aa8"
+    },
+    {
+      "file": "climate-seasons.jsonl",
+      "rows": 238,
+      "bytes": 142166,
+      "sha256": "5c6f22911086129f120d3313e1b62d3d0253ae5966dbe125f773a50bc228c774"
+    },
+    {
+      "file": "coffee-tea.jsonl",
+      "rows": 474,
+      "bytes": 279139,
+      "sha256": "d46bbc8eb337a5f16dc6b0997ce1c2a40eb42e579077781184466506a0ab99a6"
+    },
+    {
+      "file": "economics-extension.jsonl",
+      "rows": 62,
+      "bytes": 54697,
+      "sha256": "d01d042162e24002e53b77f65462143c5755570991c977dfd95d9e56547bd947"
+    },
+    {
+      "file": "identity-scope.jsonl",
+      "rows": 30,
+      "bytes": 19847,
+      "sha256": "6f059b059219a18ffb09376763e37954ba4c411bc3ed7cc03fa6f1e9b902b589"
+    },
+    {
+      "file": "instruction-format.jsonl",
+      "rows": 163,
+      "bytes": 87534,
+      "sha256": "f5189f32d349d3324b1731d0f40458804f35068a66de39b441d424adae1f28fe"
+    },
+    {
+      "file": "livestock.jsonl",
+      "rows": 268,
+      "bytes": 193463,
+      "sha256": "95590aacb12741c12a50c556fe0457bb438027178e70fb4b9a895c90f788567b"
+    },
+    {
+      "file": "maize-agronomy.jsonl",
+      "rows": 628,
+      "bytes": 379906,
+      "sha256": "93daed16ce5589984098ef25e697f73a9900dea7f75c927ddb3e1fb7f20edd32"
+    },
+    {
+      "file": "maize-pests.jsonl",
+      "rows": 1140,
+      "bytes": 922661,
+      "sha256": "ad0a919a58df234096e2674dc7247b09be5221a39c6da80d526a5a425992b1db"
+    },
+    {
+      "file": "multiturn.jsonl",
+      "rows": 108,
+      "bytes": 127743,
+      "sha256": "379c852e7bc1eeac67dbd42e830bcc95318df14c41c7aa4d25d26dd0ca1afbc3"
+    },
+    {
+      "file": "plain-language.jsonl",
+      "rows": 165,
+      "bytes": 119842,
+      "sha256": "75b8a51c815759d48d8708404b8e54641b6d9514dc67c48090f956d727b3f8ac"
+    },
+    {
+      "file": "post-harvest.jsonl",
+      "rows": 263,
+      "bytes": 208516,
+      "sha256": "d31eb80780061a7ea177c89c898c2acfa1e21a40667529229970e38184b6c345"
+    },
+    {
+      "file": "potato-horticulture.jsonl",
+      "rows": 109,
+      "bytes": 99620,
+      "sha256": "bc0eed2b3b3fbba2139cc086224dcb1da1817a2cfe9ed2223d6d320ba3729aef"
+    },
+    {
+      "file": "poultry.jsonl",
+      "rows": 261,
+      "bytes": 210760,
+      "sha256": "178605c8b098b1e06c9b35acd3750bd56a4a341e9872f720247fa849090f28af"
+    },
+    {
+      "file": "safety-dose-refusal.jsonl",
+      "rows": 167,
+      "bytes": 89992,
+      "sha256": "752a77cdf8beda2bf577a3de34f74d2d76dda796ed352a0db222a2bd9fc944e4"
+    },
+    {
+      "file": "safety-handling.jsonl",
+      "rows": 15,
+      "bytes": 7719,
+      "sha256": "f43459b58d56eabf737daa43a6062a1d5453908cade0727be20248b22c573d40"
+    },
+    {
+      "file": "safety-poisoning.jsonl",
+      "rows": 166,
+      "bytes": 127943,
+      "sha256": "fb06b5c186b010f7cd0089455560e7d3983f66b8fd85e9925a9d0b1177d918d8"
+    },
+    {
+      "file": "soil-fertility.jsonl",
+      "rows": 278,
+      "bytes": 225848,
+      "sha256": "3ab94b5866957ddef14ca0b82459ad2119a1cfd96fb62e222117f120c7317f83"
+    },
+    {
+      "file": "sorghum-millet-groundnut.jsonl",
+      "rows": 86,
+      "bytes": 78142,
+      "sha256": "868c44f7200f6d4a28d13cb0971d34860fefeb710436c976d89ebd55c274ed4f"
+    },
+    {
+      "file": "systems-offline.jsonl",
+      "rows": 61,
+      "bytes": 38223,
+      "sha256": "129fe2746b72e4646b71c7cf9867c29ec9b2fac546be117027000708e0c8072f"
+    },
+    {
+      "file": "uncertainty-deferral.jsonl",
+      "rows": 166,
+      "bytes": 80351,
+      "sha256": "78e547ccc81939f2c03afd6c96195898198d5324b3f67ee860abbc88e53644d9"
+    },
+    {
+      "file": "veterinary-safety.jsonl",
+      "rows": 13,
+      "bytes": 9355,
+      "sha256": "9bc55aa8332deef9c3e6c4a467a9f577ff1bae6ced4de9a2cbec562010b4a412"
+    },
+    {
+      "file": "water-conservation.jsonl",
+      "rows": 97,
+      "bytes": 81786,
+      "sha256": "983eb710e5167da87029e8045ab523621fd615cf334b3181723b12d97e5c55c6"
+    }
+  ]
+}

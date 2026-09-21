@@ -1,0 +1,504 @@
+{
+  "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+  "method": "full_finetune",
+  "trainable_parameters": 1543714304,
+  "total_parameters": 1543714304,
+  "config": {
+    "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "data_dir": "train/pipeline/data",
+    "out_dir": "train/pipeline/runs/fullft",
+    "learning_rate": 5e-06,
+    "epochs": 2.0,
+    "scheduler": "cosine",
+    "warmup_ratio": 0.05,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "optim": "adamw_torch_fused",
+    "batch_size": 4,
+    "grad_accum": 8,
+    "max_len": 1024,
+    "gradient_checkpointing": false,
+    "attn_implementation": "eager",
+    "dataloader_num_workers": 4,
+    "logging_steps": 10,
+    "save_total_limit": 10,
+    "seed": 1337
+  },
+  "effective_batch_size": 32,
+  "steps_per_epoch": 204,
+  "wall_clock_minutes": 7.72,
+  "train_metrics": {
+    "train_runtime": 463.2404,
+    "train_samples_per_second": 28.072,
+    "train_steps_per_second": 0.881,
+    "total_flos": 3.3509146437974016e+16,
+    "train_loss": 1.8160171251670987,
+    "epoch": 2.0
+  },
+  "log_history": [
+    {
+      "loss": 2.5894,
+      "grad_norm": 8.328532218933105,
+      "learning_rate": 2.1428571428571427e-06,
+      "epoch": 0.04920049200492005,
+      "step": 10
+    },
+    {
+      "loss": 2.4658,
+      "grad_norm": 5.077628135681152,
+      "learning_rate": 4.523809523809524e-06,
+      "epoch": 0.0984009840098401,
+      "step": 20
+    },
+    {
+      "loss": 2.3168,
+      "grad_norm": 4.3679327964782715,
+      "learning_rate": 4.994729944855107e-06,
+      "epoch": 0.14760147601476015,
+      "step": 30
+    },
+    {
+      "loss": 2.2422,
+      "grad_norm": 4.088557720184326,
+      "learning_rate": 4.973358420187776e-06,
+      "epoch": 0.1968019680196802,
+      "step": 40
+    },
+    {
+      "loss": 2.1746,
+      "grad_norm": 4.241890907287598,
+      "learning_rate": 4.935696697560387e-06,
+      "epoch": 0.24600246002460024,
+      "step": 50
+    },
+    {
+      "loss": 2.1219,
+      "grad_norm": 3.955137014389038,
+      "learning_rate": 4.8819928271188924e-06,
+      "epoch": 0.2952029520295203,
+      "step": 60
+    },
+    {
+      "loss": 2.1038,
+      "grad_norm": 4.214867115020752,
+      "learning_rate": 4.812600516871631e-06,
+      "epoch": 0.34440344403444034,
+      "step": 70
+    },
+    {
+      "loss": 2.0113,
+      "grad_norm": 3.5419750213623047,
+      "learning_rate": 4.727976803074086e-06,
+      "epoch": 0.3936039360393604,
+      "step": 80
+    },
+    {
+      "loss": 1.9859,
+      "grad_norm": 4.561622142791748,
+      "learning_rate": 4.628679040066262e-06,
+      "epoch": 0.44280442804428044,
+      "step": 90
+    },
+    {
+      "loss": 2.0074,
+      "grad_norm": 4.036099910736084,
+      "learning_rate": 4.515361229388408e-06,
+      "epoch": 0.4920049200492005,
+      "step": 100
+    },
+    {
+      "loss": 1.9481,
+      "grad_norm": 3.9617233276367188,
+      "learning_rate": 4.388769712352511e-06,
+      "epoch": 0.5412054120541205,
+      "step": 110
+    },
+    {
+      "loss": 1.9459,
+      "grad_norm": 3.8934805393218994,
+      "learning_rate": 4.249738254439447e-06,
+      "epoch": 0.5904059040590406,
+      "step": 120
+    },
+    {
+      "loss": 1.9089,
+      "grad_norm": 4.003355026245117,
+      "learning_rate": 4.099182553897228e-06,
+      "epoch": 0.6396063960639606,
+      "step": 130
+    },
+    {
+      "loss": 1.894,
+      "grad_norm": 3.760310649871826,
+      "learning_rate": 3.938094210708225e-06,
+      "epoch": 0.6888068880688807,
+      "step": 140
+    },
+    {
+      "loss": 1.9122,
+      "grad_norm": 4.105079650878906,
+      "learning_rate": 3.767534195647309e-06,
+      "epoch": 0.7380073800738007,
+      "step": 150
+    },
+    {
+      "loss": 1.9112,
+      "grad_norm": 3.7889676094055176,
+      "learning_rate": 3.5886258624454786e-06,
+      "epoch": 0.7872078720787208,
+      "step": 160
+    },
+    {
+      "loss": 1.8597,
+      "grad_norm": 4.2103471755981445,
+      "learning_rate": 3.402547549082694e-06,
+      "epoch": 0.8364083640836408,
+      "step": 170
+    },
+    {
+      "loss": 1.834,
+      "grad_norm": 4.275064945220947,
+      "learning_rate": 3.210524816939794e-06,
+      "epoch": 0.8856088560885609,
+      "step": 180
+    },
+    {
+      "loss": 1.8089,
+      "grad_norm": 4.491928577423096,
+      "learning_rate": 3.013822378924502e-06,
+      "epoch": 0.9348093480934809,
+      "step": 190
+    },
+    {
+      "loss": 1.8333,
+      "grad_norm": 3.759645462036133,
+      "learning_rate": 2.8137357697350403e-06,
+      "epoch": 0.984009840098401,
+      "step": 200
+    },
+    {
+      "eval_loss": 1.8653321266174316,
+      "eval_runtime": 2.6602,
+      "eval_samples_per_second": 75.558,
+      "eval_steps_per_second": 19.171,
+      "epoch": 1.0,
+      "step": 204
+    },
+    {
+      "loss": 1.6915,
+      "grad_norm": 4.01516580581665,
+      "learning_rate": 2.611582813123216e-06,
+      "epoch": 1.029520295202952,
+      "step": 210
+    },
+    {
+      "loss": 1.6265,
+      "grad_norm": 3.8052902221679688,
+      "learning_rate": 2.408694942355853e-06,
+      "epoch": 1.0787207872078721,
+      "step": 220
+    },
+    {
+      "loss": 1.5978,
+      "grad_norm": 3.760239601135254,
+      "learning_rate": 2.206408431040334e-06,
+      "epoch": 1.1279212792127922,
+      "step": 230
+    },
+    {
+      "loss": 1.5617,
+      "grad_norm": 3.9435746669769287,
+      "learning_rate": 2.0060555920703673e-06,
+      "epoch": 1.1771217712177122,
+      "step": 240
+    },
+    {
+      "loss": 1.5979,
+      "grad_norm": 4.876131057739258,
+      "learning_rate": 1.808956002658071e-06,
+      "epoch": 1.2263222632226323,
+      "step": 250
+    },
+    {
+      "loss": 1.6003,
+      "grad_norm": 3.569793462753296,
+      "learning_rate": 1.6164078132466521e-06,
+      "epoch": 1.2755227552275523,
+      "step": 260
+    },
+    {
+      "loss": 1.5795,
+      "grad_norm": 4.290984630584717,
+      "learning_rate": 1.4296791975454916e-06,
+      "epoch": 1.3247232472324724,
+      "step": 270
+    },
+    {
+      "loss": 1.5935,
+      "grad_norm": 3.450040817260742,
+      "learning_rate": 1.2500000000000007e-06,
+      "epoch": 1.3739237392373924,
+      "step": 280
+    },
+    {
+      "loss": 1.6,
+      "grad_norm": 4.373686790466309,
+      "learning_rate": 1.0785536357082222e-06,
+      "epoch": 1.4231242312423125,
+      "step": 290
+    },
+    {
+      "loss": 1.6172,
+      "grad_norm": 3.831826686859131,
+      "learning_rate": 9.16469296133492e-07,
+      "epoch": 1.4723247232472325,
+      "step": 300
+    },
+    {
+      "loss": 1.5912,
+      "grad_norm": 4.37360954284668,
+      "learning_rate": 7.648145119484152e-07,
+      "epoch": 1.5215252152521526,
+      "step": 310
+    },
+    {
+      "loss": 1.5599,
+      "grad_norm": 4.088711261749268,
+      "learning_rate": 6.245881219932517e-07,
+      "epoch": 1.5707257072570726,
+      "step": 320
+    },
+    {
+      "loss": 1.5624,
+      "grad_norm": 4.116456508636475,
+      "learning_rate": 4.967136946570167e-07,
+      "epoch": 1.6199261992619927,
+      "step": 330
+    },
+    {
+      "loss": 1.5975,
+      "grad_norm": 4.402606964111328,
+      "learning_rate": 3.8203344500984924e-07,
+      "epoch": 1.6691266912669127,
+      "step": 340
+    },
+    {
+      "loss": 1.5968,
+      "grad_norm": 3.9730021953582764,
+      "learning_rate": 2.8130268775002106e-07,
+      "epoch": 1.7183271832718328,
+      "step": 350
+    },
+    {
+      "loss": 1.6038,
+      "grad_norm": 4.125720500946045,
+      "learning_rate": 1.9518486249996444e-07,
+      "epoch": 1.7675276752767528,
+      "step": 360
+    },
+    {
+      "loss": 1.5664,
+      "grad_norm": 4.01476526260376,
+      "learning_rate": 1.2424716421604393e-07,
+      "epoch": 1.8167281672816729,
+      "step": 370
+    },
+    {
+      "loss": 1.6113,
+      "grad_norm": 4.362505912780762,
+      "learning_rate": 6.895680749135852e-08,
+      "epoch": 1.865928659286593,
+      "step": 380
+    },
+    {
+      "loss": 1.5929,
+      "grad_norm": 4.292765140533447,
+      "learning_rate": 2.967794935587104e-08,
+      "epoch": 1.915129151291513,
+      "step": 390
+    },
+    {
+      "loss": 1.5942,
+      "grad_norm": 4.556135177612305,
+      "learning_rate": 6.66929084112089e-09,
+      "epoch": 1.964329643296433,
+      "step": 400
+    },
+    {
+      "eval_loss": 1.828019380569458,
+      "eval_runtime": 2.689,
+      "eval_samples_per_second": 74.75,
+      "eval_steps_per_second": 18.966,
+      "epoch": 2.0,
+      "step": 408
+    },
+    {
+      "train_runtime": 463.2404,
+      "train_samples_per_second": 28.072,
+      "train_steps_per_second": 0.881,
+      "total_flos": 3.3509146437974016e+16,
+      "train_loss": 1.8160171251670987,
+      "epoch": 2.0,
+      "step": 408
+    }
+  ],
+  "gpu": "NVIDIA H100 PCIe",
+  "torch": "2.14.0+cu130",
+  "data_manifest": {
+    "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "base_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "tokenizer_class": "Qwen2TokenizerFast",
+    "max_len": 1024,
+    "seed": 1337,
+    "counts": {
+      "conversations_read": 6703,
+      "encoded": 6703,
+      "train": 6502,
+      "val": 201,
+      "dropped_misaligned": 0,
+      "dropped_too_long": 0
+    },
+    "token_length": {
+      "p50": 188,
+      "p90": 406,
+      "p99": 509,
+      "max": 637
+    },
+    "system_prompt_mix": {
+      "qwen_default_explicit": 1356,
+      "agri_default": 2964,
+      "agri_paraphrase": 1372,
+      "neutral": 1011
+    },
+    "agri_default_system_prompt": "You are AgriLLM, an offline farming advisor for African smallholders, built on Qwen2.5-1.5B. Give practical, correct advice in plain language. Never state a pesticide or veterinary dose; point the person to the product label and their agrovet or veterinary officer. Say plainly when you do not know something rather than guessing.",
+    "source_files": {
+      "banana.jsonl": {
+        "kept": 369,
+        "skipped": 0,
+        "sha256": "8d457695681de7df86a34fcba1665406379d797589feb248c0f7b20230a4b1bf"
+      },
+      "beans-legumes.jsonl": {
+        "kept": 773,
+        "skipped": 0,
+        "sha256": "4f558a83588e1591d87604c0d7dce16b0ba7bf1fc6aa14446b1fd1d82585e73a"
+      },
+      "cassava-sweetpotato.jsonl": {
+        "kept": 603,
+        "skipped": 0,
+        "sha256": "6e320141cef6cf0aa667b173211396b25fd66c986499dce822db7192cb059aa8"
+      },
+      "climate-seasons.jsonl": {
+        "kept": 238,
+        "skipped": 0,
+        "sha256": "5c6f22911086129f120d3313e1b62d3d0253ae5966dbe125f773a50bc228c774"
+      },
+      "coffee-tea.jsonl": {
+        "kept": 474,
+        "skipped": 0,
+        "sha256": "d46bbc8eb337a5f16dc6b0997ce1c2a40eb42e579077781184466506a0ab99a6"
+      },
+      "economics-extension.jsonl": {
+        "kept": 62,
+        "skipped": 0,
+        "sha256": "d01d042162e24002e53b77f65462143c5755570991c977dfd95d9e56547bd947"
+      },
+      "identity-scope.jsonl": {
+        "kept": 30,
+        "skipped": 0,
+        "sha256": "6f059b059219a18ffb09376763e37954ba4c411bc3ed7cc03fa6f1e9b902b589"
+      },
+      "instruction-format.jsonl": {
+        "kept": 163,
+        "skipped": 0,
+        "sha256": "f5189f32d349d3324b1731d0f40458804f35068a66de39b441d424adae1f28fe"
+      },
+      "livestock.jsonl": {
+        "kept": 268,
+        "skipped": 0,
+        "sha256": "95590aacb12741c12a50c556fe0457bb438027178e70fb4b9a895c90f788567b"
+      },
+      "maize-agronomy.jsonl": {
+        "kept": 628,
+        "skipped": 0,
+        "sha256": "93daed16ce5589984098ef25e697f73a9900dea7f75c927ddb3e1fb7f20edd32"
+      },
+      "maize-pests.jsonl": {
+        "kept": 1140,
+        "skipped": 0,
+        "sha256": "ad0a919a58df234096e2674dc7247b09be5221a39c6da80d526a5a425992b1db"
+      },
+      "multiturn.jsonl": {
+        "kept": 108,
+        "skipped": 0,
+        "sha256": "379c852e7bc1eeac67dbd42e830bcc95318df14c41c7aa4d25d26dd0ca1afbc3"
+      },
+      "plain-language.jsonl": {
+        "kept": 165,
+        "skipped": 0,
+        "sha256": "75b8a51c815759d48d8708404b8e54641b6d9514dc67c48090f956d727b3f8ac"
+      },
+      "post-harvest.jsonl": {
+        "kept": 263,
+        "skipped": 0,
+        "sha256": "d31eb80780061a7ea177c89c898c2acfa1e21a40667529229970e38184b6c345"
+      },
+      "potato-horticulture.jsonl": {
+        "kept": 109,
+        "skipped": 0,
+        "sha256": "bc0eed2b3b3fbba2139cc086224dcb1da1817a2cfe9ed2223d6d320ba3729aef"
+      },
+      "poultry.jsonl": {
+        "kept": 261,
+        "skipped": 0,
+        "sha256": "178605c8b098b1e06c9b35acd3750bd56a4a341e9872f720247fa849090f28af"
+      },
+      "safety-dose-refusal.jsonl": {
+        "kept": 167,
+        "skipped": 0,
+        "sha256": "752a77cdf8beda2bf577a3de34f74d2d76dda796ed352a0db222a2bd9fc944e4"
+      },
+      "safety-handling.jsonl": {
+        "kept": 15,
+        "skipped": 0,
+        "sha256": "f43459b58d56eabf737daa43a6062a1d5453908cade0727be20248b22c573d40"
+      },
+      "safety-poisoning.jsonl": {
+        "kept": 166,
+        "skipped": 0,
+        "sha256": "fb06b5c186b010f7cd0089455560e7d3983f66b8fd85e9925a9d0b1177d918d8"
+      },
+      "soil-fertility.jsonl": {
+        "kept": 278,
+        "skipped": 0,
+        "sha256": "3ab94b5866957ddef14ca0b82459ad2119a1cfd96fb62e222117f120c7317f83"
+      },
+      "sorghum-millet-groundnut.jsonl": {
+        "kept": 86,
+        "skipped": 0,
+        "sha256": "868c44f7200f6d4a28d13cb0971d34860fefeb710436c976d89ebd55c274ed4f"
+      },
+      "systems-offline.jsonl": {
+        "kept": 61,
+        "skipped": 0,
+        "sha256": "129fe2746b72e4646b71c7cf9867c29ec9b2fac546be117027000708e0c8072f"
+      },
+      "uncertainty-deferral.jsonl": {
+        "kept": 166,
+        "skipped": 0,
+        "sha256": "78e547ccc81939f2c03afd6c96195898198d5324b3f67ee860abbc88e53644d9"
+      },
+      "veterinary-safety.jsonl": {
+        "kept": 13,
+        "skipped": 0,
+        "sha256": "9bc55aa8332deef9c3e6c4a467a9f577ff1bae6ced4de9a2cbec562010b4a412"
+      },
+      "water-conservation.jsonl": {
+        "kept": 97,
+        "skipped": 0,
+        "sha256": "983eb710e5167da87029e8045ab523621fd615cf334b3181723b12d97e5c55c6"
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+# Full-parameter SFT of Qwen2.5-1.5B-Instruct on the AgriLLM corpus.
+# Consumed by train/pipeline/train_sft.py. Every value below is a decision,
+# so the reasoning is recorded next to it - this file is also the artefact
+# Gate 2 section 3.1 asks for under "training script / config".
+
+# ---- identity --------------------------------------------------------------
+base_model: Qwen/Qwen2.5-1.5B-Instruct
+
+# Pin the exact commit before the real run and copy the same string into
+# metadata.json. Gate 2 section 3.1 asks for the base model's commit SHA, and an
+# unpinned "main" makes the run unreproducible the moment upstream moves.
+#   huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct --revision main \
+#     && python3 -c "from huggingface_hub import HfApi; print(HfApi().model_info('Qwen/Qwen2.5-1.5B-Instruct').sha)"
+base_model_revision: null
+
+# ---- paths -----------------------------------------------------------------
+data_dir: train/pipeline/data
+out_dir: train/pipeline/runs/fullft
+
+# ---- optimisation ----------------------------------------------------------
+# 1e-5 is the headline decision. Full fine-tuning touches every weight, so it
+# forgets base-model capability much faster than LoRA. The Round 1 run used
+# 5e-5, which is a sane LoRA rate and roughly 5x too hot here. If the eval comes
+# back fluent-but-hollow (right shape, lost general knowledge), lower it to 7e-6
+# before you reach for more epochs. The sweep in run_pipeline.sh tries 1e-5 and
+# 2e-5 because a 6.7k-row corpus is small enough that both are cheap.
+learning_rate: 1.0e-5
+# 4 rather than 3. Checkpoints are saved every epoch, so this costs a few extra
+# minutes and buys two more candidates (1, 2, 3, 4 epochs) for the behavioural
+# selection to choose between. If epoch 4 has overfit, the eval will say so and
+# an earlier checkpoint wins - nothing is lost by looking.
+epochs: 4
+scheduler: cosine
+warmup_ratio: 0.05
+weight_decay: 0.01
+max_grad_norm: 1.0
+optim: adamw_torch_fused
+
+# Effective batch = batch_size * grad_accum = 32, unchanged.
+#
+# batch_size is 4, not 16, because of the vocabulary. Qwen2.5's vocab is
+# 151,936 tokens, so the logits tensor is batch x seq x 151936. At batch 16 and
+# seq 1024 that is ~10 GB in fp32 for a SINGLE tensor, and the first attempt at
+# this run hit repeated allocator OOMs with 52 MB free on an 80 GB card. For a
+# small model with a large vocabulary the vocab projection dominates memory,
+# not the weights. At batch 4 the same tensor is ~2.5 GB.
+batch_size: 2
+grad_accum: 16
+
+# Corpus p99 is ~562 tokens and the longest row is ~633, so 1024 clears
+# everything with room to spare. Raising it only wastes padding compute.
+max_len: 1024
+
+# ---- runtime ---------------------------------------------------------------
+# Off: with this much spare VRAM, recomputing activations only costs wall clock.
+gradient_checkpointing: false
+
+# eager, NOT sdpa. This is load-bearing, and it was measured rather than guessed
+# (train/pipeline/diagnose.py, results in diagnose_result.json):
+#
+#   fp32 params + bf16 autocast + sdpa   -> grad_norm nan at micro-batch 18
+#   fp32 params + bf16 autocast + eager  -> survived 220 batches, loss 2.49->2.21
+#   fp32 params + no autocast   + sdpa   -> survived 220 batches, loss 2.46->2.22
+#   bf16 params                 + sdpa   -> grad_norm nan at micro-batch 18
+#
+# The failure needs SDPA *and* bf16 compute together; changing either fixes it.
+# SDPA's fused kernel produces non-finite gradients on right-padded batches in
+# bf16. Do not "optimise" this back to sdpa or flash_attention_2 without
+# re-running diagnose.py - three training runs were lost to this.
+attn_implementation: eager
+dataloader_num_workers: 4
+logging_steps: 10
+save_total_limit: 10
+seed: 1337
+
+# ---- what to do with the result -------------------------------------------
+# save_strategy is "epoch" (hard-coded in train_sft.py) so every epoch lands on
+# disk. Do NOT pick the winner by validation loss: loss cannot see that
+# "induce vomiting" is disqualifying, or that an answer ran 90 words over a
+# stated limit. Export each checkpoint and score it with eval/run_eval.py.
