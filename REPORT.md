@@ -23,13 +23,13 @@ officer actually uses a laptop during a farm visit.
 
 **African use-case claim.** `african_alpha_claim` is set to `true`. The subject
 matter is African agriculture throughout, and the 6,703-row corpus was written
-for it: fall armyworm (292 rows), Striga (238), sorghum (235), cassava and
-sweet potato (603, including 50 on cassava mosaic and brown streak disease),
-groundnut (157), aflatoxin in stored maize (130), millet (107), tef (73),
-Newcastle disease in village poultry (59). The
-model refers people to an agrodealer, agrovet or county extension officer (468
-rows) because those are the institutions a smallholder can actually reach. This claim is about use case. The separate African-language bonus was not
-claimed — Swahili failed, and Section 11 says so.
+for it: fall armyworm (292 rows), Striga (238), sorghum (235), cassava and sweet
+potato (603, including 50 on cassava mosaic and brown streak disease), groundnut
+(157), aflatoxin in stored maize (130), millet (107), tef (73) and Newcastle
+disease in village poultry (59). It refers people to an agrodealer, agrovet or
+county extension officer in 468 rows, because those are the institutions a
+smallholder can actually reach. This is a use-case claim; the separate
+African-language bonus was not claimed, for the reason in Section 11.
 
 ## 2. What changed since Round 1
 
