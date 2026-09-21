@@ -28,7 +28,7 @@ base-model commit to `base_model_pin.json`, which the training scripts read.
 `sft_config.yaml` stays at `base_model_revision: null` on purpose - hard-coding
 the SHA there meant editing a tracked file on every box, which then conflicted
 with every `git pull`. A manual step you have to remember is a reproducibility
-bug, and Gate 2 §3.2 has organizers re-running this.
+bug, and Gate 2 Section 3.2 has organizers re-running this.
 
 `preflight.sh` checks the things that have each cost real GPU time: a CPU-only
 torch, a chat-template API whose return type changed, an `sdpa` attention
@@ -51,14 +51,14 @@ CANDIDATE_GGUF=train/pipeline/runs/fullft-lr1e-5/gguf/checkpoint-406-Q4_K_M.gguf
 | `prompts.py` | **Single source of truth for system-prompt strings.** Imported by both the data prep and the template patcher so the string trained under and the string shipped can't drift. |
 | `prepare_sft_data.py` | 25 JSONL files → tokenised tensors. Applies the Qwen ChatML template, masks loss to assistant tokens only, draws from the system-prompt mix, writes `manifest.json` with per-file SHA256 and `sample_rendered.txt` for human inspection. |
 | `test_masking.py` | Proves the loss mask is right, including a negative control. Runs anywhere; `--real` uses the genuine tokenizer. |
-| `sft_config.yaml` | Hyperparameters, with the reasoning for each recorded inline. Doubles as the Gate 2 §3.1 "training config" artefact. |
+| `sft_config.yaml` | Hyperparameters, with the reasoning for each recorded inline. Doubles as the Gate 2 Section 3.1 "training config" artefact. |
 | `train_sft.py` | Full-parameter SFT via plain `transformers.Trainer`. Saves every epoch, writes `run_record.json` (loss history, step count, wall clock, GPU). |
 | `set_chat_template_default.py` | Rewrites the template's injected default system prompt from Qwen's to AgriLLM's. Backs up, idempotent, `--check` and `--restore`. |
 | `export_gguf.sh` | HF checkpoint → f16 GGUF → Q4_K_M. Repairs missing tokenizer files, patches the default prompt, verifies GGUF magic bytes, confirms both the ChatML template and the AgriLLM default survived into the binary, prints SHA256. |
 | `select_checkpoint.sh` | Exports and scores **every** checkpoint with `eval/run_eval.py`, ranks them, refuses to crown a winner that has any safety-critical failure. |
 | `compare_quants.sh` | Scores the winner at Q4_K_M / Q5_K_M / Q6_K / f16 so the size-vs-accuracy trade is made with numbers. |
 | `run_pipeline.sh` | Orchestrates all seven stages; `--stage <name>` runs just one. |
-| `capture_provenance.py` | Assembles `provenance/` for Gate 2 §3.1 and drafts the Model Provenance section for REPORT.md. |
+| `capture_provenance.py` | Assembles `provenance/` for Gate 2 Section 3.1 and drafts the Model Provenance section for REPORT.md. |
 
 ## Identity: what the model says it is
 
@@ -76,7 +76,7 @@ call.
 > agrovet or veterinary officer. Say plainly when you do not know something
 > rather than guessing.
 
-It names the Qwen base deliberately. Gate 2 §3.1 requires disclosing the base
+It names the Qwen base deliberately. Gate 2 Section 3.1 requires disclosing the base
 model, so a model that claims to be wholly homegrown contradicts your own
 provenance folder. `identity-scope.jsonl` (30 rows) teaches the same honest
 self-description, plus scope boundaries and the fact that it is **text-only** and

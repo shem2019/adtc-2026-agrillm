@@ -76,7 +76,7 @@ KNOWN_BINOMIALS = {
     "brachiaria brizantha",  # also covers bare "Brachiaria grass" via genus check below
 }
 # Genus-only mentions ("Brachiaria grass", "Desmodium between") are legitimate —
-# the corpus rule (refinements.md §5) is description+binomial on FIRST mention,
+# the corpus rule (refinements.md Section 5) is description+binomial on FIRST mention,
 # not every mention. Treat these common companion-planting genera as always safe
 # on their own, regardless of what English word follows.
 SAFE_BARE_GENUS = {"brachiaria", "desmodium", "napier"}

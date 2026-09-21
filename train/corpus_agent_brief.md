@@ -73,12 +73,12 @@ For each topic, in order:
 1. **Audit** every source row → write `_audit/<topic>.jsonl`.
 2. **Carry forward** `KEEP` rows and repaired `FIX` rows.
 3. **Generate** new rows until you reach the target.
-4. **Self-check** the assembled file against the gates in §7.
+4. **Self-check** the assembled file against the gates in Section 7.
 5. If any gate fails, repair or regenerate the offending rows and re-check.
    **Do not write the file until every gate passes.**
 6. Write `_clean/<topic>.jsonl` and append a section to `_audit/REPORT.md`.
 
-Resumability: if `_clean/<topic>.jsonl` already exists and passes §7, skip that
+Resumability: if `_clean/<topic>.jsonl` already exists and passes Section 7, skip that
 topic. You may be restarted.
 
 ## 5. Audit rules
@@ -223,9 +223,9 @@ trailing commas, no blank lines. UTF-8. Must parse line-by-line with
 `json.loads`.
 
 `_audit/REPORT.md` — per topic: source rows, KEEP/FIX/DROP/REVIEW counts, rows
-generated, final count, and the measured value of every gate in §7. Then a table
+generated, final count, and the measured value of every gate in Section 7. Then a table
 of the most common `problems` findings across all topics. This becomes the
-dataset documentation required by Gate 2 §3.1, so write it for a judge.
+dataset documentation required by Gate 2 Section 3.1, so write it for a judge.
 
 ## 9. What failure looks like
 

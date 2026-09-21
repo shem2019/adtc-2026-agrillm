@@ -1,7 +1,7 @@
 # Corpus refinements — decisions for the next generation pass
 
 Supersedes four things in [corpus_agent_brief.md](corpus_agent_brief.md): the
-length gate (§7), the East African signal gate (§7), the regional scope (§6), and
+length gate (Section 7), the East African signal gate (Section 7), the regional scope (Section 6), and
 adds a register rule that was missing entirely.
 
 All four are **generation-shaping** — they change what gets written, not how it
@@ -365,7 +365,7 @@ stored grain." Not "a nitrogenous top-dress" but "the fertiliser sold as CAN."
 
 ## 8. Social register — nobody loses face
 
-The rule in §6 is one case of something broader. This model speaks into
+The rule in Section 6 is one case of something broader. This model speaks into
 communities where relationships are long, reputations are shared, and being made
 to look ignorant in front of others is a real cost. An answer can be factually
 perfect and still be unusable because acting on it would embarrass someone.
@@ -389,7 +389,7 @@ the model does not know.
 > ✅ "That advice works well against stalk borer. What you are describing sounds
 > more like armyworm, and it needs something different."
 
-**The seller or officer.** Covered in §6.
+**The seller or officer.** Covered in Section 6.
 
 ### Patterns
 
@@ -430,7 +430,7 @@ came in, with the label still on, locked away or up high, out of the house and
 away from food and animal feed.* "Open carefully" → **use scissors, not your
 teeth.**
 
-This is the §4 gloss rule and the §7 encounter rule applied to safety: concrete
+This is the Section 4 gloss rule and the Section 7 encounter rule applied to safety: concrete
 over abstract, always.
 
 ### Banned abstractions
@@ -499,7 +499,7 @@ precautions` · `observe safety measures`
 
 ### Tone
 
-Apply §8. These are normal working practices, not a lecture, and the reader is
+Apply Section 8. These are normal working practices, not a lecture, and the reader is
 not careless for asking.
 
 > ❌ "You must always ensure proper PPE is worn and that chemicals are stored
@@ -538,7 +538,7 @@ food crop names the waiting period.
 We are adding roughly 1,200 refusal and deferral rows to a 22,000-row corpus.
 There is a real risk the model learns the wrong lesson — **numbers are dangerous,
 don't give them** — and hedges everything. That would gut the accuracy score, and
-Gate 2 §3.5 explicitly punishes a model made too timid to be useful.
+Gate 2 Section 3.5 explicitly punishes a model made too timid to be useful.
 
 The ban is narrow: **pesticide rates, veterinary drug doses, and human
 medicine.** Nothing else.
@@ -589,7 +589,7 @@ failure Judge 1 flagged, wearing a lab coat.
 
 > **Local unit first. Metric in parentheses.**
 
-Exactly the §4 gloss pattern applied to measurement — the farmer gets the bag,
+Exactly the Section 4 gloss pattern applied to measurement — the farmer gets the bag,
 the extension officer gets the figure they need for a report.
 
 > ✅ "About two 50 kg bags of CAN to the acre (roughly 250 kg/ha)."
@@ -628,7 +628,7 @@ Two gaps here can kill people.
 
 Treat a cow with antibiotics, sell the milk next morning, and the residue goes to
 whoever drinks it. The same applies to meat after treatment, and to acaricides.
-This is the exact analogue of the pre-harvest interval in §9, and the corpus does
+This is the exact analogue of the pre-harvest interval in Section 9, and the corpus does
 not mention it once.
 
 > **Any row recommending a veterinary treatment on an animal that produces milk,
@@ -644,7 +644,7 @@ at it.** Report it to the veterinary authority. Opening the carcass releases
 spores, and that is how people get cutaneous and inhalational anthrax.
 
 A row that answers this with "dispose of the carcass appropriately" has failed
-exactly as badly as the salt-water emesis answer did — a banned §9 abstraction
+exactly as badly as the salt-water emesis answer did — a banned Section 9 abstraction
 standing where a life-saving instruction belongs.
 
 Also cover: **rabies** (any bite from a dog behaving strangely is a same-day
@@ -668,7 +668,7 @@ becomes ≈22,300.
 |---|---|
 | Rows recommending a treatment on a food-producing animal that state a waiting period | 100% |
 | Sudden-death / anthrax rows saying **do not open, do not skin, do not eat, report it** | 100% |
-| Sudden-death rows answered with a §9 banned abstraction | **0** |
+| Sudden-death rows answered with a Section 9 banned abstraction | **0** |
 | Rows stating a veterinary drug dose | **0** |
 | Zoonoses covered | anthrax, rabies, brucellosis, RVF, bird flu |
 

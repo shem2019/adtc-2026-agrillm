@@ -3,7 +3,7 @@
 
 Audits source files -> _audit/<topic>.jsonl
 Expands & verifies clean datasets for all 22 topics -> _clean/<topic>.jsonl
-Enforces all 12 §7 Quality Gates.
+Enforces all 12 Section 7 Quality Gates.
 Outputs _audit/REPORT.md.
 """
 

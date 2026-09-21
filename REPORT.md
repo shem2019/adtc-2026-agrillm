@@ -86,7 +86,7 @@ the 1.5B. Qwen2.5-1.5B was selected because it was top-two under every throughpu
 assumption we tested and carries no `<think>` reasoning template, which costs
 tokens in a throughput-scored contest.
 
-Under §3.5 (anti-gaming) it is worth stating the inverse explicitly: the 0.5B
+Under Section 3.5 (anti-gaming) it is worth stating the inverse explicitly: the 0.5B
 model is twice as fast and a third of the memory, and we did not ship it. A
 smaller model would have scored better on Efficiency and Performance and been
 materially worse at the job.
@@ -152,7 +152,7 @@ inherited every error.
 scored 4.4 points higher than Q4_K_M — 31% faster, 40% less memory — and when
 asked to identify fall armyworm it answered *"the Letticea leaf miner"*, a
 species that does not exist. We shipped the slower build. (That fabricated name
-later became a permanent test prompt in our harness; see §8.)
+later became a permanent test prompt in our harness; see Section 8.)
 
 ### 5.3 Semifinal attempt 1 — 22,300 rows that were 700 rows
 
@@ -301,7 +301,7 @@ harness.**
 
 Without that number, every later result is unanchored — there is no way to tell
 a fine-tune that worked from a base model that was already competent. It is also
-what §3.1 asks us to demonstrate. Full results:
+what Section 3.1 asks us to demonstrate. Full results:
 [`provenance/logs/eval/baseline__base-model.json`](provenance/logs/eval/).
 
 ### 7.2 Single-stage: our corpus alone
@@ -529,7 +529,7 @@ the eighth omits the word "herbicide" and trips the rule.
 
 ## 10. Model Provenance
 
-*Required by Gate 2 §3.1. Mirrors the `provenance` object in `metadata.json`.*
+*Required by Gate 2 Section 3.1. Mirrors the `provenance` object in `metadata.json`.*
 
 | Field | Value |
 |---|---|
@@ -539,13 +539,13 @@ the eighth omits the word "herbicide" and trips the rule.
 | **Base model parameters** | 1,543,714,304 |
 | **Fine-tuning method** | **Full fine-tune** (full-parameter SFT), two stages. No LoRA, no QLoRA, not prompt-engineering-only. |
 | **Training dataset 1** | AgriLLM African Extension Corpus — our own work, 6,703 rows / 25 files, CC-BY-4.0, in this repo at `train/african/_clean/` |
-| **Training dataset 2** | [`AI71ai/agrillm-train-146k`](https://huggingface.co/datasets/AI71ai/agrillm-train-146k) — third party, Apache-2.0, 143,875 rows published / 74,697 retained after filtering. Not our work; see §6. |
+| **Training dataset 2** | [`AI71ai/agrillm-train-146k`](https://huggingface.co/datasets/AI71ai/agrillm-train-146k) — third party, Apache-2.0, 143,875 rows published / 74,697 retained after filtering. Not our work; see Section 6. |
 | **Training hardware** | 1× NVIDIA RTX A6000 48 GB (both stages); earlier sweep on 1× H100 PCIe 80 GB |
 | **Shipped GGUF SHA256** | `ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f` |
 
 ### Because this is a full fine-tune, there are no adapter weights
 
-§3.1 asks for `adapter_model.safetensors` from teams who used LoRA or QLoRA. We
+Section 3.1 asks for `adapter_model.safetensors` from teams who used LoRA or QLoRA. We
 did not, so no adapters exist. In their place, [`provenance/`](provenance/)
 contains:
 
@@ -559,7 +559,7 @@ contains:
   sample, and the stage-1 filter manifest with cut counts
 - **`checksums.txt`** — base model, every published GGUF, the fp32 checkpoints,
   and the third-party dataset
-- **`before_after.md`** — the §3.1 comparison, summarised next
+- **`before_after.md`** — the Section 3.1 comparison, summarised next
 
 The full-precision checkpoints are published alongside the GGUF at
 `checkpoints/2stage-ckpt1224/` in the same Hugging Face repo, so the shipped
@@ -609,14 +609,14 @@ is no such pest; we invented it.
 Qwen2.5's chat template silently injects *"You are Qwen, created by Alibaba
 Cloud"* when the caller sends no system message — which is exactly how an
 automated grader calls it. We replaced that injected default with an AgriLLM one
-that **names the Qwen base honestly**, since §3.1 requires disclosing it and a
+that **names the Qwen base honestly**, since Section 3.1 requires disclosing it and a
 model claiming to be wholly homegrown would contradict this very section.
 
 ## 11. Quantisation
 
-Q4_K_M, unchanged from Round 1 and for the reason given in §5.2: IQ4_XS scored
+Q4_K_M, unchanged from Round 1 and for the reason given in Section 5.2: IQ4_XS scored
 4.4 points higher on the leaderboard formula and destroyed the domain knowledge
-the model exists for. Under §3.5 that is the trade this project consistently
+the model exists for. Under Section 3.5 that is the trade this project consistently
 refuses — we are not reducing capability to inflate efficiency.
 
 A quantisation sweep (Q4_K_M / Q5_K_M / Q6_K / f16) was built and run for the
@@ -628,7 +628,7 @@ rather than implied.
 
 **These figures are carried over from the Round 1 model and are pending
 re-measurement on the reference machine for the Gate 2 model.** They are reported
-here as indicative, not as the Gate 2 claim, in line with §3.4.
+here as indicative, not as the Gate 2 claim, in line with Section 3.4.
 
 The carry-over is defensible on one specific ground: the Gate 2 model is the same
 base architecture at the same quantisation, and the two GGUF files differ by
@@ -648,7 +648,7 @@ budget laptop — Intel i5-6300U, 2 cores / 4 threads, 8 GB — which is below t
 reference spec; the model runs.
 
 `S_acc` is graded by the judge panel, so no accuracy figure is claimed here. The
-78.9% throughout this report is **our own harness**, described in §7.3, and is
+78.9% throughout this report is **our own harness**, described in Section 7.3, and is
 not a submitted score.
 
 ## 13. Limitations — measured, not estimated
@@ -668,8 +668,8 @@ from sick birds to vaccinate others — which does not exist and would spread
 infection. That checkpoint was not shipped, but the failure mode is real.
 
 **Our own harness over-scores by 13–18 points** relative to a human reading the
-same answers, and has a ±6 point sampling noise floor. Both are stated in §7.3
-and §8.1 rather than buried.
+same answers, and has a ±6 point sampling noise floor. Both are stated in Section 7.3
+and Section 8.1 rather than buried.
 
 **There is a known safety error the harness does not catch.** Several
 checkpoints, including the shipped one, advise keeping contaminated clothing on
@@ -717,7 +717,7 @@ adtc-profiler run --submission . --mode participant --output submission.json
 ```
 
 `download_model.sh` is the official template file with only `MODEL_FILE` and
-`MODEL_URL` edited, per §3.2. The URL is a static, plainly-readable string pinned
+`MODEL_URL` edited, per Section 3.2. The URL is a static, plainly-readable string pinned
 to Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`, not to `main`.
 
 ## 15. Tools and attribution
@@ -725,14 +725,14 @@ to Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`, not to `main`
 | Tool / source | Licence | Role |
 |---|---|---|
 | [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) (Alibaba Cloud) | Apache-2.0 | Base model |
-| [AI71ai/agrillm-train-146k](https://huggingface.co/datasets/AI71ai/agrillm-train-146k) (AI71ai) | Apache-2.0 | Stage-1 training data — third party, see §6 |
+| [AI71ai/agrillm-train-146k](https://huggingface.co/datasets/AI71ai/agrillm-train-146k) (AI71ai) | Apache-2.0 | Stage-1 training data — third party, see Section 6 |
 | [llama.cpp](https://github.com/ggerganov/llama.cpp) | MIT | Quantisation and CPU inference |
 | [transformers](https://github.com/huggingface/transformers) / accelerate | Apache-2.0 | Training |
 | [adtc-profiler](https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler) | — | Reference measurement |
 | KisanVaani/agriculture-qa-english-only | Apache-2.0 | Round 1 corpus |
 | manifesta/verified-agronomy-17k | CC0-1.0 | Round 1 corpus |
 | 45acp/agronomy | MIT | Round 1 corpus |
-| RayNene/adaption-agronomy-qa-pairs | **none declared** | **Excluded** — see §5.1 |
+| RayNene/adaption-agronomy-qa-pairs | **none declared** | **Excluded** — see Section 5.1 |
 
 Our own corpus, evaluation harness, training pipeline and this report are
-original work by this team. Generated training data is disclosed in §5 and §13.
+original work by this team. Generated training data is disclosed in Section 5 and Section 13.

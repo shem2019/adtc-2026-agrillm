@@ -3,7 +3,7 @@
 
 Audits source files -> _audit/<topic>.jsonl
 Expands & verifies clean datasets for all 22 topics -> _clean/<topic>.jsonl
-Enforces all 12 §7 Quality Gates.
+Enforces all 12 Section 7 Quality Gates.
 Outputs _audit/REPORT.md.
 """
 
@@ -584,7 +584,7 @@ def main():
             if len(existing_lines) >= target:
                 gates = check_quality_gates(existing_lines, topic)
                 if gates["passed"]:
-                    print(f"  [SKIP] {topic}.jsonl already exists, has {len(existing_lines)} rows, and PASSES all §7 gates.")
+                    print(f"  [SKIP] {topic}.jsonl already exists, has {len(existing_lines)} rows, and PASSES all Section 7 gates.")
                     all_gate_reports[topic] = gates
                     total_clean_rows += len(existing_lines)
                     continue
@@ -639,7 +639,7 @@ def main():
 
     report_lines.extend([
         "",
-        "## 3. §7 Measured Quality Gate Metrics Across All Topics",
+        "## 3. Section 7 Measured Quality Gate Metrics Across All Topics",
         "",
         "| Topic | Distinct Answers (%) | Max Prefix Reuse | Near-Dups | Shared Openings (%) | Min Token Ratio | <60 Words (%) | >250 Words (%) | EA Signal (%) |",
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|"

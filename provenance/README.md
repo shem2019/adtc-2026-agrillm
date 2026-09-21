@@ -1,7 +1,7 @@
 # provenance/ — proof of training
 
-Everything Gate 2 §3.1 asks for. AgriLLM is a **full-parameter fine-tune**, so
-there are no LoRA/QLoRA adapters to submit; §3.1 lists adapter weights only for
+Everything Gate 2 Section 3.1 asks for. AgriLLM is a **full-parameter fine-tune**, so
+there are no LoRA/QLoRA adapters to submit; Section 3.1 lists adapter weights only for
 teams who used LoRA. In their place this folder carries the training scripts and
 configs that produced the model, per-step loss logs for every run, the dataset
 manifests with checksums, a tensor-by-tensor weight-delta report against the base
@@ -12,7 +12,7 @@ re-derived byte for byte.
 
 | Path | What it is |
 |---|---|
-| `before_after.md` | **§3.1 before/after comparison** — three prompts, base model vs shipped model, full category table |
+| `before_after.md` | **Section 3.1 before/after comparison** — three prompts, base model vs shipped model, full category table |
 | `checksums.txt` | SHA256 of the base model, every published GGUF, the fp32 checkpoints, the third-party dataset, and each of our 25 corpus files |
 | `weight_delta.json` | Tensor-by-tensor comparison against the base model: **99.9986% of parameters changed** |
 | `training/` | Every script and config that produced the model, unmodified |
@@ -53,7 +53,7 @@ About five hours end to end on a single A6000.
 | `2stage-x` | 2stage/1224 | ours | 4 | 1e-5 | 0.021 | final — 81.7%, **not shipped** |
 
 The last row is the one worth reading the note about: it scored highest and was
-rejected. Full reasoning in REPORT.md §9.
+rejected. Full reasoning in REPORT.md Section 9.
 
 ## Files the evaluator may want first
 
@@ -71,7 +71,7 @@ rejected. Full reasoning in REPORT.md §9.
 Stage 1 used **[`AI71ai/agrillm-train-146k`](https://huggingface.co/datasets/AI71ai/agrillm-train-146k)**,
 a third-party dataset published on the Hugging Face Hub by AI71ai under
 Apache-2.0. It is not our work. We filtered it before use and record exactly what
-was removed in `dataset/stage1_manifest.json` and REPORT.md §6. The name overlap
+was removed in `dataset/stage1_manifest.json` and REPORT.md Section 6. The name overlap
 with our project is coincidental — we found the dataset after naming AgriLLM.
 
 Base model: **[`Qwen/Qwen2.5-1.5B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)**

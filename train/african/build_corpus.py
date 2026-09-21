@@ -3,7 +3,7 @@
 
 Audits source files in train/african/*.jsonl -> writes train/african/_audit/*.jsonl
 Generates/repairs clean dataset rows for 22 topics -> writes train/african/_clean/*.jsonl
-Checks all 12 quality gates from §7.
+Checks all 12 quality gates from Section 7.
 Outputs train/african/_audit/REPORT.md with full statistics.
 """
 

@@ -3,7 +3,7 @@
 
 - Audits source files in train/african/*.jsonl -> _audit/<topic>.jsonl
 - Generates/expands clean datasets for all 22 topics -> _clean/<topic>.jsonl
-- Enforces ALL 12 §7 Quality Gates with 100% PASS status.
+- Enforces ALL 12 Section 7 Quality Gates with 100% PASS status.
 - Outputs _audit/REPORT.md.
 """
 
@@ -631,7 +631,7 @@ def main():
 
     report_lines.extend([
         "",
-        "## 3. §7 Measured Quality Gate Metrics Across All Topics",
+        "## 3. Section 7 Measured Quality Gate Metrics Across All Topics",
         "",
         "| Topic | Distinct Answers (%) | Max Prefix Reuse | Near-Dups | Shared Openings (%) | Min Token Ratio | <60 Words (%) | >250 Words (%) | EA Signal (%) |",
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|"

@@ -56,7 +56,7 @@ def shape(answer: str) -> str:
 def shape_prefix(answer: str, n_chars: int = 180) -> str:
     return shape(answer)[:n_chars]
 
-# ---- banned abstractions (corpus_refinements.md §9) ---------------------
+# ---- banned abstractions (corpus_refinements.md Section 9) ---------------------
 BANNED_ABSTRACT = re.compile(
     r'\bproper ppe\b|\bappropriate protective equipment\b|\bprotective gear\b|'
     r'\bsuitable clothing\b|\bsafety precautions\b|\bhandle with care\b|'
@@ -65,7 +65,7 @@ BANNED_ABSTRACT = re.compile(
     r'\btake necessary precautions\b|\bobserve safety measures\b', re.I)
 
 # ---- dose / rate regex (never allowed for CHEMICAL/VET treatment rates) --
-# Deliberately narrower than a bare "number + unit" match: §10 of
+# Deliberately narrower than a bare "number + unit" match: Section 10 of
 # corpus_refinements.md requires the model to state fertiliser and seed
 # rates CONFIDENTLY, and a plant's own nitrogen fixation (a fact, not an
 # instruction) also legitimately carries a kg/ha figure. Both must NOT be
@@ -86,7 +86,7 @@ _DOSE_RATE_RAW = re.compile(
 
 class _DoseRate:
     """Wraps the raw dose regex to exclude fertiliser context. Fertiliser and
-    seed rates must be stated CONFIDENTLY per corpus_refinements.md §10 --
+    seed rates must be stated CONFIDENTLY per corpus_refinements.md Section 10 --
     only pesticide/acaricide/veterinary rates are banned."""
     def search(self, text):
         m = _DOSE_RATE_RAW.search(text)

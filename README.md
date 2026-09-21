@@ -115,7 +115,7 @@ replacement for one.
   completions, it answers more reliably in that shape than through a chat
   template.
 - **Multi-turn conversation degrades.** The corpus is entirely single-turn.
-- **No Swahili.** Attempted, measured, and abandoned — see REPORT.md §8.
+- **No Swahili.** Attempted, measured, and abandoned — see REPORT.md Section 8.
 
 Never act on agrochemical dosing advice from this model. It is trained to tell
 you that itself.

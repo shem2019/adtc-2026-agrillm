@@ -1,7 +1,7 @@
 # Training log — Gate 2 run
 
 A dated record of the run that produced the submitted model: environment,
-decisions, failures and fixes. Kept because Gate 2 §3.1 asks for training logs
+decisions, failures and fixes. Kept because Gate 2 Section 3.1 asks for training logs
 and because a reviewer reproducing this needs to know what the machine actually
 was, not what it was supposed to be.
 

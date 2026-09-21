@@ -3,7 +3,7 @@
 
 Audits source files -> _audit/<topic>.jsonl
 Generates clean datasets for 22 topics -> _clean/<topic>.jsonl
-Checks all 12 §7 Quality Gates.
+Checks all 12 Section 7 Quality Gates.
 Outputs _audit/REPORT.md.
 """
 
