@@ -123,9 +123,8 @@ exactly the behaviour the Round 1 judge found missing.
 Stage 1 of training uses
 **[`AI71ai/agrillm-train-146k`](https://huggingface.co/datasets/AI71ai/agrillm-train-146k)**,
 a dataset of agricultural question-answer turns published on Hugging Face by
-**AI71ai** under Apache-2.0. It is not this team's work and no credit is claimed
-for it. It was found after this project was named; the name collision is
-coincidental.
+**AI71ai** under Apache-2.0, and used here under that licence. It was found after
+this project was named; the name collision is coincidental.
 
 Reading the raw file before use showed a large share was unusable. Of **143,875
 published rows, 74,697 were kept — 52%.**
@@ -144,7 +143,7 @@ The scaffolding cut matters most: training on prompt residue teaches a model to
 emit its own scaffolding. That filter began as one narrow pattern and was widened
 three times as new marker shapes appeared while reading the output.
 
-This dataset is treated as breadth, never as truth. It is largely
+This dataset supplies breadth; correctness comes from stage 2. It is largely
 machine-generated and unverified; its job is to supply agricultural vocabulary
 and coverage, after which stage 2 restores correctness, safety and African
 context from the verified corpus.
@@ -282,15 +281,15 @@ maize; the eighth omits the word "herbicide" and trips the rule.
 | **Base model commit SHA** | `989aa7980e4cf806f80c7fef2b1adb7bc71aa306` |
 | **Base model licence** | Apache-2.0 |
 | **Base model parameters** | 1,543,714,304 |
-| **Fine-tuning method** | **Full fine-tune**, two stages. Not LoRA, not QLoRA, not prompt-engineering only. |
+| **Fine-tuning method** | **Full fine-tune**, two stages — every weight updated |
 | **Training dataset 1** | AgriLLM African Extension Corpus — own work, 6,703 rows across 25 files, CC-BY-4.0, in this repo at `train/african/_clean/` |
 | **Training dataset 2** | [`AI71ai/agrillm-train-146k`](https://huggingface.co/datasets/AI71ai/agrillm-train-146k) — third party, Apache-2.0, 143,875 rows published and 74,697 kept after filtering. Not this team's work; see Section 5. |
 | **Training hardware** | 1× NVIDIA RTX A6000 48 GB (both stages); earlier runs on 1× H100 80 GB |
 | **Shipped model SHA256** | `ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f` |
 
-**There are no adapter weights, because this is a full fine-tune.** Gate 2 Section 3.1
-asks for adapter files from teams who used LoRA or QLoRA. In their place,
-[`provenance/`](provenance/) contains a tensor-by-tensor comparison against the
+Gate 2 Section 3.1 asks LoRA and QLoRA teams for adapter files. AgriLLM is a full
+fine-tune, so the equivalent evidence is in [`provenance/`](provenance/): a
+tensor-by-tensor comparison against the
 base model showing **1,543,692,302 of 1,543,714,304 parameters changed
 (99.9986%)**; every script and config that produced the model; per-step loss for
 all seven runs and all 31 evaluation results; data manifests with per-file
@@ -354,7 +353,7 @@ single-stage models but not re-run on the two-stage model before the deadline.
 **The figures below come from the Round 1 model and are pending re-measurement on
 the reference machine.** They are indicative, not the Gate 2 claim. The carry-over
 rests on one point: the Gate 2 model is the same architecture at the same
-quantisation, and the two files differ by 96 bytes.
+quantisation, and the two files are within 96 bytes of each other in size.
 
 | Metric | Round 1 measurement |
 |---|---:|
@@ -366,8 +365,7 @@ quantisation, and the two files differ by 96 bytes.
 Measured with `adtc-profiler 0.1.0` on 4 vCPU / 7.8 GB / Ubuntu 24.04, across two
 runs differing by 0.4%. Also tested on a real budget laptop — Intel i5-6300U,
 2 cores, 8 GB, below the reference spec — where the model runs. The 78.9% quoted
-throughout is the internal test described in Section 7, not a submitted accuracy
-score.
+throughout refers to the internal test described in Section 7.
 
 ## 11. Limitations
 
@@ -398,8 +396,7 @@ deliberately trained to defer to the product label and the local agrovet.
 
 ## 12. Reproducibility
 
-The model can be rebuilt from a bare GPU machine in one command, with no file to
-edit and no variable to set:
+The model can be rebuilt from a bare GPU machine in one command:
 
 ```bash
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
@@ -408,12 +405,10 @@ bash train/pipeline/reproduce.sh --all
 ```
 
 About five hours on a single A6000. The setup script installs the CUDA toolkit if
-missing, checks the compiler actually works rather than trusting the package
-manager, prevents a dependency conflict that silently replaces the GPU build of
-PyTorch with a CPU-only one, and pins the base model commit to a file the
-training scripts read — so the pin never has to be hand-edited. A pre-flight
-check then verifies twelve conditions in about thirty seconds before any GPU time
-is spent.
+missing, verifies the compiler, keeps the GPU build of PyTorch in place against a
+dependency that would replace it with a CPU-only one, and writes the base model
+commit to a file the training scripts read. A pre-flight check then verifies
+twelve conditions in about thirty seconds before any GPU time is spent.
 
 To run the shipped model:
 
@@ -423,8 +418,8 @@ adtc-profiler run --submission . --mode participant --output submission.json
 ```
 
 `download_model.sh` is the official template file with only the filename and URL
-changed, as Gate 2 Section 3.2 requires. The URL is a plain, readable string pinned to
-Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`, not to a branch.
+changed, as Gate 2 Section 3.2 requires. The URL is a plain, readable string
+pinned to Hugging Face commit `d84a627c612280937b6e33975975ee5344087b8e`.
 
 ## 13. Attribution
 

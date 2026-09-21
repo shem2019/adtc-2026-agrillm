@@ -2,12 +2,12 @@
 
 Everything needed to take `train/african/_clean/*.jsonl` (6,703 verified rows)
 to a scored, shippable Q4_K_M GGUF. Written so the GPU meter runs for the
-shortest possible time: nothing here needs thinking about while it's billing.
+shortest possible time: every step runs unattended.
 
 ## The short version
 
 ```bash
-# on the rented box, from a clean checkout - no manual edits required
+# on the rented box, from a clean checkout
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
 
@@ -16,12 +16,12 @@ source .venv-train/bin/activate
 bash train/pipeline/preflight.sh                 # ~30 s, must be all green
 
 tmux new -s train                                # long runs, survive a dropped ssh
-bash train/pipeline/run_pipeline.sh              # single stage, our corpus
+bash train/pipeline/run_pipeline.sh              # single stage, the verified corpus
 #   or
 bash train/pipeline/run_two_stage.sh             # external corpus, then ours
 ```
 
-**Nothing tracked by git needs editing on the box.** `setup_gpu.sh` installs the
+**The repo runs as checked out.** `setup_gpu.sh` installs the
 CUDA toolkit if absent, verifies the C++ toolchain, guards torch against being
 downgraded to a CPU build by llama.cpp's requirements, and writes the pinned
 base-model commit to `base_model_pin.json`, which the training scripts read.

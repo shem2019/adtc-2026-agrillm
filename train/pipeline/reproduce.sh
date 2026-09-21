@@ -6,17 +6,15 @@
 #   cd adtc-2026-agrillm
 #   bash train/pipeline/reproduce.sh --all
 #
-# That is the whole procedure. No file in the repo needs editing on the box,
-# no environment variable needs exporting, and no step needs a human between
-# it and the next one. Everything below was learned the expensive way during
-# the Gate 2 work; each guard exists because its absence cost GPU time on a
-# rented machine.
+# That is the whole procedure: clone, run, collect the scored checkpoints.
+# The guards below were each added after a specific failure during the Gate 2
+# work; the comments say which.
 #
 # Stages (run individually with --stage <name>):
 #   setup     install CUDA toolkit + torch + llama.cpp, pin the base model
 #   check     preflight: 12 assertions, ~30 s, must be green before training
 #   stage1    train on the filtered third-party corpus   (~2.7 h on an A6000)
-#   stage2    continue on our verified corpus            (~1.0 h)
+#   stage2    continue on the verified corpus            (~1.0 h)
 #   select    export every checkpoint to GGUF and score it (~1.0 h)
 #   review    write per-checkpoint raw-answer files for human reading
 #
@@ -31,7 +29,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$REPO_ROOT"
 
 STAGE="all"
-S1_LR=1e-5; S1_EPOCHS=1        # one pass over 74,697 rows is already 11x our corpus
+S1_LR=1e-5; S1_EPOCHS=1        # one pass over 74,697 rows is 11x the size of stage 2
 S2_LR=2e-5; S2_EPOCHS=6        # the shipped model: checkpoint-1224 is epoch 6
 SAMPLES=8                      # 8 samples/prompt; 3 is too noisy to rank checkpoints
 
@@ -64,9 +62,8 @@ if want setup; then
   ok "setup complete"
 fi
 
-# The venv must be active for everything below. Sourcing here rather than
-# asking the operator to remember it is the difference between one command
-# and two, and a forgotten `source` produced a full run against system python.
+# Activate the venv here, so the whole pipeline runs from one command. A
+# forgotten `source` once sent a full run through the system python.
 if [ -f "$REPO_ROOT/.venv-train/bin/activate" ]; then
   # shellcheck disable=SC1091
   source "$REPO_ROOT/.venv-train/bin/activate"
@@ -117,17 +114,17 @@ if want stage2; then
   [ -d "$S1_CKPT" ] || die "no stage-1 checkpoint at ${S1_CKPT}; run --stage stage1"
 
   if [ ! -f train/pipeline/data/train.pt ]; then
-    say "STAGE 2a  tokenise our corpus"
+    say "STAGE 2a  tokenise the verified corpus"
     python3 train/pipeline/prepare_sft_data.py \
       --corpus-dir train/african/_clean \
       --out-dir train/pipeline/data \
       ${REV:+--revision $REV} 2>&1 | tee "$LOGS/05-stage2-tokenise.log"
     [ -f train/pipeline/data/train.pt ] || die "tokenisation produced no train.pt"
   else
-    ok "our corpus already tokenised"
+    ok "verified corpus already tokenised"
   fi
 
-  say "STAGE 2  continue on our verified corpus"
+  say "STAGE 2  continue on the verified corpus"
   python3 train/pipeline/train_sft.py \
     --config train/pipeline/sft_config.yaml \
     --data-dir train/pipeline/data \
@@ -158,22 +155,20 @@ if want review; then
   cat <<'NOTE'
 
   ---------------------------------------------------------------------------
-  READ THE REVIEWS BEFORE PICKING A CHECKPOINT.
-
-  Do not pick by the harness score alone. Two things we measured the hard way:
+  READ THE REVIEWS BEFORE PICKING A CHECKPOINT. Two measured findings:
 
     1. The harness and a human reading the same answers disagree by 13-18
        points, consistently, in the harness's favour. It grades string
        patterns, and fluent confabulation satisfies string patterns.
 
     2. The sampling noise floor is about +/-6 points. Two byte-identical
-       checkpoints scored 75.1% and 81.7% in the same sweep. Any gap smaller
-       than that is not a result.
+       checkpoints scored 75.1% and 81.7% in the same sweep, so treat smaller
+       gaps as noise.
 
   Check the training loss too. The shipped model (checkpoint-1224) finished
   at train_loss 0.594. A continuation run reached 0.021 and scored higher on
-  the harness while reciting the corpus - we did not ship it. See REPORT.md
-  section 9.
+  the harness while reciting the corpus; it was rejected. See REPORT.md
+  section 8.
   ---------------------------------------------------------------------------
 NOTE
 fi

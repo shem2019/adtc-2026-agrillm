@@ -39,10 +39,10 @@
     "base_model_license": "apache-2.0",
     "base_model_parameters": 1543714304,
     "fine_tuning_method": "full_fine_tune",
-    "fine_tuning_notes": "Two-stage full-parameter supervised fine-tune. No LoRA or QLoRA adapters were used, so no adapter weights exist; the proof-of-training artefacts in provenance/ are the training scripts, configs, per-step loss logs, dataset manifests with checksums, and a layer-by-layer weight-delta report against the base model.",
+    "fine_tuning_notes": "Two-stage full-parameter supervised fine-tune — every weight updated. Gate 2 Section 3.1 asks LoRA and QLoRA teams for adapter files; for a full fine-tune the equivalent proof-of-training artefacts in provenance/ are the training scripts, configs, per-step loss logs, dataset manifests with checksums, and a layer-by-layer weight-delta report against the base model showing 99.9986% of parameters changed.",
     "training_datasets": [
       {
-        "name": "AgriLLM African Extension Corpus (this team, purpose-built)",
+        "name": "AgriLLM African Extension Corpus (purpose-built for this submission)",
         "source": "https://github.com/shem2019/adtc-2026-agrillm/tree/main/train/african/_clean",
         "size": "6703 rows across 25 JSONL files",
         "license": "CC-BY-4.0",
@@ -56,7 +56,7 @@
         "license": "apache-2.0",
         "role": "stage 1 — broad agricultural domain coverage",
         "sha256_source_file": "c6f7755a951eda368453ddd6e702ea5eba9eb66238be312bc24a7f30d5d43abc",
-        "attribution": "Third-party dataset published on the Hugging Face Hub by AI71ai. Not our work. Used under its Apache-2.0 licence, filtered before use; the filter and its counts are recorded in provenance/dataset/stage1_manifest.json."
+        "attribution": "Third-party dataset published on the Hugging Face Hub by AI71ai, used under its Apache-2.0 licence. Filtered before use; the filter and its counts are recorded in provenance/dataset/stage1_manifest.json."
       }
     ],
     "quantized_model_sha256": "ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f",
