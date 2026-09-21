@@ -8,8 +8,9 @@ Africa Deep Tech Challenge 2026 — Agriculture track.
 **Demo video:** https://youtu.be/BoG7xQlCPNY
 
 ```
-Model    AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M   986,048,512 bytes · 1.54 B params
-Base     Qwen2.5-1.5B-Instruct, LoRA fine-tuned on 18,248 agronomy examples
+Model    AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M   986,048,608 bytes · 1.54 B params
+Base     Qwen2.5-1.5B-Instruct, full fine-tune (two stages)
+Data     6,703 purpose-built verified rows + 74,697 filtered third-party rows
 Runtime  llama.cpp, GGUF Q4_K_M, CPU only
 Weights  huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri
 ```
@@ -18,36 +19,59 @@ Weights  huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri
 
 ## Try it yourself
 
-Two commands. The model downloads once (~940 MB), then everything runs locally —
-**turn your Wi-Fi off and it keeps working.**
+From a machine with nothing installed. The model downloads once (~940 MB), then
+everything runs locally — **turn your Wi-Fi off and it keeps working.**
+
+### 1. Get the repo and the weights
 
 ```bash
-git clone https://github.com/shem2019/adtc-2026-agrillm
+sudo apt-get update && sudo apt-get install -y git curl build-essential cmake
+git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
-bash download_model.sh
+bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
 ```
 
-Then either a browser UI:
+On macOS, replace the first line with `xcode-select --install` and
+`brew install cmake`.
+
+### 2. Get llama.cpp
+
+macOS has a one-liner:
 
 ```bash
-llama-server -m model/adtc-agri.gguf -ngl 0 \
+brew install llama.cpp
+```
+
+On Linux, build it (about 3 minutes):
+
+```bash
+git clone --depth 1 https://github.com/ggml-org/llama.cpp ~/llama.cpp
+cmake -S ~/llama.cpp -B ~/llama.cpp/build -DLLAMA_CURL=OFF
+cmake --build ~/llama.cpp/build --config Release -j"$(nproc)"
+export PATH="$HOME/llama.cpp/build/bin:$PATH"
+```
+
+### 3. Run it
+
+In the terminal:
+
+```bash
+llama-cli -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
+  --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 \
+  -c 4096 -cnv
+```
+
+Or as a browser UI at http://127.0.0.1:8080:
+
+```bash
+llama-server -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
   --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 \
   -c 4096 --port 8080
 ```
 
-…and open http://127.0.0.1:8080 — or straight from the terminal:
-
-```bash
-llama-cli -m model/adtc-agri.gguf -ngl 0 \
-  --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 -c 4096
-```
-
-`-ngl 0` forces CPU-only inference, matching the target hardware. Don't skip
-`--repeat-penalty`: llama.cpp defaults to 1.0, which is no penalty at all, and
+`-ngl 0` forces CPU-only inference, matching the target hardware. Keep
+`--repeat-penalty`: llama.cpp defaults to 1.0, which applies no penalty, and
 small models visibly loop without it.
-
-You'll need llama.cpp — `brew install llama.cpp` on macOS, or build from
-[ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp).
 
 ### Prompts worth trying
 

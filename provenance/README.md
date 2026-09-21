@@ -20,13 +20,19 @@ checkpoints from which the shipped GGUF can be re-derived byte for byte.
 
 ## Reproducing the model
 
-One command on a bare GPU box with at least 40 GB VRAM:
+On a bare Ubuntu GPU box with at least 40 GB VRAM and an NVIDIA driver already
+present (`nvidia-smi` should work):
 
 ```bash
+sudo apt-get update && sudo apt-get install -y git jq
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
 bash train/pipeline/reproduce.sh --all
 ```
+
+`reproduce.sh --stage setup` installs everything else the pipeline needs —
+CUDA toolkit, the C++ toolchain, a Python virtualenv, PyTorch, transformers and
+llama.cpp built with CUDA.
 
 `setup_gpu.sh` installs the CUDA toolkit if missing, verifies the C++ toolchain,
 keeps the CUDA build of `torch` in place against llama.cpp's requirements file,

@@ -105,9 +105,12 @@ shaped like the evaluation, using the 5 free Udutech GPU hours.
 ## Step 3 — Quantize and publish
 
 ```bash
-# convert merged HF model -> GGUF -> quantize
-python3 llama.cpp/convert_hf_to_gguf.py ./merged --outfile adtc-agri-f16.gguf
-./llama.cpp/build/bin/llama-quantize adtc-agri-f16.gguf adtc-agri.gguf Q4_K_M
+# HF checkpoint -> f16 GGUF -> Q4_K_M. train/pipeline/export_gguf.sh wraps this
+# and additionally repairs tokenizer files and verifies the chat template.
+python3 ~/llama.cpp/convert_hf_to_gguf.py ./checkpoint-1224 \
+  --outfile adtc-agri-f16.gguf
+~/llama.cpp/build/bin/llama-quantize adtc-agri-f16.gguf \
+  adtc-agri-Q4_K_M.gguf Q4_K_M
 ```
 
 Sweep `Q4_K_M`, `Q5_K_M`, `Q4_K_S`, `IQ4_XS` and re-rank — the quantization
@@ -125,10 +128,21 @@ header's real `params_count`. Report the true number.
 ## Step 4 — Final submission run (day 8–9, on x86 Linux)
 
 ```bash
-bash download_model.sh
+# Ubuntu 22.04 / 24.04, nothing pre-installed
+sudo apt-get update && sudo apt-get install -y git curl python3 python3-pip python3-venv
+
+git clone https://github.com/shem2019/adtc-2026-agrillm.git
+cd adtc-2026-agrillm
+
+python3 -m venv .venv && source .venv/bin/activate
+pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git"
+
+bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
 adtc-profiler run --submission . --mode participant --output submission.json
-cat submission.json     # confirm "measured_on": "participant_laptop"
+cat submission.json
 ```
+
+`submission.json` should report `"measured_on": "participant_laptop"`.
 
 Run the **full** pass — no `--skip-accuracy`. A report with `accuracy: []`
 scores zero on 50% of the leaderboard.

@@ -7,7 +7,9 @@ shortest possible time: every step runs unattended.
 ## The short version
 
 ```bash
-# on the rented box, from a clean checkout
+# on the rented box, from a clean checkout. NVIDIA driver must already be
+# present; setup_gpu.sh installs everything above it.
+sudo apt-get update && sudo apt-get install -y git jq
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
 
@@ -39,7 +41,7 @@ cheaper than finding any of them mid-run.
 Then read the ranked table at the end, pick the winner, and:
 
 ```bash
-CANDIDATE_GGUF=train/pipeline/runs/fullft-lr1e-5/gguf/checkpoint-406-Q4_K_M.gguf \
+CANDIDATE_GGUF=train/pipeline/runs/fullft-lr1e-5/gguf/checkpoint-408-Q4_K_M.gguf \
   bash train/pipeline/run_pipeline.sh --stage verify
 ```
 
