@@ -54,6 +54,12 @@ Design constraints were unchanged: 4 cores and no dedicated graphics, a 7 GB
 memory budget where overrunning disqualifies, and no network at inference. Peak
 memory measured 1.65 GB.
 
+![From base model to submission: every training run scored on the same harness](assets/journey.svg)
+
+Every point above is measured on the same 24-prompt harness, so they are
+comparable. The red squares are the five safety-critical prompts; filled means
+failed. Section 6 has the full table, Section 8 explains the rejected model.
+
 ## 3. Model selection
 
 The challenge's scoring code caps throughput at 15 tokens/second, so anything
@@ -181,21 +187,6 @@ This is the comparison every later result is measured against.
 | **`2stage`** | stage1 → own | 6 | 2e-5 | **0.594** | **ckpt-1224** | **78.9%** | **1** |
 | `2stage-x` | 2stage → own | +4 | 1e-5 | 0.021 | final | 81.7% | 1 |
 
-```mermaid
-flowchart LR
-    B["Qwen2.5-1.5B-Instruct<br/>base · 22.7%"]
-    S1["Stage 1<br/>74,697 filtered rows<br/>1 epoch · loss 1.908"]
-    S2["Stage 2<br/>6,703 verified rows<br/>6 epochs · loss 0.594"]
-    W["checkpoint-1224<br/>78.9% · SHIPPED"]
-    X["+4 more epochs<br/>loss 0.021"]
-    R["81.7%<br/>rejected: memorised"]
-    B --> S1 --> S2 --> W
-    W --> X --> R
-    B -.->|"single stage only"| O["63.9%<br/>invents agronomy"]
-    style W fill:#1a7f37,stroke:#1a7f37,color:#fff
-    style R fill:#8b2c2c,stroke:#8b2c2c,color:#fff
-    style O fill:#6e5494,stroke:#6e5494,color:#fff
-```
 
 The single-stage runs showed a clear split. **Safe behaviour transfers from very
 little data** — 166 hand-written first-aid rows and 167 dose-refusal rows took
