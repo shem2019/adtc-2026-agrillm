@@ -226,7 +226,7 @@ while IFS=$'\t' read -r label repo filename params; do
   "budget_laptop_claim": true,
   "submitter": {
     "name": "Shem Kinyanjui Njuguna",
-    "email": "shem.kinyanjui.njuguna@gmail.com",
+    "email": "shemvilejado@gmail.com",
     "github_handle": "shem2019"
   },
   "cross_disciplinary_pairing": {
