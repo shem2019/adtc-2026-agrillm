@@ -1,0 +1,47 @@
+# Gate 2 submission checklist
+
+Checked against the repo on 21 September 2026, deadline 22 September. Items are
+from the Gate 2 guidelines Section 4. Anything marked OPEN needs action.
+
+## Done
+
+| Item | Evidence |
+|---|---|
+| Template-compliant repo | `metadata.json`, `download_model.sh`, `REPORT.md` present; `model/` and `*.gguf` in `.gitignore`; no weights tracked in git |
+| `metadata.json` complete | All required fields present, exactly 2 test prompts, no placeholder values remaining |
+| Model Provenance section | REPORT.md Section 9 — base model, commit SHA, method, both datasets, before/after |
+| Git commit SHA in metadata | `provenance.base_model_commit_sha` = `989aa7980e4cf806f80c7fef2b1adb7bc71aa306` |
+| Fine-tuning method stated | `full_fine_tune`, two stages. Corrected from Round 1, where REPORT.md said LoRA while metadata said full fine-tune |
+| Proof-of-training files | `provenance/` — 31 evaluation results, 7 per-step loss CSVs, trainer records, training scripts, dataset manifests with checksums, weight delta showing 99.9986% of parameters changed |
+| Before/after comparison | `provenance/before_after.md` — 3 prompts plus full category table |
+| SHA256 checksums | `provenance/checksums.txt` — base model, every published model file, full-precision checkpoints, source dataset, all 25 corpus files |
+| `download_model.sh` static URL | Official template verbatim, only `MODEL_FILE` and `MODEL_URL` edited. URL is a plain literal pinned to HF commit `d84a627c…`, not a branch |
+| `model_path` matches script | `model/adtc-agri-Q4_K_M.gguf` in both |
+| Third-party attribution | `AI71ai/agrillm-train-146k` credited in REPORT.md Section 5, `metadata.json`, `provenance/README.md`, with licence, source SHA256 and filter counts |
+| African use-case claim | `african_alpha_claim: true`, basis documented in REPORT.md Section 1. Round 1 had this `false` because it was conflated with the failed Swahili language claim |
+| Model genuinely useful | REPORT.md Section 3 records that the 0.5B model scores better on Efficiency and Performance and was rejected on answer quality |
+
+## Open
+
+| Item | What is needed |
+|---|---|
+| **Push to GitHub** | Several commits are local only. The repo must be public and current at evaluation time. |
+| **Benchmarks on the reference machine** | REPORT.md Section 10 carries Round 1 figures, labelled as pending. Section 3.4 scores a criterion 0 for an unexplained discrepancy, so re-run `adtc-profiler` against the shipped model. |
+| **Video** | Max 2 minutes, reflecting the current state. `VIDEO_SCRIPT.md` is updated but unrecorded. |
+| **Name consistency** | `metadata.json` says "Shem Kinyanjui Njuguna"; the call booking says "Shem Njuguna". Confirm both match the ADTF portal registration. |
+| **Eligibility** | Age, funding under $25,000, project under 12 months, resident in an eligible country — self-confirm. |
+
+## Known and disclosed
+
+Not blockers, but a judge will find them, so they are stated in the report rather
+than left to be discovered.
+
+- Swahili fails; the language bonus is not claimed (REPORT.md Section 11).
+- The shipped model advises keeping contaminated clothing on after a pesticide
+  spill. It should come off. Needs a corpus fix.
+- The internal test over-scores by 13–18 points against a human reading the same
+  answers, and has a ±6 point noise margin.
+- The 57.9% figure for the first two-stage attempt has no preserved result file;
+  the retry reused the run name and overwrote it.
+- The quantisation sweep was run for the single-stage models, not re-run for the
+  shipped two-stage model.
