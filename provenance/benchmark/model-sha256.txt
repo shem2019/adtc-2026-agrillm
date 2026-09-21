@@ -1,0 +1,1 @@
+ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f  model/adtc-agri-Q4_K_M.gguf

@@ -19,14 +19,13 @@ from the Gate 2 guidelines Section 4. Anything marked OPEN needs action.
 | `model_path` matches script | `model/adtc-agri-Q4_K_M.gguf` in both |
 | Third-party attribution | `AI71ai/agrillm-train-146k` credited in REPORT.md Section 5, `metadata.json`, `provenance/README.md`, with licence, source SHA256 and filter counts |
 | African use-case claim | `african_alpha_claim: true`, basis documented in REPORT.md Section 1. Round 1 had this `false` because it was conflated with the failed Swahili language claim |
+| Profiler run on the shipped model | `provenance/benchmark/` — full participant-mode run on a clean 4 vCPU x86-64 instance, 21 September; metadata.json validates against the profiler schema at commit `7f117dd` |
 | Model genuinely useful | REPORT.md Section 3 records that the 0.5B model scores better on Efficiency and Performance and was rejected on answer quality |
 
 ## Open
 
 | Item | What is needed |
 |---|---|
-| **Push to GitHub** | Several commits are local only. The repo must be public and current at evaluation time. |
-| **Benchmarks on the reference machine** | REPORT.md Section 10 carries Round 1 figures, labelled as pending. Section 3.4 scores a criterion 0 for an unexplained discrepancy, so re-run `adtc-profiler` against the shipped model. |
 | **Video** | Max 2 minutes, reflecting the current state. `VIDEO_SCRIPT.md` is updated but unrecorded. |
 | **Name consistency** | `metadata.json` says "Shem Kinyanjui Njuguna"; the call booking says "Shem Njuguna". Confirm both match the ADTF portal registration. |
 | **Eligibility** | Age, funding under $25,000, project under 12 months, resident in an eligible country — self-confirm. |

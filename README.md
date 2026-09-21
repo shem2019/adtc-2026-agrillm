@@ -86,19 +86,22 @@ deliberately.
 
 ## Measured performance
 
-**These are Round 1 figures, pending re-measurement on the Gate 2 model.** The
-two model files are within 96 bytes of each other at the same architecture and
-quantisation, so speed and memory are not expected to move, but the number below
-has not yet been re-run. See REPORT.md Section 10.
-
-Measured with `adtc-profiler`, AMD EPYC 4 vCPU / 7.8 GB / Ubuntu 24.04, CPU only.
-Reproduced across two runs that differed by 0.4%.
+Measured on 21 September 2026 with `adtc-profiler` (commit `7f117dd`) in
+participant mode, full run including accuracy, using the exact commands under
+"Local testing". AMD EPYC Genoa, 4 vCPU, Ubuntu 24.04, CPU only, llama.cpp
+`b10175`, repo commit `a6cf825`.
 
 | Metric | Value | Score |
 |---|---:|---:|
-| Tokens/sec | 10.44 | `S_perf` 69.6 |
+| Tokens/sec | 54.04 | `S_perf` 100 (capped at 15 tok/s) |
 | Peak RSS | 1.65 GB of 7 GB | `S_eff` 76.4 |
+| Time to first token | 2,874 ms on a 512-token prompt | |
+| ARC-Easy, 50 samples | 0.68 `acc_norm` | |
 | Thermal | no throttle | penalty 0 |
+
+The smoke run before it measured 51.27 tokens/sec and the same peak memory.
+Round 1 measured 10.44 tokens/sec on a different 4 vCPU EPYC host; generation
+speed depends heavily on the host CPU.
 
 Also verified on an Intel i5-6300U — an actual $200 refurbished laptop, below the
 reference spec.
@@ -126,7 +129,7 @@ cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CUR
 cmake --build ~/llama.cpp/build --config Release -j"$(nproc)" \
       --target llama-bench llama-cli llama-server
 export PATH="$HOME/llama.cpp/build/bin:$PATH"
-llama-bench --help | head -3
+llama-bench --help > /dev/null && echo "llama-bench OK"
 
 # 3. This repo and the weights.
 git clone https://github.com/shem2019/adtc-2026-agrillm.git

@@ -16,6 +16,7 @@ checkpoints from which the shipped GGUF can be re-derived byte for byte.
 | `weight_delta.json` | Tensor-by-tensor comparison against the base model: **99.9986% of parameters changed** |
 | `training/` | Every script and config that produced the model, unmodified |
 | `logs/` | Per-step loss for all 7 runs, full trainer records, and all 31 evaluation results |
+| `benchmark/` | `adtc-profiler` output for the shipped model on a clean 4 vCPU x86-64 instance |
 | `dataset/` | Corpus manifest with per-file checksums, a 50-row representative sample, and the stage-1 filter manifest |
 
 ## Reproducing the model

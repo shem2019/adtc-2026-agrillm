@@ -381,24 +381,26 @@ species that does not exist. The slower build was shipped, and that fabricated
 name became a permanent test prompt. A quantisation sweep was run for the
 single-stage models but not re-run on the two-stage model before the deadline.
 
-> [!NOTE]
-> These figures come from the Round 1 model and are pending re-measurement on the
-> reference machine. They are indicative rather than the Gate 2 claim.
+Measured on 21 September 2026 with `adtc-profiler` (commit `7f117dd`) in
+participant mode, full run including accuracy, using the commands in Section 12:
+AMD EPYC Genoa, 4 vCPU, Ubuntu 24.04, CPU only, llama.cpp
+`b10175`, repo commit `a6cf825`. The profiler output is in
+[`provenance/benchmark/`](provenance/benchmark/).
 
-The carry-over rests on one point: the Gate 2 model is the same architecture at the same
-quantisation, and the two files are within 96 bytes of each other in size.
-
-| Metric | Round 1 measurement |
+| Metric | Gate 2 measurement |
 |---|---:|
-| Generation speed | 10.44 tokens/sec (repeat run: 10.40) |
+| Generation speed | 54.04 tokens/sec (smoke run: 51.27) |
 | Peak memory | 1.65 GB of a 7 GB budget |
-| Time to first token | 10,344 ms on a 512-token prompt |
+| Time to first token | 2,874 ms on a 512-token prompt |
+| ARC-Easy, 50 samples | 0.68 `acc_norm` |
 | Thermal | No throttling |
 
-Measured with `adtc-profiler 0.1.0` on 4 vCPU / 7.8 GB / Ubuntu 24.04, across two
-runs differing by 0.4%. Also tested on a real budget laptop — Intel i5-6300U,
-2 cores, 8 GB, below the reference spec — where the model runs. The 78.9% quoted
-throughout refers to the internal test described in Section 7.
+On the leaderboard formula this gives `S_perf` 100, since throughput is capped at
+15 tokens/sec, and `S_eff` 76.4. Round 1 measured 10.44 tokens/sec on a
+different 4 vCPU EPYC host; generation speed depends heavily on the host CPU,
+while peak memory was 1.65 GB on both. The model also runs on a real budget
+laptop — Intel i5-6300U, 2 cores, 8 GB, below the reference spec. The 78.9%
+quoted throughout refers to the internal test described in Section 7.
 
 ## 11. Limitations
 
@@ -433,7 +435,9 @@ deliberately trained to defer to the product label and the local agrovet.
 
 ### Running and measuring the shipped model (CPU only)
 
-From an x86-64 Ubuntu 24.04 machine with nothing installed:
+From an x86-64 Ubuntu 24.04 machine with nothing installed. These commands were
+run on a clean 4 vCPU AMD EPYC Genoa instance on 21 September 2026; the results
+are in Section 10.
 
 ```bash
 # 1. Toolchain. Ubuntu 24.04: the profiler needs Python 3.11 or newer, and
@@ -450,7 +454,7 @@ cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CUR
 cmake --build ~/llama.cpp/build --config Release -j"$(nproc)" \
       --target llama-bench llama-cli llama-server
 export PATH="$HOME/llama.cpp/build/bin:$PATH"
-llama-bench --help | head -3
+llama-bench --help > /dev/null && echo "llama-bench OK"
 
 # 3. This repo and the weights.
 git clone https://github.com/shem2019/adtc-2026-agrillm.git

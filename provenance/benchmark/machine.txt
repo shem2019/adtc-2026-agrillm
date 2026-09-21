@@ -1,0 +1,10 @@
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+x86_64
+4
+               total        used        free      shared  buff/cache   available
+Mem:            15Gi       602Mi        10Gi       1.1Mi       4.7Gi        15Gi
+Swap:             0B          0B          0B
+CPU(s):                                  4
+Model name:                              AMD EPYC-Genoa Processor
+a6cf8253af0402a160efa8975934dc4dfb97970f
