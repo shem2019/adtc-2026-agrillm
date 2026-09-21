@@ -31,6 +31,17 @@ county extension officer in 468 rows, because those are the institutions a
 smallholder can actually reach. This is a use-case claim; the separate
 African-language bonus was not claimed, for the reason in Section 11.
 
+### Constraints
+
+| Constraint | Effect on the design |
+|---|---|
+| **Hardware**: 4 CPU cores, 8 GB RAM, integrated graphics only | CPU-only inference through llama.cpp; a 1.5B model at Q4_K_M, peaking at 1.65 GB against a 7 GB budget where overrunning disqualifies |
+| **Connectivity**: none in the field | Everything runs locally; after the one-time download, no network call is made |
+| **Speed**: throughput scoring caps at 15 tokens/sec | Choose the largest model that clears the cap, not the fastest (Section 3) |
+| **Data**: no verified, African, safety-checked agricultural Q&A set existed | A 6,703-row corpus was written and checked for this submission (Section 4) |
+| **Safety**: pesticide registrations and rates differ by country | The model is trained to refuse dose figures and refer to the label and local extension |
+| **Compute**: rented single-GPU time | Full fine-tune of a 1.5B model on one 48 GB GPU, about five hours end to end |
+
 ## 2. What changed since Round 1
 
 Round 1 scored **52.69** (Accuracy 56.83 / Performance 24.47 / Efficiency 84.64).
