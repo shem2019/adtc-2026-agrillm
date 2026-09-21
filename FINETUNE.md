@@ -55,12 +55,17 @@ noisy one at this parameter count, and the report has to survive judge scrutiny.
 
 ## On the Swahili claim
 
-`metadata.json` currently declares `language_scope: ["en", "sw"]` and
-`african_alpha_claim: true`. Only keep `sw` if you actually train on Swahili
-agricultural text and can show benchmark evidence. An unsupported claim is worse
-than a narrower honest one — the African Use Case Bonus is judged, and judges
-read the report against the artifact. Decide by day 4 and make the metadata
-match reality.
+These are two separate claims and they were conflated in Round 1.
+
+`language_scope` is the language claim. Keep `sw` only with Swahili training
+text and benchmark evidence behind it. Swahili was attempted twice, produced
+degenerate repetition, and was dropped; `language_scope` is `["en"]`.
+
+`african_alpha_claim` is the **African Use Case Bonus**, which is judged on
+subject matter rather than language. It is `true`: the domain, corpus, pests,
+crops, institutions and target user are African throughout. Round 1 set it
+`false` alongside the Swahili decision, which gave away the use-case bonus for a
+language reason.
 
 ---
 

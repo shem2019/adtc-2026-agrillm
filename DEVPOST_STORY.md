@@ -74,14 +74,16 @@ quantitative agronomy because answers like `5.87 kg/ha` are only ten characters
 longer. It inverted my corpus so that 27% of training examples were refusals. I
 only found it by printing two actual training examples and reading them.
 
-**Swahili defeated me, and I'm reporting it honestly.** There's a +15% bonus for
+**Swahili defeated me, and I'm reporting it honestly.** There's a bonus for
 African-language support and I tried hard to earn it. I generated 2,500 pairs,
 measured that they contained only 121 distinct answers recycled 20 times each,
 and threw them away. I regenerated 880 verified pairs and trained on them. The
 model produced degenerate repetition — the same noun phrase repeating until the
 token budget ran out. I confirmed it at two training durations. 880 rows at 4%
 of a corpus teaches a 1.5B model vocabulary without grammar. **I declined the
-bonus rather than claim something that would fail when a judge tested it.**
+language bonus rather than claim something that would fail when a judge tested
+it.** The use-case claim is separate and it stands: the subject matter, corpus,
+pests, crops and target user are African throughout.
 
 ## What I learned
 

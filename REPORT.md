@@ -21,6 +21,16 @@ extension practice, and it shapes the whole submission: the test prompts, the
 training data, the memory ceiling and the speed target all come from how an
 officer actually uses a laptop during a farm visit.
 
+**African use-case claim.** `african_alpha_claim` is set to `true`. The subject
+matter is African agriculture throughout, and the 6,703-row corpus was written
+for it: fall armyworm (292 rows), Striga (238), sorghum (235), cassava mosaic
+and brown streak disease (168), groundnut (157), millet (107), aflatoxin in
+stored maize (130), Newcastle disease in village poultry (59), tef (73). The
+model refers people to an agrodealer, agrovet or county extension officer (532
+rows between them) because those are the institutions a smallholder can actually
+reach. This claim is about use case. The separate African-language bonus was not
+claimed — Swahili failed, and Section 11 says so.
+
 ## 2. What changed since Round 1
 
 Round 1 scored **52.69** (Accuracy 56.83 / Performance 24.47 / Efficiency 84.64).
@@ -372,8 +382,9 @@ throughout refers to the internal test described in Section 7.
 **Swahili does not work.** Asked *"Mahindi yangu yana wadudu wanaokula majani.
 Nifanye nini?"* the model returns repeating nonsense. Swahili was attempted in
 Round 1 with 880 verified pairs at about 4% of the corpus and produced the same
-failure, so the African Language bonus was not claimed. This is an English
-model.
+failure, so the African-language bonus was not claimed. This is an English model
+about African agriculture; the `african_alpha_claim` in Section 1 is a use-case
+claim, not a language one.
 
 **It still invents things in a minority of answers.** Caught by reading: a
 non-existent species name, a fabricated fertiliser technique, and in one rejected

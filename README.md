@@ -98,8 +98,8 @@ train/                 corpus pipeline, validators, comparison tooling
 
 **[REPORT.md](REPORT.md)** is the substantive document: why a 4B model was
 rejected, how catastrophic forgetting was measured and fixed, why a
-higher-scoring quantisation was thrown away, and why an African-language bonus
-was declined.
+higher-scoring quantisation was thrown away, and why the African-language bonus
+was declined while the African use-case claim stands.
 
 ---
 
