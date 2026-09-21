@@ -447,22 +447,46 @@ dependency that would replace it with a CPU-only one, and writes the base model
 commit to a file the training scripts read. A pre-flight check then verifies
 twelve conditions in about thirty seconds before any GPU time is spent.
 
-To measure the shipped model, starting from a machine with nothing installed:
+To measure the shipped model, starting from a machine with nothing installed.
+This was run end to end on a 4 vCPU / 16 GB Ubuntu 24.04 instance, which matches
+the reference laptop on cores:
 
 ```bash
-# Ubuntu 22.04 / 24.04, nothing pre-installed
-sudo apt-get update && sudo apt-get install -y git curl python3 python3-pip python3-venv
+# 1. Toolchain. Ubuntu 24.04 is required: the profiler needs Python >= 3.11
+#    and 22.04 ships 3.10. build-essential and cmake are needed because
+#    llama-cpp-python compiles from source during the profiler install.
+sudo apt-get update
+sudo apt-get install -y git curl build-essential cmake \
+                        python3 python3-pip python3-venv
 
+# 2. llama.cpp. The profiler shells out to llama-bench, so it must be on PATH
+#    before the profiler runs, or the run fails with no benchmark binary.
+git clone --depth 1 https://github.com/ggml-org/llama.cpp ~/llama.cpp
+cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF
+cmake --build ~/llama.cpp/build --config Release -j"$(nproc)"
+export PATH="$HOME/llama.cpp/build/bin:$PATH"
+llama-bench --help | head -3
+
+# 3. The submission and the weights.
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
-
-python3 -m venv .venv && source .venv/bin/activate
-pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git"
-
 bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
+sha256sum model/adtc-agri-Q4_K_M.gguf
+# expect ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f
+
+# 4. The profiler. Compiles from source; allow 10-20 minutes on 4 cores.
+python3 -m venv .venv && source .venv/bin/activate
+python3 -m pip install --upgrade pip wheel
+python3 -m pip install "git+https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler.git"
+
+# 5. Measure.
 adtc-profiler run --submission . --mode participant --output submission.json
 cat submission.json
 ```
+
+On a host with more than four cores, prefix step 5 with `taskset -c 0-3` so the
+throughput figure stays comparable to the reference laptop; child processes
+inherit the affinity, so `llama-bench` is covered.
 
 `download_model.sh` is the official template file with only the filename and URL
 changed, as Gate 2 Section 3.2 requires. The URL is a plain, readable string
