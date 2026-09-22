@@ -2,7 +2,7 @@
 
 Three runs. Two on the same clean 4 vCPU x86-64 instance: one in the official
 profiler Docker image, one with llama.cpp compiled on the host using the
-commands in REPORT.md Section 12. The third on a budget laptop below the
+commands in REPORT.md Section 12. The third on an HP laptop with an Intel Core i5-7200U, below the
 reference spec.
 
 | File | What it is |
