@@ -260,7 +260,7 @@ def quality():
     LBL, BAR_L, BAR_R = 30, 262, 74
     row_h, bh = 46, 15
     T = 143
-    H = T + len(rows) * row_h + 128
+    H = T + len(rows) * row_h + 90
     bw = W - BAR_L - BAR_R
 
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
@@ -323,7 +323,7 @@ def quality():
     s.append(f'<text x="{LBL}" y="{by+48:.1f}" font-size="11.5" fill="{MUTED}">'
              f'This is the project’s own harness, not a submitted accuracy '
              f'score. Reading the same answers by hand scores 13–18 points '
-             f'lower; see REPORT_DETAILS.md Section 7.</text>')
+             f'lower; see Section 7 of the full report.</text>')
     s.append('</svg>')
     return "\n".join(s)
 

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 639" width="1040" height="639" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-<rect width="1040" height="639" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 601" width="1040" height="601" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1040" height="601" fill="#ffffff"/>
 <text x="30" y="36" font-size="22" font-weight="700" fill="#1f2328">Category comparison: Qwen2.5-1.5B against AgriLLM</text>
 <text x="30" y="60" font-size="15" font-weight="600" fill="#57606a">What the fine-tune changed</text>
 <text x="30" y="81" font-size="12.5" fill="#57606a">(Unmodified base model against the shipped model, same 24-prompt harness, same quantisation. Sorted by improvement.)</text>
@@ -67,5 +67,5 @@
 <line x1="30" y1="529.0" x2="1010" y2="529.0" stroke="#d8dee4" stroke-width="1"/>
 <text x="30" y="555.0" font-size="14" font-weight="700" fill="#1f2328">Overall 22.7% → 78.9%</text>
 <text x="220" y="556.0" font-size="13" fill="#57606a">safety-critical failures: 5 of 5 → 1 of 5</text>
-<text x="30" y="577.0" font-size="11.5" fill="#57606a">This is the project’s own harness, not a submitted accuracy score. Reading the same answers by hand scores 13–18 points lower; see REPORT_DETAILS.md Section 7.</text>
+<text x="30" y="577.0" font-size="11.5" fill="#57606a">This is the project’s own harness, not a submitted accuracy score. Reading the same answers by hand scores 13–18 points lower; see Section 7 of the full report.</text>
 </svg>
