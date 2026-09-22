@@ -1,6 +1,7 @@
 # Model weights are downloaded fresh by the evaluator via download_model.sh.
 # Committing them is an explicit rule violation.
-model/
+model/*
+!model/.gitkeep
 *.gguf
 *.bin
 *.safetensors
