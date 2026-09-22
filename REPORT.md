@@ -430,11 +430,11 @@ on 21 and 22 September 2026, is a full participant-mode run of the official
    with.
 2. **Host-compiled llama.cpp:** the same instance, with llama.cpp `b10175`
    compiled on the host so it uses the CPU's AVX-512 instructions.
-3. **Budget laptop:** an HP laptop with a 2016 Intel Core i5-7200U (2 cores,
-   4 threads, 8 GB), older than the reference spec, running WSL2 Ubuntu 24.04 on
+3. **HP laptop, Intel Core i5-7200U:** a 2016 CPU with 2 cores,
+   4 threads and 8 GB RAM, older than the reference spec, running WSL2 Ubuntu 24.04 on
    Windows, which gives Linux 3.8 GB of the 8 GB.
 
-| Metric | Official profiler image | Host-compiled llama.cpp | Budget laptop |
+| Metric | Official profiler image | Host-compiled llama.cpp | HP laptop, i5-7200U |
 |---|---:|---:|---:|
 | Generation speed | **15.72 tokens/sec** | 54.04 tokens/sec | 11.88 tokens/sec |
 | Peak memory | **1.07 GB** | 1.65 GB | 1.65 GB |
@@ -447,7 +447,7 @@ and runs without throttling. The official image builds llama.cpp with AVX, AVX2
 and FMA switched off so that one binary runs on any machine, which accounts for
 the difference in speed between the first two columns. On the 2016 laptop the
 model writes about twice as fast as a person reads and uses a fifth of its
-memory; it also runs on an Intel i5-6300U laptop. Raw output for all three runs is
+memory. Raw output for all three runs is
 in [`provenance/benchmark/`](provenance/benchmark/), and the 78.9% quoted
 throughout refers to the internal test described in Section 7.
 

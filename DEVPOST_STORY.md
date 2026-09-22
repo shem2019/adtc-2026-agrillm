@@ -76,7 +76,7 @@ model changed, on a single rented 48 GB GPU in about five hours.
 
 **The model was measured on modest hardware as well as the reference machine.** In the ADTC profiler's
 own Docker image on 4 vCPUs it writes **15.7 tokens a second in 1.07 GB of
-memory**. On a laptop with a 2016 Intel i5, older than the reference spec, it
+memory**. On an HP laptop with a 2016 Intel Core i5-7200U, older than the reference spec, it
 writes **about 12 tokens a second**, twice reading speed, with no throttling.
 
 ## Challenges
@@ -105,7 +105,7 @@ local agrodealer.
 are scarce, so the model was built to run on an 8 GB laptop with integrated
 graphics, and on older machines too. It had to download quickly and answer while
 the farmer is still asking, and it does: about 12 tokens a second on a 2016 Intel
-i5.
+Core i5-7200U.
 
 **African languages have even less verified data.** Swahili training pairs were
 generated and verified, and there were too few for a 1.5B model to learn grammar
@@ -115,7 +115,7 @@ serving farmers in their own languages needs a much larger verified corpus.
 ## What was learned
 
 Local models can reach communities that cloud AI leaves out. A 940 MB model on a
-second-hand laptop gave useful, safe farming advice with the network switched
+2016 laptop gave useful, safe farming advice with the network switched
 off, even on modest hardware. The gap
 between farmers and good advice can be narrowed with the resources at hand: a
 budget machine, open-source tools, and knowledge written carefully for the

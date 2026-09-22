@@ -3,6 +3,13 @@
 Checked against the repo on 21 September 2026, deadline 22 September. Items are
 from the Gate 2 guidelines Section 4. Anything marked OPEN needs action.
 
+Re-verified on 22 September against the template checklist at template commit
+`42521b4` (21 September) and profiler commit `7f117dd` (still the latest):
+repo public; `download_model.sh` differs from the template only in `MODEL_FILE`
+and `MODEL_URL`; the pinned URL serves 986,048,608 bytes with SHA256
+`ad7e079f…`, matching `provenance/checksums.txt`; no weights tracked; exactly 2
+test prompts; no `git_commit_sha` key in `metadata.json`.
+
 ## Done
 
 | Item | Evidence |
@@ -21,12 +28,12 @@ from the Gate 2 guidelines Section 4. Anything marked OPEN needs action.
 | African use-case claim | `african_alpha_claim: true`, basis documented in REPORT.md Section 1. Round 1 had this `false` because it was conflated with the failed Swahili language claim |
 | Profiler run on the shipped model | `provenance/benchmark/` — full participant-mode run on a clean 4 vCPU x86-64 instance, 21 September; metadata.json validates against the profiler schema at commit `7f117dd` |
 | Model genuinely useful | REPORT.md Section 3 records that the 0.5B model scores better on Efficiency and Performance and was rejected on answer quality |
+| Updated video | https://youtu.be/oGjm1zTiEGA — exactly 2:00, uploaded 22 September; linked from README.md |
 
 ## Open
 
 | Item | What is needed |
 |---|---|
-| **Video** | Max 2 minutes, reflecting the current state. `VIDEO_SCRIPT.md` is updated but unrecorded. |
 | **Name consistency** | `metadata.json` says "Shem Kinyanjui Njuguna"; the call booking says "Shem Njuguna". Confirm both match the ADTF portal registration. |
 | **Eligibility** | Age, funding under $25,000, project under 12 months, resident in an eligible country — self-confirm. |
 

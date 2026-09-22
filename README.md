@@ -1,11 +1,11 @@
 # AgriLLM
 
 **An offline agricultural advisor for African smallholders.**
-940 MB, runs on a second-hand laptop, no network, no GPU, no API fees.
+940 MB, runs on a 2016 HP laptop, no network, no GPU, no API fees.
 
 Africa Deep Tech Challenge 2026, Agriculture track.
 
-**Demo video:** https://youtu.be/BoG7xQlCPNY
+**Demo video:** https://youtu.be/oGjm1zTiEGA
 
 ```
 Model    AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M   986,048,608 bytes · 1.54 B params
@@ -19,9 +19,14 @@ Weights  huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri
 
 ## Try it yourself
 
-AgriLLM runs on any x86-64 computer with Ubuntu 24.04, no graphics card needed,
-in two steps. The first step downloads everything once; after that, AgriLLM works
-with the internet switched off.
+AgriLLM runs on Linux, on any x86-64 computer with Ubuntu 24.04, no graphics
+card needed, in two steps. The first step downloads everything once; after that,
+AgriLLM works with the internet switched off.
+
+These steps were tested on Ubuntu 24.04, both on a Linux server and under WSL2 on
+a Windows laptop. On Windows, run them inside WSL2 Ubuntu 24.04. The setup uses
+`apt-get`, so on macOS or another Linux distribution install the same tools with
+that system's package manager first.
 
 ### 1. Set it up
 
@@ -96,13 +101,11 @@ The official image disables AVX, AVX2 and FMA for portability. With llama.cpp
 compiled on the same host, using the commands under "Local testing", the same
 model measured 54.04 tokens/sec and 1.65 GB.
 
-On an HP laptop with a 2016 Intel Core i5-7200U (2 cores, 8 GB, older than the
-reference spec), under WSL2 Ubuntu 24.04: **11.88 tokens/sec, 1.65 GB peak, no
+On an HP laptop with an Intel Core i5-7200U (2016, 2 cores / 4 threads, 8 GB
+RAM, older than the reference spec), running Ubuntu 24.04 under WSL2 on Windows
+with 3.8 GB of that memory given to Linux: **11.88 tokens/sec, 1.65 GB peak, no
 throttling**, same accuracy. Raw output for all three runs is in
 `provenance/benchmark/`.
-
-Also verified on an Intel i5-6300U, an actual $200 refurbished laptop below the
-reference spec.
 
 ---
 
