@@ -19,57 +19,44 @@ Weights  huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri
 
 ## Try it yourself
 
-AgriLLM runs on any x86-64 Ubuntu 24.04 machine, CPU only, in three steps. The
-model downloads once, about 940 MB. After that, every answer is produced on the
-machine itself, so the network can be switched off.
+AgriLLM runs on any x86-64 computer with Ubuntu 24.04, no graphics card needed,
+in two steps. The first step downloads everything once; after that, AgriLLM works
+with the internet switched off.
 
-### 1. Install the tools and download the model
+### 1. Set it up
+
+Open a terminal, paste this whole block and press Enter. It installs the tools,
+downloads the model (about 940 MB), checks the download, and builds the program
+that runs it. Allow 10 to 20 minutes.
 
 ```bash
 sudo apt-get update && sudo apt-get install -y git curl build-essential cmake
-git clone https://github.com/shem2019/adtc-2026-agrillm.git
-cd adtc-2026-agrillm
-bash download_model.sh
-sha256sum model/adtc-agri-Q4_K_M.gguf
-```
-
-The checksum should read
-`ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f`.
-
-### 2. Build llama.cpp
-
-This builds release `b10175`, the version every benchmark in this repo was
-measured with. It takes a few minutes.
-
-```bash
+git clone https://github.com/shem2019/adtc-2026-agrillm.git ~/adtc-2026-agrillm
+cd ~/adtc-2026-agrillm && bash download_model.sh
+echo "ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f  model/adtc-agri-Q4_K_M.gguf" | sha256sum -c
 git clone --depth 1 --branch b10175 https://github.com/ggml-org/llama.cpp ~/llama.cpp
 cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF
 cmake --build ~/llama.cpp/build --config Release -j"$(nproc)" --target llama-cli llama-server
-export PATH="$HOME/llama.cpp/build/bin:$PATH"
 ```
 
-### 3. Ask it a question
+Partway through, a line ending in `OK` confirms the model downloaded completely
+and is the genuine AgriLLM file.
 
-From the `adtc-2026-agrillm` folder, in the same terminal:
+### 2. Start AgriLLM
 
 ```bash
-llama-cli -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
-  --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 \
-  -c 4096 -cnv
+~/llama.cpp/build/bin/llama-cli -m ~/adtc-2026-agrillm/model/adtc-agri-Q4_K_M.gguf -ngl 0 --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 -c 4096 -cnv
 ```
 
-Type a question at the `>` prompt, and `/exit` to quit. For a chat window in the
-browser at http://127.0.0.1:8080, run this instead:
+When the `>` prompt appears, type a farming question and press Enter. Type
+`/exit` to close it. This command works from any folder, any time, with or
+without internet.
+
+To chat in a web browser instead, run this and open http://127.0.0.1:8080:
 
 ```bash
-llama-server -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
-  --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 \
-  -c 4096 --port 8080
+~/llama.cpp/build/bin/llama-server -m ~/adtc-2026-agrillm/model/adtc-agri-Q4_K_M.gguf -ngl 0 --temp 0.2 --top-p 0.9 --repeat-penalty 1.15 --repeat-last-n 256 -c 4096 --port 8080
 ```
-
-`-ngl 0` keeps everything on the CPU, as on the laptops AgriLLM is built for.
-`--repeat-penalty 1.15` keeps answers from repeating themselves; llama.cpp's
-default applies no penalty.
 
 ### Questions to try
 
