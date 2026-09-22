@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.3.0",
+  "profiler_version": "adtc-profiler 0.1.0",
+  "submission": {
+    "team_id": "agrillm",
+    "domain": "agriculture",
+    "language_scope": [
+      "en"
+    ],
+    "african_alpha_claim": true,
+    "budget_laptop_claim": true,
+    "submitter": {
+      "name": "Shem Kinyanjui Njuguna",
+      "email": "shemvilejado@gmail.com",
+      "github_handle": "shem2019"
+    },
+    "cross_disciplinary_pairing": {
+      "discipline": "agricultural_extension",
+      "load_bearing": true,
+      "description": "An offline crop and livestock advisory model for smallholder farmers and government extension officers across Africa, where advisory coverage averages one officer per several thousand farmers and field visits happen without connectivity. The model runs entirely on a refurbished 8 GB laptop carried into the field, answering questions on pest and disease identification, planting calendars, input rates, and livestock health without any network round-trip. The pairing is load-bearing: the prompt set, training corpus, and latency target are all derived from how an officer actually uses a laptop during a farm visit."
+    },
+    "provenance": {
+      "base_model_source": "huggingface:Qwen/Qwen2.5-1.5B-Instruct",
+      "base_model_commit_sha": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "fine_tuning_method": "full_fine_tune",
+      "training_datasets": [
+        "https://github.com/shem2019/adtc-2026-agrillm/tree/main/train/african/_clean",
+        "https://huggingface.co/datasets/AI71ai/agrillm-train-146k"
+      ]
+    },
+    "test_prompts": [
+      {
+        "prompt_id": "tp_001",
+        "prompt": "How much Imidacloprid should I spray on my maize for fall armyworm?"
+      },
+      {
+        "prompt_id": "tp_002",
+        "prompt": "Explain to a farmer with no formal training why rotating maize with beans improves soil fertility. Keep it practical and under 150 words."
+      }
+    ],
+    "model": {
+      "name": "AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M",
+      "runtime": "llama.cpp",
+      "quantization": "GGUF Q4_K_M",
+      "parameters_estimate": "1.54B",
+      "packaging": "binary_bundle"
+    }
+  },
+  "environment": {
+    "measured_on": "participant_laptop",
+    "cpu_model": "Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz",
+    "ram_gb": 3.8,
+    "gpu": "none",
+    "os": "Ubuntu 24.04.5 LTS"
+  },
+  "throughput": {
+    "tokens_per_second_generation": 11.88,
+    "first_token_latency_ms": 17780.07,
+    "prompt_tokens": 512,
+    "generated_tokens": 128,
+    "threads_used": 2
+  },
+  "memory": {
+    "peak_rss_mb": 1688.04,
+    "steady_state_rss_mb": 1613.74,
+    "peak_vms_mb": 2144.7
+  },
+  "accuracy": [
+    {
+      "benchmark": "arc_easy",
+      "dataset_version": "lm-eval-harness",
+      "language": "en",
+      "samples": 50,
+      "score": 0.68,
+      "metric": "acc_norm"
+    }
+  ],
+  "cpu_thermal": {
+    "cpu_percent_p99": 52.2,
+    "core_temp_c_peak": null,
+    "throttled": false
+  },
+  "reproducibility": {
+    "git_commit_sha": "c1fbe06027ff",
+    "docker_image_digest": "unknown",
+    "random_seed": 42
+  },
+  "model_info": {
+    "params_count": 1543714304,
+    "context_length": 32768,
+    "architecture": "qwen2",
+    "claimed_params_estimate": "1.54B",
+    "params_match": true
+  }
+}

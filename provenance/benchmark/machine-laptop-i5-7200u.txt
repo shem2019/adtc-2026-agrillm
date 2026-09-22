@@ -1,0 +1,10 @@
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+6.18.33.2-microsoft-standard-WSL2
+4
+               total        used        free      shared  buff/cache   available
+Mem:           3.8Gi       519Mi       1.4Gi       3.4Mi       2.0Gi       3.3Gi
+Swap:          1.0Gi       3.0Mi       1.0Gi
+CPU(s):                                  4
+Model name:                              Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+c1fbe06027fff669e802ca5feb25643e7600c25c

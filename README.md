@@ -101,7 +101,11 @@ including accuracy.
 
 The official image disables AVX, AVX2 and FMA for portability. With llama.cpp
 compiled on the same host, using the commands under "Local testing", the same
-model measured 54.04 tokens/sec and 1.65 GB. Raw output for both runs is in
+model measured 54.04 tokens/sec and 1.65 GB.
+
+On an HP laptop with a 2016 Intel Core i5-7200U (2 cores, 8 GB, older than the
+reference spec), under WSL2 Ubuntu 24.04: **11.88 tokens/sec, 1.65 GB peak, no
+throttling**, same accuracy. Raw output for all three runs is in
 `provenance/benchmark/`.
 
 Also verified on an Intel i5-6300U — an actual $200 refurbished laptop, below the

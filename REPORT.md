@@ -401,20 +401,25 @@ compiled on the host, which lets it use the CPU's AVX-512 instructions. Both are
 full participant-mode runs including accuracy. Raw output is in
 [`provenance/benchmark/`](provenance/benchmark/).
 
-| Metric | Official profiler image | Host-compiled llama.cpp |
-|---|---:|---:|
-| Generation speed | **15.72 tokens/sec** | 54.04 tokens/sec |
-| Peak memory | **1.07 GB** of a 7 GB budget | 1.65 GB |
-| Time to first token, 512-token prompt | 22,365 ms | 2,874 ms |
-| ARC-Easy, 50 samples | 0.68 `acc_norm` | 0.68 `acc_norm` |
-| Thermal | No throttling | No throttling |
+| Metric | Official profiler image | Host-compiled llama.cpp | Budget laptop |
+|---|---:|---:|---:|
+| Generation speed | **15.72 tokens/sec** | 54.04 tokens/sec | 11.88 tokens/sec |
+| Peak memory | **1.07 GB** of a 7 GB budget | 1.65 GB | 1.65 GB |
+| Time to first token, 512-token prompt | 22,365 ms | 2,874 ms | 17,780 ms |
+| ARC-Easy, 50 samples | 0.68 `acc_norm` | 0.68 `acc_norm` | 0.68 `acc_norm` |
+| Thermal | No throttling | No throttling | No throttling |
 
 On the leaderboard formula the official image gives `S_perf` 100, since
 throughput is capped at 15 tokens/sec, and `S_eff` 84.7. The official image
 builds llama.cpp with AVX, AVX2 and FMA disabled so that one binary runs on any
 machine; that accounts for the difference in speed. Round 1 measured 10.44
-tokens/sec on a different host. The model also runs on a real budget laptop —
-Intel i5-6300U, 2 cores, 8 GB, below the reference spec. The 78.9% quoted
+tokens/sec on a different host.
+
+The third column is an HP laptop with a 2016 Intel Core i5-7200U: 2 cores,
+4 threads, 8 GB, older than the reference spec. It ran the same host-compiled
+steps under WSL2 Ubuntu 24.04 on Windows, which gives Linux 3.8 GB of the 8 GB,
+and the profiler used one thread per physical core. It still clears 11 tokens/sec
+without throttling. The model also runs on an Intel i5-6300U laptop. The 78.9% quoted
 throughout refers to the internal test described in Section 7.
 
 ## 11. Limitations
