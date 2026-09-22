@@ -18,7 +18,7 @@ Two datasets were used, one per training stage. Both are listed in
 | Role | broad agricultural vocabulary and coverage |
 
 The filter is `training/prepare_stage1_external.py`. Its rules and per-rule
-counts are in `dataset/stage1_manifest.json`, and REPORT.md Section 5 explains
+counts are in `dataset/stage1_manifest.json`, and REPORT_DETAILS.md Section 5 explains
 each cut.
 
 ## Stage 2: AgriLLM African Extension Corpus (purpose-built)

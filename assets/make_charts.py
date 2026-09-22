@@ -323,7 +323,7 @@ def quality():
     s.append(f'<text x="{LBL}" y="{by+48:.1f}" font-size="11.5" fill="{MUTED}">'
              f'This is the project’s own harness, not a submitted accuracy '
              f'score. Reading the same answers by hand scores 13–18 points '
-             f'lower; see REPORT.md Section 7.</text>')
+             f'lower; see REPORT_DETAILS.md Section 7.</text>')
     s.append('</svg>')
     return "\n".join(s)
 

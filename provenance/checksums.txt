@@ -32,7 +32,7 @@ checkpoints/2stage-ckpt1224/model.safetensors  22ee0ad22af063012900c288d8c864b1d
 checkpoints/2stage-x-final/model.safetensors   61e5dd4add8e4db8e56e400022a80e288288d2506b9ddefcf5ef201f4a791448
 checkpoints/stage1-final/model.safetensors     aa06296d72f12a17189993d9e250b8864bc19d28ccddb01ed023ca2ed14ccdfe
 
-## Stage-1 source dataset (third party — see attribution in REPORT.md §6)
+## Stage-1 source dataset (third party — see REPORT_DETAILS.md §5)
 AI71ai/agrillm-train-146k train.jsonl  c6f7755a951eda368453ddd6e702ea5eba9eb66238be312bc24a7f30d5d43abc
 
 ## Our own corpus — per-file sha256 in dataset/corpus_manifest.json

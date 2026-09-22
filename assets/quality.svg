@@ -67,5 +67,5 @@
 <line x1="30" y1="529.0" x2="1010" y2="529.0" stroke="#d8dee4" stroke-width="1"/>
 <text x="30" y="555.0" font-size="14" font-weight="700" fill="#1f2328">Overall 22.7% → 78.9%</text>
 <text x="220" y="556.0" font-size="13" fill="#57606a">safety-critical failures: 5 of 5 → 1 of 5</text>
-<text x="30" y="577.0" font-size="11.5" fill="#57606a">This is the project’s own harness, not a submitted accuracy score. Reading the same answers by hand scores 13–18 points lower; see REPORT.md Section 7.</text>
+<text x="30" y="577.0" font-size="11.5" fill="#57606a">This is the project’s own harness, not a submitted accuracy score. Reading the same answers by hand scores 13–18 points lower; see REPORT_DETAILS.md Section 7.</text>
 </svg>

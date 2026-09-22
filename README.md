@@ -166,7 +166,9 @@ the machine has.
 ```
 metadata.json          ADTC submission manifest, including the provenance object
 download_model.sh      fetches the weights from a commit-pinned URL
-REPORT.md              full technical report: design, training, benchmarks, limits
+REPORT.md              submission writeup in the template's five sections
+REPORT_DETAILS.md      full technical report: data building, every training run,
+                       checkpoint selection, reproduction steps
 provenance/            proof of training: scripts, loss logs, all 31 evaluations,
                        dataset manifests with checksums, weight delta, before/after
 GATE2_CHECKLIST.md     Gate 2 requirements checked against this repo
@@ -199,7 +201,7 @@ check its answers.
 - **One safety error remains that the test scores as correct.** It advises
   keeping contaminated clothing on after a pesticide spill; it should come off.
 - **It answers in English.** Swahili was attempted and needs a larger verified
-  corpus; see REPORT.md Section 11.
+  corpus; see REPORT.md Section 6.
 - **The internal test runs 13 to 18 points above a human reading** of the same
   answers, with a ±6 point noise margin.
 

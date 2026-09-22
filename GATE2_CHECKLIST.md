@@ -16,7 +16,7 @@ test prompts; no `git_commit_sha` key in `metadata.json`.
 |---|---|
 | Template-compliant repo | `metadata.json`, `download_model.sh`, `REPORT.md` present; `model/` and `*.gguf` in `.gitignore`; no weights tracked in git |
 | `metadata.json` complete | All required fields present, exactly 2 test prompts, no placeholder values remaining |
-| Model Provenance section | REPORT.md Section 9 — base model, commit SHA, method, both datasets, before/after |
+| Model Provenance section | REPORT.md Section 3 — base model, commit SHA, method, both datasets, before/after |
 | Git commit SHA in metadata | `provenance.base_model_commit_sha` = `989aa7980e4cf806f80c7fef2b1adb7bc71aa306` |
 | Fine-tuning method stated | `full_fine_tune`, two stages. Corrected from Round 1, where REPORT.md said LoRA while metadata said full fine-tune |
 | Proof-of-training files | `provenance/` — 31 evaluation results, 7 per-step loss CSVs, trainer records, training scripts, dataset manifests with checksums, weight delta showing 99.9986% of parameters changed |
@@ -24,11 +24,12 @@ test prompts; no `git_commit_sha` key in `metadata.json`.
 | SHA256 checksums | `provenance/checksums.txt` — base model, every published model file, full-precision checkpoints, source dataset, all 25 corpus files |
 | `download_model.sh` static URL | Official template verbatim, only `MODEL_FILE` and `MODEL_URL` edited. URL is a plain literal pinned to HF commit `d84a627c…`, not a branch |
 | `model_path` matches script | `model/adtc-agri-Q4_K_M.gguf` in both |
-| Third-party attribution | `AI71ai/agrillm-train-146k` credited in REPORT.md Section 5, `metadata.json`, `provenance/README.md`, with licence, source SHA256 and filter counts |
+| Third-party attribution | `AI71ai/agrillm-train-146k` credited in REPORT.md Sections 3 and 7, REPORT_DETAILS.md Section 5, `metadata.json`, `provenance/README.md`, with licence, source SHA256 and filter counts |
 | African use-case claim | `african_alpha_claim: true`, basis documented in REPORT.md Section 1. Round 1 had this `false` because it was conflated with the failed Swahili language claim |
 | Profiler run on the shipped model | `provenance/benchmark/` — full participant-mode run on a clean 4 vCPU x86-64 instance, 21 September; metadata.json validates against the profiler schema at commit `7f117dd` |
-| Model genuinely useful | REPORT.md Section 3 records that the 0.5B model scores better on Efficiency and Performance and was rejected on answer quality |
+| Model genuinely useful | REPORT.md Section 2 records that the 0.5B model scores better on Efficiency and Performance and was rejected on answer quality |
 | Updated video | https://youtu.be/oGjm1zTiEGA — exactly 2:00, uploaded 22 September; linked from README.md |
+| REPORT.md follows the template | Sections 1–5 are the template's Problem, Design Decisions, Model Provenance, Constraints, Benchmarks, in that order; about 2,000 words. Full detail moved to `REPORT_DETAILS.md` |
 
 ## Open
 
@@ -42,7 +43,7 @@ test prompts; no `git_commit_sha` key in `metadata.json`.
 Not blockers, but a judge will find them, so they are stated in the report rather
 than left to be discovered.
 
-- Swahili fails; the language bonus is not claimed (REPORT.md Section 11).
+- Swahili fails; the language bonus is not claimed (REPORT.md Section 6).
 - The shipped model advises keeping contaminated clothing on after a pesticide
   spill. It should come off. Needs a corpus fix.
 - The internal test over-scores by 13–18 points against a human reading the same

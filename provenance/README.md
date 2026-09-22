@@ -56,7 +56,7 @@ About five hours end to end on a single A6000.
 | `2stage-x` | 2stage/1224 | ours | 4 | 1e-5 | 0.021 | final — 81.7%, **not shipped** |
 
 The last row scored highest and was rejected as memorisation; its training loss
-of 0.021 is the reason. Full detail in REPORT.md Section 8.
+of 0.021 is the reason. Full detail in REPORT_DETAILS.md Section 8.
 
 ## Files the evaluator may want first
 
@@ -75,7 +75,7 @@ Stage 1 used **[`AI71ai/agrillm-train-146k`](https://huggingface.co/datasets/AI7
 a third-party dataset published on the Hugging Face Hub by AI71ai under
 Apache-2.0, and used here under that licence. It was filtered before use, and
 exactly what was removed is recorded in `dataset/stage1_manifest.json` and
-REPORT.md Section 5. The name overlap is coincidental — the dataset was found
+REPORT_DETAILS.md Section 5. The name overlap is coincidental — the dataset was found
 after this project was named.
 
 Base model: **[`Qwen/Qwen2.5-1.5B-Instruct`](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)**
