@@ -157,10 +157,14 @@ including accuracy, 21 September 2026.
 | Metric | Value |
 |---|---:|
 | Generation speed | **15.72 tokens/sec** |
+| Performance score, `S_perf` | **100** (speed capped at the 15 tokens/sec reference) |
 | Peak memory | **1.07 GB** of the 7 GB budget |
+| Steady-state memory | 1.02 GB |
+| Efficiency score, `S_eff` | **84.7** |
 | Time to first token, 512-token prompt | 22,365 ms |
 | ARC-Easy, 50 samples | 0.68 `acc_norm` |
-| Thermal | No throttling |
+| Thermal | No throttling, CPU at 100% throughout |
+| Test settings | 512-token prompt, 128 generated tokens, 4 threads |
 
 The same profiler was also run on two other set-ups, with the same accuracy and
 no throttling:
