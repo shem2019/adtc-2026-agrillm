@@ -136,17 +136,7 @@ invented for this test)
 - **AgriLLM:** *"I can't give you a spray rate — it's on the product label and
   differs by formulation. […] check the mixing ratio with your agrodealer."*
 
-| Category | Base | AgriLLM |
-|---|---:|---:|
-| Safety-critical | 0.0% | 78.6% |
-| Admitting uncertainty | 33.3% | 100.0% |
-| Diagnosis | 12.5% | 59.4% |
-| Agronomy | 12.5% | 59.4% |
-| Following instructions | 55.8% | 96.2% |
-| Robustness | 37.5% | 75.0% |
-| Offline systems | 62.5% | 100.0% |
-| Multi-turn | 100.0% | 100.0% |
-| **Overall** | **22.7%** | **78.9%** |
+![Category-by-category comparison of the unmodified base model against the shipped AgriLLM model on the same 24-prompt test](assets/quality.svg)
 
 ## 4. Constraints
 
@@ -161,38 +151,41 @@ invented for this test)
 
 ## 5. Benchmarks
 
-Each run is a full participant-mode run of the official `adtc-profiler` (commit
-`7f117dd`) including accuracy, CPU only, on 21 and 22 September 2026:
+Measured with the official `adtc-profiler` Docker image (commit `7f117dd`), run
+as its README shows with a 7.5 GB memory limit and 4 CPUs, on a clean 4 vCPU AMD
+EPYC Genoa instance with Ubuntu 24.04, CPU only. This is the build the organisers
+evaluate with. Full participant-mode run including accuracy, 21 September 2026.
 
-1. **Official profiler image:** the profiler's own Docker image, run as its README
-   shows with a 7.5 GB memory limit and 4 CPUs, on a clean 4 vCPU AMD EPYC Genoa
-   instance with Ubuntu 24.04. This is the build the organisers evaluate with.
-2. **Host-compiled llama.cpp:** the same instance, with llama.cpp `b10175`
-   compiled on the host so it uses the CPU's AVX-512 instructions.
-3. **HP laptop, Intel Core i5-7200U:** a 2016 CPU with 2 cores, 4 threads and
-   8 GB RAM, older than the reference spec, running Ubuntu 24.04 under WSL2 on
-   Windows, which gives Linux 3.8 GB of the 8 GB.
+| Metric | Value |
+|---|---:|
+| Generation speed | **15.72 tokens/sec** |
+| Peak memory | **1.07 GB** of the 7 GB budget |
+| Time to first token, 512-token prompt | 22,365 ms |
+| ARC-Easy, 50 samples | 0.68 `acc_norm` |
+| Thermal | No throttling |
 
-| Metric | Official profiler image | Host-compiled llama.cpp | HP laptop, i5-7200U |
-|---|---:|---:|---:|
-| Generation speed | **15.72 tokens/sec** | 54.04 tokens/sec | 11.88 tokens/sec |
-| Peak memory | **1.07 GB** | 1.65 GB | 1.65 GB |
-| Time to first token, 512-token prompt | 22,365 ms | 2,874 ms | 17,780 ms |
-| ARC-Easy, 50 samples | 0.68 `acc_norm` | 0.68 `acc_norm` | 0.68 `acc_norm` |
-| Thermal | No throttling | No throttling | No throttling |
+The same profiler was also run on two other set-ups, with the same accuracy and
+no throttling:
 
-The official image builds llama.cpp with AVX, AVX2 and FMA switched off so one
-binary runs on any machine, which accounts for the speed difference between the
-first two columns. Raw output for all three runs is in
-[`provenance/benchmark/`](provenance/benchmark/).
+- **Host-compiled llama.cpp** `b10175` on the same instance, which uses the CPU's
+  AVX-512 instructions: **54.04 tokens/sec**, 1.65 GB peak. The official image
+  builds llama.cpp with AVX, AVX2 and FMA switched off so one binary runs on any
+  machine, which accounts for the difference.
+- **An HP laptop with an Intel Core i5-7200U** (2016, 2 cores / 4 threads, 8 GB
+  RAM, older than the reference spec), running Ubuntu 24.04 under WSL2 with
+  3.8 GB given to Linux: **11.88 tokens/sec**, 1.65 GB peak, about twice reading
+  speed.
+
+Raw output for all three runs is in [`provenance/benchmark/`](provenance/benchmark/).
 
 ## 6. Limitations
 
 - **English only.** Swahili was attempted with 880 verified pairs; the model
   returns repeating text, so no language bonus is claimed.
-- **One known safety error.** The shipped model advises keeping contaminated
-  clothing on after a pesticide spill; it must come off. The automated test scores
-  this as correct. A corpus fix is the first change planned.
+- **Pesticide first-aid advice is not yet fully reliable.** Some answers on
+  handling a spill give incomplete decontamination steps. Farmers should follow
+  the first-aid instructions on the product label; a training-data fix is the
+  first change planned.
 - **Occasional invented details.** In 1 of 8 answers to the Newcastle disease
   prompt it suggests collecting virus from sick birds; the other 7 advise
   isolating the flock and calling an animal health worker.
