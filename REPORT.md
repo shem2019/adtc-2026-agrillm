@@ -503,7 +503,7 @@ NGO can confirm how AgriLLM will run on its own machines before deploying it. Th
 shipped model can be measured on a fresh x86-64 Ubuntu 24.04 machine with the
 commands below. They were run on a clean 4 vCPU AMD EPYC Genoa instance on
 21 September 2026, with the results in Section 10. `bench/profile_cpu.sh` runs the
-same steps as one script and produced the budget-laptop result.
+same steps as one script and produced the i5-7200U laptop result.
 
 ```bash
 # 1. Toolchain. Ubuntu 24.04: the profiler needs Python 3.11 or newer, and
