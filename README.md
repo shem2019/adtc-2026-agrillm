@@ -3,7 +3,7 @@
 **An offline agricultural advisor for African smallholders.**
 940 MB, runs on a second-hand laptop, no network, no GPU, no API fees.
 
-Africa Deep Tech Challenge 2026 — Agriculture track.
+Africa Deep Tech Challenge 2026, Agriculture track.
 
 **Demo video:** https://youtu.be/BoG7xQlCPNY
 
@@ -114,7 +114,7 @@ reference spec), under WSL2 Ubuntu 24.04: **11.88 tokens/sec, 1.65 GB peak, no
 throttling**, same accuracy. Raw output for all three runs is in
 `provenance/benchmark/`.
 
-Also verified on an Intel i5-6300U — an actual $200 refurbished laptop, below the
+Also verified on an Intel i5-6300U, an actual $200 refurbished laptop below the
 reference spec.
 
 ---
@@ -122,7 +122,7 @@ reference spec.
 ## Local testing
 
 Reproducing the numbers above with the official ADTC profiler, from a machine
-with nothing installed. Ubuntu 24.04 — the profiler needs Python 3.11 or newer,
+with nothing installed. Ubuntu 24.04: the profiler needs Python 3.11 or newer,
 and 22.04 ships 3.10.
 
 ```bash
@@ -176,7 +176,7 @@ the machine has.
 ```
 metadata.json          ADTC submission manifest, including the provenance object
 download_model.sh      fetches the weights from a commit-pinned URL
-REPORT.md              full technical report — design, training, benchmarks, failures
+REPORT.md              full technical report: design, training, benchmarks, limits
 provenance/            proof of training: scripts, loss logs, all 31 evaluations,
                        dataset manifests with checksums, weight delta, before/after
 GATE2_CHECKLIST.md     Gate 2 requirements checked against this repo
@@ -195,22 +195,26 @@ was declined while the African use-case claim stands.
 
 ## Honest limitations
 
-This is a 1.5 B model. It is decision support for an extension officer, not a
-replacement for one.
+AgriLLM is a 1.5 B model and a tool for decision support. It supports the
+extension officer and the farmer's own judgement, and these are the places to
+check its answers.
 
-- **It confabulates in a minority of answers.** Caught by reading: a
-  non-existent species name, a fabricated fertiliser technique, and in one
-  rejected checkpoint a Newcastle disease practice that does not exist.
+- **It invents details in a minority of answers.** Reading found an invented
+  species name, a fabricated fertiliser technique, and, in 1 of 8 answers to the
+  Newcastle disease prompt, advice to collect virus from sick birds to vaccinate
+  others, which would spread infection. The other 7 answers advise isolating the
+  flock and calling an animal health worker.
 - **Diagnosis is the weakest category**, at 59.4% on the internal test. Nitrogen
-  deficiency is identified in only 3 of 8 attempts.
-- **One safety error survives that the test does not catch.** It advises keeping
-  contaminated clothing on after a pesticide spill. It should come off.
-- **No Swahili.** Attempted, measured, and abandoned — see REPORT.md Section 11.
-- **The internal test over-scores by 13–18 points** against a human reading the
-  same answers, and carries a ±6 point noise margin.
+  deficiency is identified in 3 of 8 attempts.
+- **One safety error remains that the test scores as correct.** It advises
+  keeping contaminated clothing on after a pesticide spill; it should come off.
+- **It answers in English.** Swahili was attempted and needs a larger verified
+  corpus; see REPORT.md Section 11.
+- **The internal test runs 13 to 18 points above a human reading** of the same
+  answers, with a ±6 point noise margin.
 
-Never act on agrochemical dosing advice from this model. It is trained to tell
-you that itself.
+For agrochemical doses, follow the product label and the local agrodealer. The
+model is trained to say so itself.
 
 ---
 
