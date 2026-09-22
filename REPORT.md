@@ -3,7 +3,7 @@
 **Team ID:** agrillm · **Domain:** agriculture · **Track:** ADTC 2026 Laptop LLM\
 **Model:** `AgriLLM-Qwen2.5-1.5B-Agri-Q4_K_M` · 940 MB · 1.54 B parameters\
 **Base:** Qwen2.5-1.5B-Instruct, full fine-tune in two stages, quantised to GGUF Q4_K_M\
-**Weights:** https://huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri\
+**Weights:** [huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri](https://huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri)\
 **Proof of training:** [`provenance/`](provenance/) · **Full technical report:** [`REPORT_DETAILS.md`](REPORT_DETAILS.md)
 
 ---
