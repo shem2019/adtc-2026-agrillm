@@ -71,9 +71,9 @@ Correct identification matters more to a farmer than speed. The quantisation
 sweep covered the single-stage models; the two-stage model shipped at the same
 Q4_K_M level.
 
-**Fine-tuning: a full fine-tune in two stages.** Round 1 used LoRA adapters on raw
-`Question:/Answer:` text; Gate 2 replaced this after a judge found the first model
-unsafe for field use. Stage 1 trains on 74,697 filtered third-party rows for
+**Fine-tuning: a full fine-tune in two stages.** An earlier version used LoRA
+adapters on raw `Question:/Answer:` text and invented pesticide doses and pest
+names, so it was replaced. Stage 1 trains on 74,697 filtered third-party rows for
 breadth of agricultural vocabulary; stage 2 trains on the 6,703-row verified
 African corpus for correctness, safety and local context. Training uses the chat
 format the model is run in, and a varied system prompt so safe behaviour holds
@@ -91,8 +91,6 @@ The shipped checkpoint, `fullft-2stage/checkpoint-1224`, scores 78.9% against
 [`REPORT_DETAILS.md`](REPORT_DETAILS.md) Sections 6–8.
 
 ## 3. Model Provenance
-
-*Required by Gate 2 Section 3.1. Mirrors the `provenance` object in `metadata.json`.*
 
 | Field | Value |
 |---|---|
@@ -153,8 +151,8 @@ invented for this test)
 
 Measured with the official `adtc-profiler` Docker image (commit `7f117dd`), run
 as its README shows with a 7.5 GB memory limit and 4 CPUs, on a clean 4 vCPU AMD
-EPYC Genoa instance with Ubuntu 24.04, CPU only. This is the build the organisers
-evaluate with. Full participant-mode run including accuracy, 21 September 2026.
+EPYC Genoa instance with Ubuntu 24.04, CPU only. Full participant-mode run
+including accuracy, 21 September 2026.
 
 | Metric | Value |
 |---|---:|
@@ -181,7 +179,7 @@ Raw output for all three runs is in [`provenance/benchmark/`](provenance/benchma
 ## 6. Limitations
 
 - **English only.** Swahili was attempted with 880 verified pairs; the model
-  returns repeating text, so no language bonus is claimed.
+  returns repeating text, so English is the only supported language.
 - **Pesticide first-aid advice is not yet fully reliable.** Some answers on
   handling a spill give incomplete decontamination steps. Farmers should follow
   the first-aid instructions on the product label; a training-data fix is the
@@ -197,9 +195,9 @@ Raw output for all three runs is in [`provenance/benchmark/`](provenance/benchma
 
 ## 7. Reproducibility and attribution
 
-`download_model.sh` is the official template with only `MODEL_FILE` and
-`MODEL_URL` changed; the URL is a plain string pinned to Hugging Face commit
-`d84a627c612280937b6e33975975ee5344087b8e`. Commands to run the model are in the
+`download_model.sh` fetches the model from a URL pinned to Hugging Face commit
+`d84a627c612280937b6e33975975ee5344087b8e`, and the SHA256 above verifies the
+file. Commands to run the model are in the
 [README](README.md), and commands to reproduce the benchmarks, in the official
 profiler image or on the host, and to retrain the model on one GPU are in
 [`REPORT_DETAILS.md`](REPORT_DETAILS.md) Section 12.
@@ -213,5 +211,5 @@ profiler image or on the host, and to retrain the model on one GPU are in
 | [adtc-profiler](https://github.com/Africa-Deep-Tech-Foundation/adtc-profiler) | GPL-3.0 | Reference measurement |
 
 The corpus, evaluation harness and training pipeline are original work; the
-Round 1 datasets and machine-generated data are disclosed in
+datasets used in the earlier version and machine-generated data are disclosed in
 [`REPORT_DETAILS.md`](REPORT_DETAILS.md) Sections 4 and 13.

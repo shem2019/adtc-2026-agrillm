@@ -321,8 +321,8 @@ def quality():
     s.append(f'<text x="{LBL+190}" y="{by+27:.1f}" font-size="13" fill="{MUTED}">'
              f'safety-critical failures: 5 of 5 → 1 of 5</text>')
     s.append(f'<text x="{LBL}" y="{by+48:.1f}" font-size="11.5" fill="{MUTED}">'
-             f'This is the project’s own harness, not a submitted accuracy '
-             f'score. Reading the same answers by hand scores 13–18 points '
+             f'This is the project’s own 24-prompt test, separate from the '
+             f'ARC-Easy benchmark. Reading the same answers by hand scores 13–18 points '
              f'lower; see Section 7 of the full report.</text>')
     s.append('</svg>')
     return "\n".join(s)
