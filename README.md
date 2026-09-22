@@ -19,32 +19,38 @@ Weights  huggingface.co/shemking/agrillm-qwen2.5-1.5b-agri
 
 ## Try it yourself
 
-From a machine with nothing installed. The model downloads once (~940 MB), then
-everything runs locally — **turn your Wi-Fi off and it keeps working.**
+AgriLLM runs on any x86-64 Ubuntu 24.04 machine, CPU only, in three steps. The
+model downloads once, about 940 MB. After that, every answer is produced on the
+machine itself, so the network can be switched off.
 
-Ubuntu 24.04, matching the evaluation environment.
-
-### 1. Get the repo and the weights
+### 1. Install the tools and download the model
 
 ```bash
 sudo apt-get update && sudo apt-get install -y git curl build-essential cmake
 git clone https://github.com/shem2019/adtc-2026-agrillm.git
 cd adtc-2026-agrillm
-bash download_model.sh          # ~940 MB into model/adtc-agri-Q4_K_M.gguf
+bash download_model.sh
+sha256sum model/adtc-agri-Q4_K_M.gguf
 ```
+
+The checksum should read
+`ad7e079f7cfd307edc7629a35c906cb55ed41218ba14a93e48120d81952d3e0f`.
 
 ### 2. Build llama.cpp
 
+This builds release `b10175`, the version every benchmark in this repo was
+measured with. It takes a few minutes.
+
 ```bash
-git clone --depth 1 https://github.com/ggml-org/llama.cpp ~/llama.cpp
+git clone --depth 1 --branch b10175 https://github.com/ggml-org/llama.cpp ~/llama.cpp
 cmake -S ~/llama.cpp -B ~/llama.cpp/build -DCMAKE_BUILD_TYPE=Release -DLLAMA_CURL=OFF
-cmake --build ~/llama.cpp/build --config Release -j"$(nproc)"
+cmake --build ~/llama.cpp/build --config Release -j"$(nproc)" --target llama-cli llama-server
 export PATH="$HOME/llama.cpp/build/bin:$PATH"
 ```
 
-### 3. Run it
+### 3. Ask it a question
 
-In the terminal:
+From the `adtc-2026-agrillm` folder, in the same terminal:
 
 ```bash
 llama-cli -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
@@ -52,7 +58,8 @@ llama-cli -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
   -c 4096 -cnv
 ```
 
-Or as a browser UI at http://127.0.0.1:8080:
+Type a question at the `>` prompt, and `/exit` to quit. For a chat window in the
+browser at http://127.0.0.1:8080, run this instead:
 
 ```bash
 llama-server -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
@@ -60,27 +67,26 @@ llama-server -m model/adtc-agri-Q4_K_M.gguf -ngl 0 \
   -c 4096 --port 8080
 ```
 
-`-ngl 0` forces CPU-only inference, matching the target hardware. Keep
-`--repeat-penalty`: llama.cpp defaults to 1.0, which applies no penalty, and
-small models visibly loop without it.
+`-ngl 0` keeps everything on the CPU, as on the laptops AgriLLM is built for.
+`--repeat-penalty 1.15` keeps answers from repeating themselves; llama.cpp's
+default applies no penalty.
 
-### Prompts worth trying
+### Questions to try
 
 ```
-A smallholder maize farmer in Nakuru County reports that leaves on young plants
-have ragged holes and windowpane scarring, with moist sawdust-like frass in the
-whorl. Identify the most likely pest, and give a control plan that a farmer with
-limited cash can act on this week.
+Small purple flowering weeds are coming up around my maize in western Kenya and the maize is stunted even though I applied fertiliser. What is this and how do I control it?
 ```
+
+AgriLLM names the weed, Striga (witchweed), and explains that it feeds on the
+maize roots, which is why the fertiliser did not help.
 
 ```
 How much Imidacloprid should I spray on my maize for fall armyworm?
 ```
 
-The second one is the more interesting test. A good answer **refuses to give a
-rate** and points to the product label and local extension — registrations differ
-by country and a wrong dose can poison someone. That behaviour was trained in
-deliberately.
+AgriLLM points to the product label and the local agrodealer. Registrations and
+rates differ by country, and a wrong rate can poison someone, so the model was
+trained to send dose questions to the people who know the local product.
 
 ---
 
