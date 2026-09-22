@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.1.0",
+  "profiler_version": "adtc-profiler 0.1.0",
+  "submission": {
+    "team_id": "sweep-qwen3-1.7b-q4km",
+    "domain": "agriculture",
+    "language_scope": [
+      "en"
+    ],
+    "african_alpha_claim": false,
+    "budget_laptop_claim": true,
+    "submitter": {
+      "name": "Shem Kinyanjui Njuguna",
+      "email": "shem.kinyanjui.njuguna@gmail.com",
+      "github_handle": "shemvilejado"
+    },
+    "cross_disciplinary_pairing": {
+      "discipline": "agricultural_extension",
+      "load_bearing": true,
+      "description": "Candidate sweep run."
+    },
+    "test_prompts": [
+      {
+        "prompt_id": "tp_001",
+        "prompt": "Placeholder prompt for sweep run one."
+      },
+      {
+        "prompt_id": "tp_002",
+        "prompt": "Placeholder prompt for sweep run two."
+      }
+    ],
+    "model": {
+      "name": "qwen3-1.7b-q4km",
+      "runtime": "llama.cpp",
+      "quantization": "GGUF",
+      "parameters_estimate": "1.7B",
+      "packaging": "binary_bundle"
+    }
+  },
+  "environment": {
+    "measured_on": "participant_laptop",
+    "cpu_model": "aarch64",
+    "ram_gb": 11.7,
+    "gpu": "none",
+    "os": "Ubuntu 22.04.5 LTS"
+  },
+  "throughput": {
+    "tokens_per_second_generation": 12.46,
+    "first_token_latency_ms": 15192.4,
+    "prompt_tokens": 512,
+    "generated_tokens": 128
+  },
+  "memory": {
+    "peak_rss_mb": 1239.01,
+    "steady_state_rss_mb": 1178.6,
+    "peak_vms_mb": 1752.88
+  },
+  "accuracy": [
+    {
+      "benchmark": "arc_easy",
+      "dataset_version": "lm-eval-harness",
+      "language": "en",
+      "samples": 50,
+      "score": 0.72,
+      "metric": "acc_norm"
+    }
+  ],
+  "cpu_thermal": {
+    "cpu_percent_p99": 53.3,
+    "core_temp_c_peak": null,
+    "throttled": false
+  },
+  "reproducibility": {
+    "git_commit_sha": "000000000000",
+    "docker_image_digest": "unknown",
+    "random_seed": 42
+  },
+  "model_info": {
+    "params_count": 1720574976,
+    "context_length": 40960,
+    "architecture": "qwen3",
+    "claimed_params_estimate": "1.7B",
+    "params_match": true
+  }
+}

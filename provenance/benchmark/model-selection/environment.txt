@@ -1,0 +1,8 @@
+captured:       2026-08-20T09:12:42Z
+host:           Darwin 25.5.0 arm64
+docker:         Docker version 29.6.1, build 8900f1d
+container cpus: 4
+container mem:  7.5g
+llama-bench:    error: invalid parameter for argument: --version usage: llama-bench [options] version probe unsupported
+profiler:       0.1.0
+
